@@ -11,6 +11,7 @@
         input{
             padding:10px;
             width:200px;
+            margin-top:20px;
         }
         button{
             padding:10px;
@@ -23,9 +24,33 @@
             margin-top:20px;
             font-size:30px;
         }
-        .style1{font-family:cursive;}
-        .style2{font-weight:bold;}
-        .style3{color:gold;}
+
+        /* Stylish fonts & colors */
+        #heart {
+            font-family: 'Cursive', Arial;
+            font-size: 40px;
+            color: hotpink;
+            text-shadow: 2px 2px 5px red;
+            margin-top:20px;
+        }
+        #d1 { color: purple; }
+        #d2 { color: blue; }
+        #d3 { color: gold; }
+
+        /* Download button style */
+        #downloadBtn {
+            padding: 10px 20px;
+            background: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        #downloadBtn:hover {
+            background: #e91e63;
+        }
     </style>
 </head>
 <body>
@@ -39,57 +64,34 @@
     <div class="design style2" id="d2"></div>
     <div class="design style3" id="d3"></div>
 
+    <div class="design" id="heart">
+        💖 <span id="heartName"></span> 💖
+    </div>
+
+    <button id="downloadBtn">Download Design</button>
+
     <script>
         function generate(){
             let name = document.getElementById("nameInput").value;
             document.getElementById("d1").innerText = name;
             document.getElementById("d2").innerText = name;
             document.getElementById("d3").innerText = name;
+            document.getElementById("heartName").innerText = name;
         }
+
+        // Download functionality
+        document.getElementById("downloadBtn").addEventListener("click", function() {
+            let heartDiv = document.getElementById("heart");
+            let name = heartDiv.innerText;
+
+            // Simple text file download
+            let blob = new Blob([name], {type: "text/plain"});
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "LocketDesign.txt";
+            link.click();
+        });
     </script>
 
 </body>
 </html>
-#heart {
-    font-family: 'Cursive', Arial;
-    font-size: 40px;
-    color: hotpink;
-    text-shadow: 2px 2px 5px red;
-}
-
-#d1 {
-    color: purple;
-}
-
-#d2 {
-    color: blue;
-}
-
-#d3 {
-    color: gold;
-}
-<button id="downloadBtn">Download Design</button>
-#downloadBtn {
-    padding: 10px 20px;
-    background: #ff4081;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 20px;
-    font-size: 16px;
-}
-#downloadBtn:hover {
-    background: #e91e63;
-}
-document.getElementById("downloadBtn").addEventListener("click", function() {
-    let heartDiv = document.getElementById("heart");
-    let name = heartDiv.innerText;
-    
-    // Simple text file download
-    let blob = new Blob([name], {type: "text/plain"});
-    let link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "LocketDesign.txt";
-    link.click();
-});
