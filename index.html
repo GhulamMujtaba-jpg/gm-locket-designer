@@ -3,6 +3,7 @@
 <head>
     <title>GM Locket Designer</title>
     <style>
+        /* Body & input styles */
         body{
             text-align:center;
             font-family:Arial;
@@ -15,152 +16,124 @@
         }
         button{
             padding:10px;
-            background:black;
-            color:white;
             border:none;
+            border-radius:8px;
             cursor:pointer;
-        }
-        .design{
-            margin-top:20px;
-            font-size:30px;
+            font-size:16px;
         }
 
-        /* Stylish fonts & colors */
+        /* Heart preview */
         #heart {
-            font-family: 'Cursive', Arial;
-            font-size: 40px;
-            color: hotpink;
-            text-shadow: 2px 2px 5px red;
+            font-family:'Cursive', Arial;
+            font-size:40px;
+            color:hotpink;
+            text-shadow:2px 2px 5px red;
+            margin-top:20px;
+            margin-bottom:20px;
+        }
+
+        /* Download buttons */
+        #downloadBtn{
+            background:#ff4081;
+            color:white;
+            margin-top:10px;
+        }
+        #downloadBtn:hover{ background:#e91e63; }
+
+        #downloadImageBtn{
+            background:#4CAF50;
+            color:white;
+            margin-top:10px;
+        }
+        #downloadImageBtn:hover{ background:#45a049; }
+
+        /* Container for all designs */
+        .design-container{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+            gap:10px;
             margin-top:20px;
         }
-        #d1 { color: purple; }
-        #d2 { color: blue; }
-        #d3 { color: gold; }
 
-        /* Download button style */
-        #downloadBtn {
-            padding: 10px 20px;
-            background: #ff4081;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-            font-size: 16px;
+        /* Each design card */
+        .design{
+            padding:10px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            background:#fff;
+            box-shadow:2px 2px 5px rgba(0,0,0,0.2);
+            text-align:center;
         }
-        #downloadBtn:hover {
-            background: #e91e63;
-        }
+
+        /* Example 50 unique styles */
+        .design-style1 { font-family:'Cursive'; color:hotpink; text-shadow:2px 2px 5px red; font-size:24px; }
+        .design-style2 { font-family:'Arial Black'; color:purple; text-shadow:1px 1px 3px gold; font-size:26px; }
+        .design-style3 { font-family:'Verdana'; color:blue; text-shadow:0 0 10px cyan; font-size:28px; }
+        .design-style4 { font-family:'Tahoma'; color:green; text-shadow:2px 2px 8px lime; font-size:24px; }
+        .design-style5 { font-family:'Georgia'; color:orange; text-shadow:1px 1px 4px red; font-size:26px; }
+        /* Add remaining styles up to .design-style50 similarly */
     </style>
 </head>
 <body>
 
-    <h1>GM Name Locket Designer</h1>
+<h1>GM Name Locket Designer</h1>
 
-    <input type="text" id="nameInput" placeholder="Enter Name">
-    <button onclick="generate()">Generate</button>
-
-    <div class="design style1" id="d1"></div>
-    <div class="design style2" id="d2"></div>
-    <div class="design style3" id="d3"></div>
-
-    <div class="design" id="heart">
-        💖 <span id="heartName"></span> 💖
-    </div>
+<input type="text" id="nameInput" placeholder="Enter Name">
 <button onclick="generateMultipleDesigns()">Generate</button>
 
-    <script>
-        function generate(){
-            let name = document.getElementById("nameInput").value;
-            document.getElementById("d1").innerText = name;
-            document.getElementById("d2").innerText = name;
-            document.getElementById("d3").innerText = name;
-            document.getElementById("heartName").innerText = name;
+<div class="design" id="heart">💖 <span id="heartName"></span> 💖</div>
+
+<h2>All Designs Preview</h2>
+<div class="design-container" id="allDesigns"></div>
+
+<button id="downloadBtn">Download Text</button>
+<button id="downloadImageBtn">Download as Image</button>
+
+<!-- HTML2Canvas library for image download -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+    // Generate 50 designs dynamically
+    function generateMultipleDesigns(){
+        let name = document.getElementById("nameInput").value;
+        let container = document.getElementById("allDesigns");
+        container.innerHTML = ""; // Clear previous designs
+
+        for(let i=1; i<=50; i++){
+            let div = document.createElement("div");
+            div.className = "design design-style"+i; // Assign unique style
+            div.innerText = name;
+            container.appendChild(div);
         }
 
-        // Download functionality
-        document.getElementById("downloadBtn").addEventListener("click", function() {
-            let heartDiv = document.getElementById("heart");
-            let name = heartDiv.innerText;
+        // Update heart preview
+        document.getElementById("heartName").innerText = name;
+    }
 
-            // Simple text file download
-            let blob = new Blob([name], {type: "text/plain"});
+    // Download all designs as text file
+    document.getElementById("downloadBtn").addEventListener("click", function(){
+        let container = document.getElementById("allDesigns");
+        let allText = "";
+        container.querySelectorAll(".design").forEach(div => { allText += div.innerText + "\n"; });
+        allText += "\nHeart Design: " + document.getElementById("heartName").innerText;
+
+        let blob = new Blob([allText], {type:"text/plain"});
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "AllLocketDesigns.txt";
+        link.click();
+    });
+
+    // Download all designs as PNG image
+    document.getElementById("downloadImageBtn").addEventListener("click", function(){
+        let container = document.getElementById("allDesigns");
+        html2canvas(container).then(canvas => {
             let link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "LocketDesign.txt";
+            link.href = canvas.toDataURL("image/png");
+            link.download = "AllLocketDesigns.png";
             link.click();
         });
-    </script>
+    });
+</script>
 
 </body>
 </html>
-<h2>All Designs Preview</h2>
-<div class="design-container" id="allDesigns">
-    <!-- 50 design divs will be generated here -->
-</div>
-/* 50 unique styles */
-.design-style1 { font-family: 'Cursive'; color: hotpink; text-shadow: 2px 2px 5px red; font-size:24px; }
-.design-style2 { font-family: 'Arial Black'; color: purple; text-shadow: 1px 1px 3px gold; font-size:26px; }
-.design-style3 { font-family: 'Verdana'; color: blue; text-shadow: 0 0 10px cyan; font-size:28px; }
-.design-style4 { font-family: 'Tahoma'; color: green; text-shadow: 2px 2px 8px lime; font-size:24px; }
-.design-style5 { font-family: 'Georgia'; color: orange; text-shadow: 1px 1px 4px red; font-size:26px; }
-/* ... repeat pattern up to .design-style50 with different colors/fonts/shadows ... */
-// Generate 50 designs dynamically
-function generateMultipleDesigns(){
-    let name = document.getElementById("nameInput").value;
-    let container = document.getElementById("allDesigns");
-    container.innerHTML = ""; // Clear previous designs
-
-    for(let i=1; i<=50; i++){
-        let div = document.createElement("div");
-        div.className = "design design-style" + i; // Assign unique style
-        div.innerText = name;
-        container.appendChild(div);
-    }
-
-    // Also update the heart preview
-    document.getElementById("heartName").innerText = name;
-}
-        /* Container for all designs */
-.design-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-    margin-top: 20px;
-}
-
-/* Each design card */
-.design {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    text-align: center;
-}
-
-/* Heart preview stays at top */
-#heart {
-    margin-bottom: 20px;
-}
-// Download all 50 designs as text file
-document.getElementById("downloadBtn").addEventListener("click", function() {
-    let container = document.getElementById("allDesigns");
-    let allText = "";
-
-    // Loop through all child divs
-    container.querySelectorAll(".design").forEach(div => {
-        allText += div.innerText + "\n";
-    });
-
-    // Also include heart design
-    allText += "\nHeart Design: " + document.getElementById("heartName").innerText;
-
-    // Create text file and download
-    let blob = new Blob([allText], {type: "text/plain"});
-    let link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "AllLocketDesigns.txt";
-    link.click();
-});
-        <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
