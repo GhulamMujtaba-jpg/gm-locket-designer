@@ -121,3 +121,25 @@ function generateMultipleDesigns(){
     // Also update the heart preview
     document.getElementById("heartName").innerText = name;
 }
+        /* Container for all designs */
+.design-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Each design card */
+.design {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* Heart preview stays at top */
+#heart {
+    margin-bottom: 20px;
+}
