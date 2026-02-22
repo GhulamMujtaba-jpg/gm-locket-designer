@@ -1,99 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>GM Ultimate 3D Locket Designer</title>
-    <meta name="description" content="Create 1000+ 3D unique locket designs with names, Islamic background icons, hearts, arrows, stars and more. Perfect for printing.">
-    <meta name="keywords" content="3D locket, name locket, Islamic icon, heart, arrow, 3D logo, custom locket, download PNG, unique design, GM locket designer">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body{
-            text-align:center;
-            font-family:Arial, sans-serif;
-            background:#111;
-            color:white;
-        }
-        input{
-            padding:10px;
-            width:250px;
-            margin-top:20px;
-            font-size:16px;
-            border-radius:5px;
-            border:none;
-        }
-        button{
-            padding:8px 15px;
-            border:none;
-            border-radius:8px;
-            cursor:pointer;
-            font-size:14px;
-            margin:5px;
-        }
-        #generateBtn{ background:#ff4081; color:white; }
-        #generateBtn:hover{ background:#e91e63; }
-        #downloadAllBtn{ background:#4CAF50; color:white; }
-        #downloadAllBtn:hover{ background:#45a049; }
+<meta charset="UTF-8">
+<title>GM Ultimate 3D Locket Designer</title>
+<meta name="description" content="Create 1000+ 3D unique locket designs with names, Islamic backgrounds, overlapping letters and glowing effects. Perfect for printing.">
+<meta name="keywords" content="3D locket, name locket, Islamic icon, mosque, heart, arrow, star, 3D logo, custom locket, download PNG, unique design, GM locket designer">
+<meta name="author" content="GM Official">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="canonical" href="https://yourusername.github.io/your-repo-name/">
+<style>
+body{
+    text-align:center;
+    font-family:Arial, sans-serif;
+    background:#111;
+    color:white;
+}
+input{
+    padding:10px;
+    width:250px;
+    margin-top:20px;
+    font-size:16px;
+    border-radius:5px;
+    border:none;
+}
+button{
+    padding:8px 15px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    margin:5px;
+}
+#generateBtn{ background:#ff4081; color:white; }
+#generateBtn:hover{ background:#e91e63; }
+#downloadAllBtn{ background:#4CAF50; color:white; }
+#downloadAllBtn:hover{ background:#45a049; }
 
-        .design-container{
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
-            gap:15px;
-            margin-top:20px;
-        }
+.design-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+    gap:15px;
+    margin-top:20px;
+}
 
-        .design-card{
-            width:130px;
-            height:130px;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            flex-direction:column;
-            perspective:500px;
-            transition: transform 0.3s;
-        }
-        .design-card:hover{
-            transform: rotateY(10deg) rotateX(10deg) scale(1.1);
-        }
+.design-card{
+    width:140px;
+    height:140px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    perspective:800px;
+    transition: transform 0.4s;
+}
+.design-card:hover{
+    transform: rotateY(15deg) rotateX(10deg) scale(1.1);
+}
 
-        .design-circle{
-            width:110px;
-            height:110px;
-            border-radius:50%;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            flex-direction:column;
-            background-size:cover;
-            box-shadow: 0 0 15px rgba(255,255,255,0.6), 0 0 30px rgba(255,0,255,0.3);
-            position:relative;
-        }
+.design-circle{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background-size:cover;
+    box-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(255,0,255,0.3);
+    position:relative;
+    overflow:hidden;
+}
 
-        .design-text{
-            position:absolute;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            flex-wrap:wrap;
-            gap:-5px; /* overlap letters */
-            color:white;
-            font-weight:bold;
-        }
+.design-text{
+    position:absolute;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:-8px; /* letters overlap */
+    flex-wrap:wrap;
+    font-weight:bold;
+    color:white;
+    text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff;
+}
 
-        .letter{
-            display:inline-block;
-        }
+.letter{
+    display:inline-block;
+    transform-origin:center;
+}
 
-        .download-btn{
-            background:#ffcc00;
-            color:black;
-            font-size:12px;
-            margin-top:5px;
-            border-radius:5px;
-        }
-        .download-btn:hover{
-            background:#ffaa00;
-        }
-    </style>
+.download-btn{
+    background:#ffcc00;
+    color:black;
+    font-size:12px;
+    margin-top:5px;
+    border-radius:5px;
+}
+.download-btn:hover{
+    background:#ffaa00;
+}
+</style>
 </head>
 <body>
 
@@ -106,13 +112,13 @@
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-// Background images (Islamic, hearts, arrows)
+// Real Islamic + other decorative backgrounds
 const backgrounds = [
-    "https://img.icons8.com/emoji/96/000000/mosque.png",
-    "https://img.icons8.com/emoji/96/000000/star-emoji.png",
-    "https://img.icons8.com/emoji/96/000000/moon-emoji.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Al_Masjid_Al-Haram_Makkah.jpg/120px-Al_Masjid_Al-Haram_Makkah.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Islamic_pattern.png/120px-Islamic_pattern.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Moon_star.png/120px-Moon_star.png",
     "https://img.icons8.com/emoji/96/000000/red-heart.png",
-    "https://img.icons8.com/emoji/96/000000/arrow.png"
+    "https://img.icons8.com/emoji/96/000000/star-emoji.png"
 ];
 
 const fonts = ["Cursive","Arial Black","Impact","Trebuchet MS","Verdana","Tahoma","Georgia","Comic Sans MS","Courier New","Lucida Console"];
@@ -128,7 +134,7 @@ function generateUniqueDesigns(name){
         let font = fonts[Math.floor(Math.random()*fonts.length)];
         let rotateX = (Math.random()*20)-10;
         let rotateY = (Math.random()*20)-10;
-        let scale = (Math.random()*0.4)+0.8;
+        let scale = (Math.random()*0.5)+0.8;
 
         let comboKey = bg+"|"+font+"|"+rotateX.toFixed(1)+"|"+rotateY.toFixed(1)+"|"+scale.toFixed(2);
         if(usedCombos.has(comboKey)) continue;
@@ -151,7 +157,7 @@ function generateUniqueDesigns(name){
             span.className="letter";
             span.innerText = char;
             span.style.fontFamily = font;
-            span.style.transform = `rotate(${Math.random()*20-10}deg) scale(${scale})`;
+            span.style.transform = `rotate(${Math.random()*30-15}deg) scale(${scale})`;
             textDiv.appendChild(span);
         }
 
