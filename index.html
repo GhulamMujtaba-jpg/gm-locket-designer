@@ -82,3 +82,14 @@
 #downloadBtn:hover {
     background: #e91e63;
 }
+document.getElementById("downloadBtn").addEventListener("click", function() {
+    let heartDiv = document.getElementById("heart");
+    let name = heartDiv.innerText;
+    
+    // Simple text file download
+    let blob = new Blob([name], {type: "text/plain"});
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "LocketDesign.txt";
+    link.click();
+});
