@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GM Locket Designer</title>
+    <style>
+        body{
+            text-align:center;
+            font-family:Arial;
+            background:#f2f2f2;
+        }
+        input{
+            padding:10px;
+            width:200px;
+        }
+        button{
+            padding:10px;
+            background:black;
+            color:white;
+            border:none;
+            cursor:pointer;
+        }
+        .design{
+            margin-top:20px;
+            font-size:30px;
+        }
+        .style1{font-family:cursive;}
+        .style2{font-weight:bold;}
+        .style3{color:gold;}
+    </style>
+</head>
+<body>
+
+    <h1>GM Name Locket Designer</h1>
+
+    <input type="text" id="nameInput" placeholder="Enter Name">
+    <button onclick="generate()">Generate</button>
+
+    <div class="design style1" id="d1"></div>
+    <div class="design style2" id="d2"></div>
+    <div class="design style3" id="d3"></div>
+
+    <script>
+        function generate(){
+            let name = document.getElementById("nameInput").value;
+            document.getElementById("d1").innerText = name;
+            document.getElementById("d2").innerText = name;
+            document.getElementById("d3").innerText = name;
+        }
+    </script>
+
+</body>
+</html>
