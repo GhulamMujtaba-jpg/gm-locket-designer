@@ -3,7 +3,6 @@
 <head>
     <title>GM Locket Designer</title>
     <style>
-        /* Body & input styles */
         body{
             text-align:center;
             font-family:Arial;
@@ -15,39 +14,35 @@
             margin-top:20px;
         }
         button{
-            padding:10px;
+            padding:10px 20px;
             border:none;
             border-radius:8px;
             cursor:pointer;
             font-size:16px;
         }
 
-        /* Heart preview */
-        #heart {
+        #heart{
             font-family:'Cursive', Arial;
             font-size:40px;
             color:hotpink;
             text-shadow:2px 2px 5px red;
-            margin-top:20px;
-            margin-bottom:20px;
+            margin:20px 0;
         }
 
-        /* Download buttons */
         #downloadBtn{
             background:#ff4081;
             color:white;
-            margin-top:10px;
+            margin:10px 5px;
         }
         #downloadBtn:hover{ background:#e91e63; }
 
         #downloadImageBtn{
             background:#4CAF50;
             color:white;
-            margin-top:10px;
+            margin:10px 5px;
         }
         #downloadImageBtn:hover{ background:#45a049; }
 
-        /* Container for all designs */
         .design-container{
             display:grid;
             grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
@@ -55,23 +50,21 @@
             margin-top:20px;
         }
 
-        /* Each design card */
         .design{
             padding:10px;
             border:1px solid #ccc;
             border-radius:8px;
-            background:#fff;
-            box-shadow:2px 2px 5px rgba(0,0,0,0.2);
+            background:#111;
+            color:white;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.5);
             text-align:center;
+            transform: rotateX(5deg) rotateY(3deg);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-
-        /* Example 50 unique styles */
-        .design-style1 { font-family:'Cursive'; color:hotpink; text-shadow:2px 2px 5px red; font-size:24px; }
-        .design-style2 { font-family:'Arial Black'; color:purple; text-shadow:1px 1px 3px gold; font-size:26px; }
-        .design-style3 { font-family:'Verdana'; color:blue; text-shadow:0 0 10px cyan; font-size:28px; }
-        .design-style4 { font-family:'Tahoma'; color:green; text-shadow:2px 2px 8px lime; font-size:24px; }
-        .design-style5 { font-family:'Georgia'; color:orange; text-shadow:1px 1px 4px red; font-size:26px; }
-        /* Add remaining styles up to .design-style50 similarly */
+        .design:hover{
+            transform: rotateX(0deg) rotateY(0deg) scale(1.05);
+            box-shadow: 4px 4px 15px rgba(0,0,0,0.7);
+        }
     </style>
 </head>
 <body>
@@ -89,19 +82,37 @@
 <button id="downloadBtn">Download Text</button>
 <button id="downloadImageBtn">Download as Image</button>
 
-<!-- HTML2Canvas library for image download -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-    // Generate 50 designs dynamically
+    // Array of random styles
+    const styles = [
+        "color: hotpink; font-family: 'Cursive'; text-shadow:2px 2px 5px red; font-size:24px;",
+        "color: purple; font-family: 'Arial Black'; text-shadow:1px 1px 3px gold; font-size:26px;",
+        "color: blue; font-family: 'Verdana'; text-shadow:0 0 10px cyan; font-size:28px;",
+        "color: green; font-family: 'Tahoma'; text-shadow:2px 2px 8px lime; font-size:24px;",
+        "color: orange; font-family: 'Georgia'; text-shadow:1px 1px 4px red; font-size:26px;",
+        "color: cyan; font-family:'Impact'; text-shadow:2px 2px 6px navy; font-size:25px;",
+        "color: magenta; font-family:'Trebuchet MS'; text-shadow:1px 1px 5px purple; font-size:24px;",
+        "color: yellow; font-family:'Comic Sans MS'; text-shadow:0 0 8px orange; font-size:27px;",
+        "color: lime; font-family:'Tahoma'; text-shadow:2px 2px 5px green; font-size:26px;",
+        "color: red; font-family:'Arial'; text-shadow:2px 2px 8px darkred; font-size:25px;",
+        // Add more up to 50 styles
+    ];
+
     function generateMultipleDesigns(){
-        let name = document.getElementById("nameInput").value;
+        let name = document.getElementById("nameInput").value || "GM";
         let container = document.getElementById("allDesigns");
         container.innerHTML = ""; // Clear previous designs
 
-        for(let i=1; i<=50; i++){
+        for(let i=0;i<50;i++){
             let div = document.createElement("div");
-            div.className = "design design-style"+i; // Assign unique style
+            div.className = "design";
             div.innerText = name;
+
+            // Random style
+            let randomStyle = styles[Math.floor(Math.random() * styles.length)];
+            div.style = randomStyle;
+
             container.appendChild(div);
         }
 
@@ -109,7 +120,7 @@
         document.getElementById("heartName").innerText = name;
     }
 
-    // Download all designs as text file
+    // Download Text
     document.getElementById("downloadBtn").addEventListener("click", function(){
         let container = document.getElementById("allDesigns");
         let allText = "";
@@ -119,17 +130,17 @@
         let blob = new Blob([allText], {type:"text/plain"});
         let link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
-        link.download = "AllLocketDesigns.txt";
+        link.download="AllLocketDesigns.txt";
         link.click();
     });
 
-    // Download all designs as PNG image
+    // Download PNG
     document.getElementById("downloadImageBtn").addEventListener("click", function(){
         let container = document.getElementById("allDesigns");
         html2canvas(container).then(canvas => {
             let link = document.createElement("a");
             link.href = canvas.toDataURL("image/png");
-            link.download = "AllLocketDesigns.png";
+            link.download="AllLocketDesigns.png";
             link.click();
         });
     });
