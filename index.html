@@ -143,3 +143,23 @@ function generateMultipleDesigns(){
 #heart {
     margin-bottom: 20px;
 }
+// Download all 50 designs as text file
+document.getElementById("downloadBtn").addEventListener("click", function() {
+    let container = document.getElementById("allDesigns");
+    let allText = "";
+
+    // Loop through all child divs
+    container.querySelectorAll(".design").forEach(div => {
+        allText += div.innerText + "\n";
+    });
+
+    // Also include heart design
+    allText += "\nHeart Design: " + document.getElementById("heartName").innerText;
+
+    // Create text file and download
+    let blob = new Blob([allText], {type: "text/plain"});
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "AllLocketDesigns.txt";
+    link.click();
+});
