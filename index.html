@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>GM Ultimate 3D Locket Designer</title>
+    <meta name="description" content="Create 1000+ 3D unique locket designs with names, Islamic background icons, hearts, arrows, stars and more. Perfect for printing.">
+    <meta name="keywords" content="3D locket, name locket, Islamic icon, heart, arrow, 3D logo, custom locket, download PNG, unique design, GM locket designer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body{
             text-align:center;
@@ -27,16 +31,6 @@
         }
         #generateBtn{ background:#ff4081; color:white; }
         #generateBtn:hover{ background:#e91e63; }
-        <head>
-    <title>GM Ultimate 3D Locket Designer</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="Create 1000+ 3D unique locket designs with names, Islamic icons, hearts, arrows, stars and more. Download individual or all PNGs. Perfect for printing.">
-    <meta name="keywords" content="3D locket, name locket, Islamic icon, heart, arrow, 3D logo, custom locket, download PNG, unique design, GM locket designer">
-    <meta name="author" content="GM Official">
-    <meta name="robots" content="index, follow">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://yourusername.github.io/your-repo-name/">
-</head>
         #downloadAllBtn{ background:#4CAF50; color:white; }
         #downloadAllBtn:hover{ background:#45a049; }
 
@@ -48,12 +42,8 @@
         }
 
         .design-card{
-            background:transparent;
-            border-radius:50%;
-            padding:15px;
-            text-align:center;
-            width:120px;
-            height:120px;
+            width:130px;
+            height:130px;
             display:flex;
             justify-content:center;
             align-items:center;
@@ -66,40 +56,48 @@
         }
 
         .design-circle{
-            width:100px;
-            height:100px;
+            width:110px;
+            height:110px;
             border-radius:50%;
             display:flex;
             justify-content:center;
             align-items:center;
             flex-direction:column;
-            background:linear-gradient(135deg,#ff0080,#7928ca);
-            box-shadow: 0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(255,0,255,0.3);
-            transform-style: preserve-3d;
+            background-size:cover;
+            box-shadow: 0 0 15px rgba(255,255,255,0.6), 0 0 30px rgba(255,0,255,0.3);
+            position:relative;
         }
 
         .design-text{
-            font-size:18px;
-            font-weight:bold;
-            color:white;
+            position:absolute;
             display:flex;
             justify-content:center;
             align-items:center;
-            gap:3px;
             flex-wrap:wrap;
-        }
-        .design-icon{
-            width:18px;
-            height:18px;
+            gap:-5px; /* overlap letters */
+            color:white;
+            font-weight:bold;
         }
 
-        .download-btn{ background:#ffcc00; color:black; font-size:12px; margin-top:5px;}
-        .download-btn:hover{ background:#ffaa00;}
+        .letter{
+            display:inline-block;
+        }
+
+        .download-btn{
+            background:#ffcc00;
+            color:black;
+            font-size:12px;
+            margin-top:5px;
+            border-radius:5px;
+        }
+        .download-btn:hover{
+            background:#ffaa00;
+        }
     </style>
 </head>
 <body>
 
-<h1>GM Ultimate 3D Circular Locket Designer</h1>
+<h1>GM Ultimate 3D Locket Designer</h1>
 <input type="text" id="nameInput" placeholder="Enter Name">
 <button id="generateBtn">Generate 1000 Designs</button>
 <button id="downloadAllBtn">Download All PNG</button>
@@ -108,20 +106,16 @@
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-// Colors, Fonts, Icons
-const baseColors = ["#ff4d4d","#ff944d","#ffff4d","#4dff4d","#4dffff","#4d4dff","#ff4dff","#ff1a75",
-"#ff661a","#99ff33","#33ffcc","#ff3366","#9933ff","#ffcc33","#66ff33","#33ccff","#cc33ff","#ff3399",
-"#33ff99","#ff6633","#00ccff","#ff00cc","#ccff00","#ff9900","#00ff99","#9900ff","#ff0066","#66ff00","#ff3300","#00ffcc"];
+// Background images (Islamic, hearts, arrows)
+const backgrounds = [
+    "https://img.icons8.com/emoji/96/000000/mosque.png",
+    "https://img.icons8.com/emoji/96/000000/star-emoji.png",
+    "https://img.icons8.com/emoji/96/000000/moon-emoji.png",
+    "https://img.icons8.com/emoji/96/000000/red-heart.png",
+    "https://img.icons8.com/emoji/96/000000/arrow.png"
+];
 
 const fonts = ["Cursive","Arial Black","Impact","Trebuchet MS","Verdana","Tahoma","Georgia","Comic Sans MS","Courier New","Lucida Console"];
-
-const icons = [
-    "https://img.icons8.com/emoji/48/000000/mosque.png",
-    "https://img.icons8.com/emoji/48/000000/red-heart.png",
-    "https://img.icons8.com/emoji/48/000000/arrow.png",
-    "https://img.icons8.com/emoji/48/000000/star-emoji.png",
-    "https://img.icons8.com/emoji/48/000000/moon-emoji.png"
-];
 
 function generateUniqueDesigns(name){
     const container = document.getElementById("allDesigns");
@@ -130,39 +124,36 @@ function generateUniqueDesigns(name){
     let count = 0;
 
     while(count<1000){
-        let color = baseColors[Math.floor(Math.random()*baseColors.length)];
+        let bg = backgrounds[Math.floor(Math.random()*backgrounds.length)];
         let font = fonts[Math.floor(Math.random()*fonts.length)];
-        let scale = (Math.random()*0.4)+0.8;
         let rotateX = (Math.random()*20)-10;
         let rotateY = (Math.random()*20)-10;
-        let icon = icons[Math.floor(Math.random()*icons.length)];
+        let scale = (Math.random()*0.4)+0.8;
 
-        let comboKey = color+"|"+font+"|"+scale.toFixed(2)+"|"+rotateX.toFixed(1)+"|"+rotateY.toFixed(1)+"|"+icon;
+        let comboKey = bg+"|"+font+"|"+rotateX.toFixed(1)+"|"+rotateY.toFixed(1)+"|"+scale.toFixed(2);
         if(usedCombos.has(comboKey)) continue;
         usedCombos.add(comboKey);
 
+        // Card
         let card = document.createElement("div");
         card.className="design-card";
 
+        // Circle
         let circle = document.createElement("div");
         circle.className="design-circle";
-        circle.style.background=`linear-gradient(135deg, ${color}, #000000)`;
+        circle.style.backgroundImage = `url(${bg})`;
 
+        // Name with overlapped letters
         let textDiv = document.createElement("div");
         textDiv.className="design-text";
-
-        let img = document.createElement("img");
-        img.src = icon;
-        img.className="design-icon";
-
-        let span = document.createElement("span");
-        span.innerText=name;
-        span.style.fontFamily=font;
-        span.style.transform=`rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
-
-        textDiv.appendChild(img);
-        textDiv.appendChild(span);
-        circle.appendChild(textDiv);
+        for(let char of name){
+            let span = document.createElement("span");
+            span.className="letter";
+            span.innerText = char;
+            span.style.fontFamily = font;
+            span.style.transform = `rotate(${Math.random()*20-10}deg) scale(${scale})`;
+            textDiv.appendChild(span);
+        }
 
         // Individual download
         let downloadBtn = document.createElement("button");
@@ -177,6 +168,7 @@ function generateUniqueDesigns(name){
             });
         });
 
+        circle.appendChild(textDiv);
         card.appendChild(circle);
         card.appendChild(downloadBtn);
         container.appendChild(card);
@@ -190,7 +182,7 @@ document.getElementById("generateBtn").addEventListener("click", ()=>{
     generateUniqueDesigns(name);
 });
 
-// Download All
+// Download all
 document.getElementById("downloadAllBtn").addEventListener("click", ()=>{
     let container = document.getElementById("allDesigns");
     html2canvas(container,{backgroundColor:null}).then(canvas=>{
