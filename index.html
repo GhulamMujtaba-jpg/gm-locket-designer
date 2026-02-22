@@ -106,3 +106,19 @@
 .design-style4 { font-family: 'Tahoma'; color: green; text-shadow: 2px 2px 8px lime; font-size:24px; }
 .design-style5 { font-family: 'Georgia'; color: orange; text-shadow: 1px 1px 4px red; font-size:26px; }
 /* ... repeat pattern up to .design-style50 with different colors/fonts/shadows ... */
+// Generate 50 designs dynamically
+function generateMultipleDesigns(){
+    let name = document.getElementById("nameInput").value;
+    let container = document.getElementById("allDesigns");
+    container.innerHTML = ""; // Clear previous designs
+
+    for(let i=1; i<=50; i++){
+        let div = document.createElement("div");
+        div.className = "design design-style" + i; // Assign unique style
+        div.innerText = name;
+        container.appendChild(div);
+    }
+
+    // Also update the heart preview
+    document.getElementById("heartName").innerText = name;
+}
