@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GM Locket Designer</title>
+    <title>GM Locket Designer 3D</title>
     <style>
         body{
             text-align:center;
-            font-family:Arial;
-            background:#f2f2f2;
+            font-family:Arial, sans-serif;
+            background:#222;
+            color:white;
         }
         input{
             padding:10px;
-            width:200px;
+            width:250px;
             margin-top:20px;
+            font-size:16px;
+            border-radius:5px;
+            border:none;
         }
         button{
             padding:10px 20px;
@@ -19,29 +23,12 @@
             border-radius:8px;
             cursor:pointer;
             font-size:16px;
+            margin:5px;
         }
-
-        #heart{
-            font-family:'Cursive', Arial;
-            font-size:40px;
-            color:hotpink;
-            text-shadow:2px 2px 5px red;
-            margin:20px 0;
-        }
-
-        #downloadBtn{
-            background:#ff4081;
-            color:white;
-            margin:10px 5px;
-        }
-        #downloadBtn:hover{ background:#e91e63; }
-
-        #downloadImageBtn{
-            background:#4CAF50;
-            color:white;
-            margin:10px 5px;
-        }
-        #downloadImageBtn:hover{ background:#45a049; }
+        #generateBtn{ background:#ff4081; color:white; }
+        #generateBtn:hover{ background:#e91e63; }
+        #downloadBtn{ background:#4CAF50; color:white; }
+        #downloadBtn:hover{ background:#45a049; }
 
         .design-container{
             display:grid;
@@ -51,99 +38,93 @@
         }
 
         .design{
-            padding:10px;
-            border:1px solid #ccc;
-            border-radius:8px;
-            background:#111;
-            color:white;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            padding:20px;
+            border-radius:12px;
+            background: linear-gradient(135deg, #ff0080, #7928ca);
+            font-size:26px;
+            font-weight:bold;
             text-align:center;
-            transform: rotateX(5deg) rotateY(3deg);
-            transition: transform 0.3s, box-shadow 0.3s;
+            color:white;
+            transform: perspective(200px) rotateX(10deg) rotateY(-10deg);
+            transition: transform 0.3s, scale 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
+
         .design:hover{
-            transform: rotateX(0deg) rotateY(0deg) scale(1.05);
-            box-shadow: 4px 4px 15px rgba(0,0,0,0.7);
+            transform: perspective(200px) rotateX(0deg) rotateY(0deg) scale(1.1);
         }
+
     </style>
 </head>
 <body>
 
-<h1>GM Name Locket Designer</h1>
-
+<h1>GM 3D Locket Designer</h1>
 <input type="text" id="nameInput" placeholder="Enter Name">
-<button onclick="generateMultipleDesigns()">Generate</button>
+<button id="generateBtn">Generate 100 Designs</button>
+<button id="downloadBtn">Download PNG</button>
 
-<div class="design" id="heart">💖 <span id="heartName"></span> 💖</div>
-
-<h2>All Designs Preview</h2>
 <div class="design-container" id="allDesigns"></div>
-
-<button id="downloadBtn">Download Text</button>
-<button id="downloadImageBtn">Download as Image</button>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-    // Array of random styles
-    const styles = [
-        "color: hotpink; font-family: 'Cursive'; text-shadow:2px 2px 5px red; font-size:24px;",
-        "color: purple; font-family: 'Arial Black'; text-shadow:1px 1px 3px gold; font-size:26px;",
-        "color: blue; font-family: 'Verdana'; text-shadow:0 0 10px cyan; font-size:28px;",
-        "color: green; font-family: 'Tahoma'; text-shadow:2px 2px 8px lime; font-size:24px;",
-        "color: orange; font-family: 'Georgia'; text-shadow:1px 1px 4px red; font-size:26px;",
-        "color: cyan; font-family:'Impact'; text-shadow:2px 2px 6px navy; font-size:25px;",
-        "color: magenta; font-family:'Trebuchet MS'; text-shadow:1px 1px 5px purple; font-size:24px;",
-        "color: yellow; font-family:'Comic Sans MS'; text-shadow:0 0 8px orange; font-size:27px;",
-        "color: lime; font-family:'Tahoma'; text-shadow:2px 2px 5px green; font-size:26px;",
-        "color: red; font-family:'Arial'; text-shadow:2px 2px 8px darkred; font-size:25px;",
-        // Add more up to 50 styles
-    ];
+const baseColors = [
+    "#ff4d4d","#ff944d","#ffff4d","#4dff4d","#4dffff","#4d4dff","#ff4dff","#ff1a75",
+    "#ff661a","#99ff33","#33ffcc","#ff3366","#9933ff","#ffcc33","#66ff33","#33ccff",
+    "#cc33ff","#ff3399","#33ff99","#ff6633"
+]; // 20 base colors
 
-    function generateMultipleDesigns(){
-        let name = document.getElementById("nameInput").value || "GM";
-        let container = document.getElementById("allDesigns");
-        container.innerHTML = ""; // Clear previous designs
+const fonts = [
+    "Cursive","Arial Black","Impact","Trebuchet MS","Verdana","Tahoma","Georgia","Comic Sans MS","Courier New","Lucida Console"
+]; // 10 fonts
 
-        for(let i=0;i<50;i++){
-            let div = document.createElement("div");
-            div.className = "design";
-            div.innerText = name;
+// Generate 100 unique locket styles
+function generateUniqueDesigns(name){
+    const container = document.getElementById("allDesigns");
+    container.innerHTML=""; // clear previous
 
-            // Random style
-            let randomStyle = styles[Math.floor(Math.random() * styles.length)];
-            div.style = randomStyle;
+    let usedCombos = new Set();
 
-            container.appendChild(div);
-        }
+    let count = 0;
+    while(count < 100){
+        let color = baseColors[Math.floor(Math.random()*baseColors.length)];
+        let font = fonts[Math.floor(Math.random()*fonts.length)];
+        let scale = (Math.random()*0.4)+0.8; // 0.8 to 1.2
+        let rotateX = (Math.random()*20)-10; // -10 to 10
+        let rotateY = (Math.random()*20)-10; // -10 to 10
 
-        // Update heart preview
-        document.getElementById("heartName").innerText = name;
+        let comboKey = color+"|"+font+"|"+scale.toFixed(2)+"|"+rotateX.toFixed(1)+"|"+rotateY.toFixed(1);
+        if(usedCombos.has(comboKey)) continue; // skip repeat
+        usedCombos.add(comboKey);
+
+        let div = document.createElement("div");
+        div.className="design";
+        div.innerText=name;
+
+        div.style.background=`linear-gradient(135deg, ${color}, #000000)`;
+        div.style.fontFamily=font;
+        div.style.transform=`perspective(200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+
+        container.appendChild(div);
+        count++;
     }
+}
 
-    // Download Text
-    document.getElementById("downloadBtn").addEventListener("click", function(){
-        let container = document.getElementById("allDesigns");
-        let allText = "";
-        container.querySelectorAll(".design").forEach(div => { allText += div.innerText + "\n"; });
-        allText += "\nHeart Design: " + document.getElementById("heartName").innerText;
+// Generate button
+document.getElementById("generateBtn").addEventListener("click", function(){
+    let name = document.getElementById("nameInput").value || "GM";
+    generateUniqueDesigns(name);
+});
 
-        let blob = new Blob([allText], {type:"text/plain"});
+// Download all designs as image
+document.getElementById("downloadBtn").addEventListener("click", function(){
+    let container = document.getElementById("allDesigns");
+    html2canvas(container).then(canvas=>{
         let link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download="AllLocketDesigns.txt";
+        link.href = canvas.toDataURL("image/png");
+        link.download="GM_Locket_Designs.png";
         link.click();
     });
-
-    // Download PNG
-    document.getElementById("downloadImageBtn").addEventListener("click", function(){
-        let container = document.getElementById("allDesigns");
-        html2canvas(container).then(canvas => {
-            let link = document.createElement("a");
-            link.href = canvas.toDataURL("image/png");
-            link.download="AllLocketDesigns.png";
-            link.click();
-        });
-    });
+});
 </script>
 
 </body>
