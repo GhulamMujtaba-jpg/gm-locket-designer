@@ -3,184 +3,175 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GM 3D Shape Locket Designer</title>
 
-<title>GM 3D Locket Designer - Create 1000 Unique Name Designs</title>
-
-<meta name="description" content="GM 3D Locket Designer - Create 1000 unique colorful 3D name locket designs online. Download high quality PNG instantly.">
-<meta name="keywords" content="3D locket designer, name locket maker, GM locket, 3D name art, online locket generator">
+<meta name="description" content="GM 3D Shape Locket Designer - 1000 unique 3D name designs in different geometric shapes.">
 <meta name="author" content="GM Official">
 <meta name="robots" content="index, follow">
 
 <style>
 body{
-    text-align:center;
-    font-family:Arial, sans-serif;
-    background:#111;
-    color:white;
     margin:0;
+    background:#000;
+    color:white;
+    text-align:center;
+    font-family:Arial;
 }
 
-/* 3D Banner */
 .banner{
     font-size:40px;
+    padding:20px;
     font-weight:bold;
-    padding:25px;
-    background:linear-gradient(90deg,#ff0080,#7928ca,#00ffff);
-    background-size:300% 300%;
-    animation: gradientMove 5s infinite alternate;
-    text-shadow: 0 5px 15px rgba(0,0,0,0.6);
+    background:linear-gradient(90deg,#ff0080,#00ffff);
+    background-size:200% 200%;
+    animation:move 4s infinite alternate;
 }
 
-@keyframes gradientMove{
-    0%{background-position:0% 50%;}
-    100%{background-position:100% 50%;}
+@keyframes move{
+    0%{background-position:0%}
+    100%{background-position:100%}
 }
 
 input{
     padding:10px;
-    width:250px;
     margin-top:20px;
-    font-size:16px;
-    border-radius:5px;
-    border:none;
+    width:250px;
 }
 
 button{
-    padding:8px 15px;
+    padding:10px 15px;
+    margin:10px;
+    cursor:pointer;
     border:none;
     border-radius:8px;
-    cursor:pointer;
-    font-size:14px;
-    margin:5px;
-}
-
-#generateBtn{ background:#ff4081; color:white; }
-#generateBtn:hover{ background:#e91e63; }
-#downloadAllBtn{ background:#4CAF50; color:white; }
-#downloadAllBtn:hover{ background:#45a049; }
-
-.design-container{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
-    gap:15px;
-    margin:20px;
-}
-
-.design-card{
-    background:linear-gradient(135deg,#ff0080,#7928ca);
-    padding:15px;
-    border-radius:12px;
-    transition: transform 0.3s, scale 0.3s;
-    box-shadow:0 5px 15px rgba(0,0,0,0.3);
-}
-
-.design-card:hover{
-    transform: scale(1.1) rotateY(10deg);
-}
-
-.design-text{
-    font-size:24px;
-    font-weight:bold;
+    background:#ff0080;
     color:white;
-    margin-bottom:8px;
-    display:inline-block;
-    padding:5px 10px;
-    border-radius:8px;
 }
 
-.download-btn{ background:#ffcc00; color:black; }
-.download-btn:hover{ background:#ffaa00; }
+#container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+    padding:20px;
+}
+.canvasBox{
+    height:200px;
+    background:#111;
+    border-radius:12px;
+}
 </style>
 </head>
 <body>
 
-<div class="banner">GM 3D Locket Designer</div>
+<div class="banner">GM 3D Shape Locket Designer</div>
 
 <input type="text" id="nameInput" placeholder="Enter Name">
-<button id="generateBtn">Generate 1000 Designs</button>
-<button id="downloadAllBtn">Download All as PNG</button>
+<button onclick="generateShapes()">Generate 1000 3D Designs</button>
 
-<div class="design-container" id="allDesigns"></div>
+<div id="container"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
-const baseColors = [
-"#ff4d4d","#ff944d","#ffff4d","#4dff4d","#4dffff","#4d4dff","#ff4dff","#ff1a75",
-"#ff661a","#99ff33","#33ffcc","#ff3366","#9933ff","#ffcc33","#66ff33","#33ccff",
-"#cc33ff","#ff3399","#33ff99","#ff6633","#00ccff","#ff00cc","#ccff00","#ff9900",
-"#00ff99","#9900ff","#ff0066","#66ff00","#ff3300","#00ffcc"
+
+const shapesList = [
+"Sphere","Box","Cylinder","Cone","Torus",
+"Tetrahedron","Octahedron","Dodecahedron","Icosahedron",
+"Plane","Ring"
 ];
 
-const fonts = [
-"Cursive","Arial Black","Impact","Trebuchet MS","Verdana","Tahoma","Georgia","Comic Sans MS","Courier New","Lucida Console"
-];
+function createShape(type,name){
 
-function generateUniqueDesigns(name){
-    const container = document.getElementById("allDesigns");
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75,1,0.1,1000);
+    const renderer = new THREE.WebGLRenderer({alpha:true});
+    renderer.setSize(200,200);
+
+    const colors = ["#ff0080","#00ffff","#ffcc00","#00ff00","#ff3300"];
+    const randomColor = colors[Math.floor(Math.random()*colors.length)];
+
+    let geometry;
+
+    switch(type){
+        case "Sphere":
+            geometry = new THREE.SphereGeometry(2,32,32);
+            break;
+        case "Box":
+            geometry = new THREE.BoxGeometry(3,3,3);
+            break;
+        case "Cylinder":
+            geometry = new THREE.CylinderGeometry(2,2,4,32);
+            break;
+        case "Cone":
+            geometry = new THREE.ConeGeometry(2,4,32);
+            break;
+        case "Torus":
+            geometry = new THREE.TorusGeometry(2,0.6,16,100);
+            break;
+        case "Tetrahedron":
+            geometry = new THREE.TetrahedronGeometry(3);
+            break;
+        case "Octahedron":
+            geometry = new THREE.OctahedronGeometry(3);
+            break;
+        case "Dodecahedron":
+            geometry = new THREE.DodecahedronGeometry(3);
+            break;
+        case "Icosahedron":
+            geometry = new THREE.IcosahedronGeometry(3);
+            break;
+        default:
+            geometry = new THREE.BoxGeometry(3,3,3);
+    }
+
+    const material = new THREE.MeshStandardMaterial({color:randomColor});
+    const mesh = new THREE.Mesh(geometry,material);
+    scene.add(mesh);
+
+    const light = new THREE.PointLight(0xffffff,1);
+    light.position.set(10,10,10);
+    scene.add(light);
+
+    camera.position.z = 7;
+
+    function animate(){
+        requestAnimationFrame(animate);
+        mesh.rotation.x += 0.01;
+        mesh.rotation.y += 0.01;
+        renderer.render(scene,camera);
+    }
+    animate();
+
+    const div = document.createElement("div");
+    div.className="canvasBox";
+    div.appendChild(renderer.domElement);
+
+    const label = document.createElement("div");
+    label.innerText = name;
+    label.style.marginTop="5px";
+    label.style.fontWeight="bold";
+    label.style.color=randomColor;
+
+    div.appendChild(label);
+
+    return div;
+}
+
+function generateShapes(){
+
+    const container = document.getElementById("container");
     container.innerHTML="";
+    const name = document.getElementById("nameInput").value || "GM";
 
-    let usedCombos = new Set();
-    let count=0;
+    for(let i=0;i<1000;i++){
 
-    while(count<1000){
+        const randomShape = shapesList[Math.floor(Math.random()*shapesList.length)];
+        const shapeElement = createShape(randomShape,name);
+        container.appendChild(shapeElement);
 
-        let color = baseColors[Math.floor(Math.random()*baseColors.length)];
-        let font = fonts[Math.floor(Math.random()*fonts.length)];
-        let scale = (Math.random()*0.5)+0.8;
-        let rotateX = (Math.random()*40)-20;
-        let rotateY = (Math.random()*40)-20;
-
-        let comboKey = color+"|"+font+"|"+scale.toFixed(2)+"|"+rotateX.toFixed(1)+"|"+rotateY.toFixed(1);
-        if(usedCombos.has(comboKey)) continue;
-        usedCombos.add(comboKey);
-
-        let card = document.createElement("div");
-        card.className="design-card";
-
-        let textDiv = document.createElement("div");
-        textDiv.className="design-text";
-        textDiv.innerText=name;
-
-        textDiv.style.background=`linear-gradient(135deg, ${color}, #000000)`;
-        textDiv.style.fontFamily=font;
-        textDiv.style.transform=`perspective(300px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
-        textDiv.style.boxShadow="0 5px 15px rgba(0,0,0,0.6)";
-
-        let downloadBtn = document.createElement("button");
-        downloadBtn.className="download-btn";
-        downloadBtn.innerText="Download";
-
-        downloadBtn.addEventListener("click", ()=>{
-            html2canvas(textDiv,{backgroundColor:null,scale:3}).then(canvas=>{
-                let link = document.createElement("a");
-                link.href = canvas.toDataURL("image/png");
-                link.download=name+"_GM_Locket.png";
-                link.click();
-            });
-        });
-
-        card.appendChild(textDiv);
-        card.appendChild(downloadBtn);
-        container.appendChild(card);
-        count++;
     }
 }
 
-document.getElementById("generateBtn").addEventListener("click", ()=>{
-    let name = document.getElementById("nameInput").value || "GM";
-    generateUniqueDesigns(name);
-});
-
-document.getElementById("downloadAllBtn").addEventListener("click", ()=>{
-    let container = document.getElementById("allDesigns");
-    html2canvas(container,{scale:2}).then(canvas=>{
-        let link = document.createElement("a");
-        link.href = canvas.toDataURL("image/png");
-        link.download="GM_Locket_Designs_All.png";
-        link.click();
-    });
-});
 </script>
 
 </body>
