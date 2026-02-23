@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>GM Ultra PRO 3D Locket Designer</title>
+<title>GM 1000 Ultra PRO Locket Generator</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
-    background:#0d0d0d;
+    background:#0e0e0e;
     color:white;
     text-align:center;
     font-family:Arial;
@@ -31,55 +31,43 @@ button{
 }
 
 #generateBtn{background:gold;}
-#downloadBtn{background:silver;}
-
-.design-area{
+.container{
     margin-top:30px;
-    display:flex;
-    justify-content:center;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:25px;
 }
 
 .locket{
-    width:400px;
-    height:400px;
+    width:200px;
+    height:200px;
     border-radius:50%;
     position:relative;
     display:flex;
     align-items:center;
     justify-content:center;
     overflow:hidden;
-    
-    /* Metal Ring */
-    background:
-    radial-gradient(circle at 30% 30%, #ffffff55, transparent 40%),
-    radial-gradient(circle at 70% 70%, #00000055, transparent 40%),
-    linear-gradient(45deg,#d4af37,#f7e98e,#b8860b);
-    
+    background:linear-gradient(45deg,#d4af37,#f7e98e,#b8860b);
     box-shadow:
-    inset 0 0 40px rgba(0,0,0,0.6),
-    0 0 50px rgba(255,215,0,0.4);
+        inset 0 0 30px rgba(0,0,0,0.6),
+        0 0 30px rgba(255,215,0,0.3);
 }
 
-/* Glass Reflection */
 .locket::after{
     content:"";
     position:absolute;
-    top:0;
-    left:0;
     width:100%;
     height:100%;
     border-radius:50%;
     background:radial-gradient(circle at 30% 20%, #ffffff88, transparent 50%);
-    pointer-events:none;
 }
 
 .name{
     position:absolute;
     display:flex;
-    gap:-15px;
-    font-size:60px;
+    letter-spacing:-8px;
+    font-size:35px;
     font-weight:bold;
-    letter-spacing:-10px;
 }
 
 .letter{
@@ -87,80 +75,109 @@ button{
     transform-origin:center;
 }
 
-/* GOLD TEXT */
 .gold{
     background:linear-gradient(#fff8dc,#ffd700,#b8860b);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-    text-shadow:
-    2px 2px 3px rgba(0,0,0,0.7),
-    -1px -1px 2px #fff,
-    0 0 10px gold;
+    text-shadow:2px 2px 3px rgba(0,0,0,0.7);
 }
 
-/* SILVER TEXT */
 .silver{
     background:linear-gradient(#ffffff,#c0c0c0,#808080);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-    text-shadow:
-    2px 2px 3px rgba(0,0,0,0.7),
-    -1px -1px 2px #fff,
-    0 0 10px silver;
+    text-shadow:2px 2px 3px rgba(0,0,0,0.7);
+}
+
+.download{
+    margin-top:8px;
+    font-size:12px;
+    background:white;
+    color:black;
+    padding:5px 10px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>GM Ultra PRO Locket Designer</h1>
+<h2>GM 1000 Ultra PRO Locket Generator</h2>
 
 <input type="text" id="nameInput" placeholder="Enter Name">
 <br><br>
-<button id="generateBtn">Generate Design</button>
-<button id="downloadBtn">Download High-Res PNG</button>
+<button id="generateBtn">Generate 1000 Designs</button>
 
-<div class="design-area">
-    <div class="locket" id="locket">
-        <div class="name" id="nameArea"></div>
-    </div>
-</div>
+<div class="container" id="container"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
 
-function generateDesign(){
-    let name = document.getElementById("nameInput").value || "GM";
-    let nameArea = document.getElementById("nameArea");
-    nameArea.innerHTML="";
+function generate(){
+    let name=document.getElementById("nameInput").value || "GM";
+    let container=document.getElementById("container");
+    container.innerHTML="";
 
-    let metalType = Math.random() > 0.5 ? "gold" : "silver";
+    let used=new Set();
+    let count=0;
 
-    for(let char of name){
-        let span = document.createElement("span");
-        span.className="letter " + metalType;
-        span.innerText = char;
-        span.style.transform = "rotate("+(Math.random()*30-15)+"deg)";
-        nameArea.appendChild(span);
+    while(count<1000){
+
+        let metal=Math.random()>0.5?"gold":"silver";
+        let rotateBase=(Math.random()*40-20).toFixed(1);
+        let embossDepth=(Math.random()*5+1).toFixed(1);
+
+        let key=metal+"-"+rotateBase+"-"+embossDepth;
+        if(used.has(key)) continue;
+        used.add(key);
+
+        let wrapper=document.createElement("div");
+
+        let locket=document.createElement("div");
+        locket.className="locket";
+
+        // random metal background
+        if(metal==="silver"){
+            locket.style.background="linear-gradient(45deg,#ffffff,#c0c0c0,#808080)";
+        }
+
+        let nameDiv=document.createElement("div");
+        nameDiv.className="name";
+
+        for(let char of name){
+            let span=document.createElement("span");
+            span.className="letter "+metal;
+            span.innerText=char;
+            span.style.transform="rotate("+(Math.random()*40-20)+"deg)";
+            span.style.textShadow=
+                embossDepth+"px "+embossDepth+"px "+(embossDepth+2)+"px rgba(0,0,0,0.8)";
+            nameDiv.appendChild(span);
+        }
+
+        locket.appendChild(nameDiv);
+        wrapper.appendChild(locket);
+
+        let btn=document.createElement("button");
+        btn.innerText="Download";
+        btn.className="download";
+
+        btn.onclick=function(){
+            html2canvas(locket,{backgroundColor:null,scale:4}).then(canvas=>{
+                let link=document.createElement("a");
+                link.href=canvas.toDataURL("image/png");
+                link.download=name+"_GM_Locket.png";
+                link.click();
+            });
+        }
+
+        wrapper.appendChild(btn);
+        container.appendChild(wrapper);
+
+        count++;
     }
 }
 
-document.getElementById("generateBtn").addEventListener("click",generateDesign);
-
-document.getElementById("downloadBtn").addEventListener("click",function(){
-
-    html2canvas(document.getElementById("locket"),{
-        backgroundColor:null,
-        scale:5  // HIGH RES EXPORT
-    }).then(canvas=>{
-        let link = document.createElement("a");
-        link.download="GM_Locket_HighRes.png";
-        link.href=canvas.toDataURL("image/png");
-        link.click();
-    });
-
-});
+document.getElementById("generateBtn").addEventListener("click",generate);
 
 </script>
 
