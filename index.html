@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>GM 1000 Ultra PRO Locket Generator</title>
+<title>GM Real 1000 Unique 3D Locket Generator</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
-    background:#0e0e0e;
+    background:#111;
     color:white;
     text-align:center;
     font-family:Arial;
@@ -30,12 +30,11 @@ button{
     margin:5px;
 }
 
-#generateBtn{background:gold;}
 .container{
     margin-top:30px;
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:25px;
+    gap:30px;
 }
 
 .locket{
@@ -47,10 +46,6 @@ button{
     align-items:center;
     justify-content:center;
     overflow:hidden;
-    background:linear-gradient(45deg,#d4af37,#f7e98e,#b8860b);
-    box-shadow:
-        inset 0 0 30px rgba(0,0,0,0.6),
-        0 0 30px rgba(255,215,0,0.3);
 }
 
 .locket::after{
@@ -59,34 +54,20 @@ button{
     width:100%;
     height:100%;
     border-radius:50%;
-    background:radial-gradient(circle at 30% 20%, #ffffff88, transparent 50%);
+    background:radial-gradient(circle at 30% 20%, rgba(255,255,255,0.5), transparent 50%);
+    pointer-events:none;
 }
 
 .name{
     position:absolute;
     display:flex;
-    letter-spacing:-8px;
-    font-size:35px;
+    font-size:32px;
     font-weight:bold;
 }
 
 .letter{
     display:inline-block;
     transform-origin:center;
-}
-
-.gold{
-    background:linear-gradient(#fff8dc,#ffd700,#b8860b);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    text-shadow:2px 2px 3px rgba(0,0,0,0.7);
-}
-
-.silver{
-    background:linear-gradient(#ffffff,#c0c0c0,#808080);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    text-shadow:2px 2px 3px rgba(0,0,0,0.7);
 }
 
 .download{
@@ -101,11 +82,11 @@ button{
 
 <body>
 
-<h2>GM 1000 Ultra PRO Locket Generator</h2>
+<h2>GM Real 1000 Unique 3D Locket Generator</h2>
 
 <input type="text" id="nameInput" placeholder="Enter Name">
 <br><br>
-<button id="generateBtn">Generate 1000 Designs</button>
+<button onclick="generate()">Generate 1000 Designs</button>
 
 <div class="container" id="container"></div>
 
@@ -113,21 +94,49 @@ button{
 
 <script>
 
+const gradients=[
+"linear-gradient(45deg,#ff0000,#ff9900)",
+"linear-gradient(45deg,#00ffcc,#0066ff)",
+"linear-gradient(45deg,#ff00cc,#6600ff)",
+"linear-gradient(45deg,#00ff00,#003300)",
+"linear-gradient(45deg,#ffff00,#ff6600)",
+"linear-gradient(45deg,#ffffff,#999999)",
+"linear-gradient(45deg,#ff1493,#8a2be2)",
+"linear-gradient(45deg,#00ffff,#0000ff)",
+"linear-gradient(45deg,#ff4500,#ffd700)",
+"linear-gradient(45deg,#ff69b4,#ff0000)",
+"linear-gradient(45deg,#00fa9a,#006400)",
+"linear-gradient(45deg,#f0e68c,#b8860b)",
+"linear-gradient(45deg,#87ceeb,#00008b)",
+"linear-gradient(45deg,#ffa500,#8b0000)",
+"linear-gradient(45deg,#e6e6fa,#4b0082)",
+"linear-gradient(45deg,#ffb6c1,#c71585)",
+"linear-gradient(45deg,#7fffd4,#2e8b57)",
+"linear-gradient(45deg,#dc143c,#8b0000)",
+"linear-gradient(45deg,#adff2f,#006400)",
+"linear-gradient(45deg,#ffd700,#daa520)"
+];
+
+function randomPattern(){
+    return `radial-gradient(circle at ${Math.random()*100}% ${Math.random()*100}%, rgba(255,255,255,0.2), transparent 40%)`;
+}
+
 function generate(){
     let name=document.getElementById("nameInput").value || "GM";
     let container=document.getElementById("container");
     container.innerHTML="";
-
     let used=new Set();
     let count=0;
 
     while(count<1000){
 
-        let metal=Math.random()>0.5?"gold":"silver";
+        let grad=gradients[Math.floor(Math.random()*gradients.length)];
+        let pattern=randomPattern();
+        let depth=(Math.random()*6+2).toFixed(1);
         let rotateBase=(Math.random()*40-20).toFixed(1);
-        let embossDepth=(Math.random()*5+1).toFixed(1);
+        let spacing=(Math.random()*-10).toFixed(1);
 
-        let key=metal+"-"+rotateBase+"-"+embossDepth;
+        let key=grad+pattern+depth+rotateBase+spacing;
         if(used.has(key)) continue;
         used.add(key);
 
@@ -135,22 +144,23 @@ function generate(){
 
         let locket=document.createElement("div");
         locket.className="locket";
-
-        // random metal background
-        if(metal==="silver"){
-            locket.style.background="linear-gradient(45deg,#ffffff,#c0c0c0,#808080)";
-        }
+        locket.style.background=grad+","+pattern;
+        locket.style.boxShadow=`inset 0 0 ${depth*5}px rgba(0,0,0,0.6), 0 0 ${depth*3}px rgba(255,255,255,0.3)`;
 
         let nameDiv=document.createElement("div");
         nameDiv.className="name";
+        nameDiv.style.letterSpacing=spacing+"px";
 
         for(let char of name){
             let span=document.createElement("span");
-            span.className="letter "+metal;
+            span.className="letter";
             span.innerText=char;
+            span.style.background=grad;
+            span.style.webkitBackgroundClip="text";
+            span.style.webkitTextFillColor="transparent";
             span.style.transform="rotate("+(Math.random()*40-20)+"deg)";
             span.style.textShadow=
-                embossDepth+"px "+embossDepth+"px "+(embossDepth+2)+"px rgba(0,0,0,0.8)";
+                depth+"px "+depth+"px "+(depth+3)+"px rgba(0,0,0,0.8)";
             nameDiv.appendChild(span);
         }
 
@@ -160,7 +170,6 @@ function generate(){
         let btn=document.createElement("button");
         btn.innerText="Download";
         btn.className="download";
-
         btn.onclick=function(){
             html2canvas(locket,{backgroundColor:null,scale:4}).then(canvas=>{
                 let link=document.createElement("a");
@@ -176,8 +185,6 @@ function generate(){
         count++;
     }
 }
-
-document.getElementById("generateBtn").addEventListener("click",generate);
 
 </script>
 
