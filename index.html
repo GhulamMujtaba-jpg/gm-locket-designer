@@ -2,19 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>GM Ultimate 3D Locket Designer</title>
-<meta name="description" content="Create 1000+ 3D unique locket designs with names, Islamic backgrounds, overlapping letters and glowing effects. Perfect for printing.">
-<meta name="keywords" content="3D locket, name locket, Islamic icon, mosque, heart, arrow, star, 3D logo, custom locket, download PNG, unique design, GM locket designer">
+<title>GM Ultra-Realistic Metal & Glass 3D Locket Designer</title>
+<meta name="description" content="Create 1000+ ultra-realistic 3D locket designs with metal & glass textures, overlapping letters, Islamic backgrounds, reflections, neon glow. Printing & social media ready.">
+<meta name="keywords" content="3D locket, metal texture, glass reflection, printing ready, name locket, Islamic background, overlapping letters, neon glow, GM locket designer">
 <meta name="author" content="GM Official">
 <meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="canonical" href="https://yourusername.github.io/your-repo-name/">
+
 <style>
 body{
     text-align:center;
     font-family:Arial, sans-serif;
     background:#111;
     color:white;
+    margin:0;
+    padding:0;
 }
 input{
     padding:10px;
@@ -45,31 +48,43 @@ button{
 }
 
 .design-card{
-    width:140px;
-    height:140px;
+    width:150px;
+    height:150px;
     display:flex;
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    perspective:800px;
-    transition: transform 0.4s;
+    perspective:1200px;
+    transition: transform 0.5s;
 }
 .design-card:hover{
-    transform: rotateY(15deg) rotateX(10deg) scale(1.1);
+    transform: rotateY(25deg) rotateX(15deg) scale(1.1);
 }
 
 .design-circle{
-    width:120px;
-    height:120px;
+    width:130px;
+    height:130px;
     border-radius:50%;
     display:flex;
     justify-content:center;
     align-items:center;
     flex-direction:column;
     background-size:cover;
-    box-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 40px rgba(255,0,255,0.3);
     position:relative;
     overflow:hidden;
+    /* Realistic metal + glass effect */
+    box-shadow: 
+        inset 0 0 20px rgba(255,255,255,0.4),
+        inset 0 0 50px rgba(255,255,255,0.2),
+        0 0 15px rgba(255,255,255,0.2),
+        0 0 40px rgba(255,0,255,0.2);
+    background-blend-mode: overlay;
+    animation: neonGlow 2s infinite alternate;
+}
+
+@keyframes neonGlow{
+    0% { box-shadow: inset 0 0 10px rgba(255,255,255,0.2), inset 0 0 30px rgba(255,0,255,0.2), 0 0 20px rgba(255,0,255,0.3), 0 0 40px rgba(255,0,255,0.2);}
+    100% { box-shadow: inset 0 0 25px rgba(255,255,255,0.4), inset 0 0 60px rgba(255,0,255,0.3), 0 0 50px rgba(255,0,255,0.5), 0 0 80px rgba(255,0,255,0.3);}
 }
 
 .design-text{
@@ -77,16 +92,23 @@ button{
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:-8px; /* letters overlap */
+    gap:-10px; /* overlapping letters */
     flex-wrap:wrap;
     font-weight:bold;
     color:white;
-    text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff;
+    /* Realistic metal / glass text shadow */
+    text-shadow: 
+        0 2px 3px rgba(0,0,0,0.7), 
+        0 0 5px #fff, 
+        0 0 10px #ff00ff, 
+        0 0 15px #ff00ff, 
+        0 0 20px #ff00ff;
 }
 
 .letter{
     display:inline-block;
     transform-origin:center;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.7);
 }
 
 .download-btn{
@@ -103,7 +125,7 @@ button{
 </head>
 <body>
 
-<h1>GM Ultimate 3D Locket Designer</h1>
+<h1>GM Ultra-Realistic Metal & Glass 3D Locket Designer</h1>
 <input type="text" id="nameInput" placeholder="Enter Name">
 <button id="generateBtn">Generate 1000 Designs</button>
 <button id="downloadAllBtn">Download All PNG</button>
@@ -112,7 +134,7 @@ button{
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-// Real Islamic + other decorative backgrounds
+// Realistic Islamic + decorative backgrounds
 const backgrounds = [
     "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Al_Masjid_Al-Haram_Makkah.jpg/120px-Al_Masjid_Al-Haram_Makkah.jpg",
     "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Islamic_pattern.png/120px-Islamic_pattern.png",
@@ -132,24 +154,21 @@ function generateUniqueDesigns(name){
     while(count<1000){
         let bg = backgrounds[Math.floor(Math.random()*backgrounds.length)];
         let font = fonts[Math.floor(Math.random()*fonts.length)];
-        let rotateX = (Math.random()*20)-10;
-        let rotateY = (Math.random()*20)-10;
-        let scale = (Math.random()*0.5)+0.8;
+        let rotateX = (Math.random()*40)-20;
+        let rotateY = (Math.random()*40)-20;
+        let scale = (Math.random()*0.6)+0.8;
 
         let comboKey = bg+"|"+font+"|"+rotateX.toFixed(1)+"|"+rotateY.toFixed(1)+"|"+scale.toFixed(2);
         if(usedCombos.has(comboKey)) continue;
         usedCombos.add(comboKey);
 
-        // Card
         let card = document.createElement("div");
         card.className="design-card";
 
-        // Circle
         let circle = document.createElement("div");
         circle.className="design-circle";
         circle.style.backgroundImage = `url(${bg})`;
 
-        // Name with overlapped letters
         let textDiv = document.createElement("div");
         textDiv.className="design-text";
         for(let char of name){
@@ -157,11 +176,10 @@ function generateUniqueDesigns(name){
             span.className="letter";
             span.innerText = char;
             span.style.fontFamily = font;
-            span.style.transform = `rotate(${Math.random()*30-15}deg) scale(${scale})`;
+            span.style.transform = `rotate(${Math.random()*50-25}deg) scale(${scale})`;
             textDiv.appendChild(span);
         }
 
-        // Individual download
         let downloadBtn = document.createElement("button");
         downloadBtn.className="download-btn";
         downloadBtn.innerText="Download";
@@ -182,13 +200,11 @@ function generateUniqueDesigns(name){
     }
 }
 
-// Generate button
 document.getElementById("generateBtn").addEventListener("click", ()=>{
     let name = document.getElementById("nameInput").value || "GM";
     generateUniqueDesigns(name);
 });
 
-// Download all
 document.getElementById("downloadAllBtn").addEventListener("click", ()=>{
     let container = document.getElementById("allDesigns");
     html2canvas(container,{backgroundColor:null}).then(canvas=>{
