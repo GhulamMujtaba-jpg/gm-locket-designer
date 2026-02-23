@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GM 3D Locket Designer - Create 1000 Unique Name Designs</title>
+<title>GM 3D Logo Designer - 200 Unique Names</title>
 
-<meta name="description" content="GM 3D Locket Designer - Create 1000 unique colorful 3D name locket designs online. Download high quality PNG instantly.">
-<meta name="keywords" content="3D locket designer, name locket maker, GM locket, 3D name art, online locket generator">
+<meta name="description" content="GM 3D Logo Designer - Create 200 unique logo style name designs online. Download high quality PNG instantly.">
+<meta name="keywords" content="3D logo designer, name logo maker, GM logos, online logo generator">
 <meta name="author" content="GM Official">
 <meta name="robots" content="index, follow">
 
@@ -20,9 +20,8 @@ body{
     margin:0;
 }
 
-/* 3D Banner */
 .banner{
-    font-size:40px;
+    font-size:38px;
     font-weight:bold;
     padding:25px;
     background:linear-gradient(90deg,#ff0080,#7928ca,#00ffff);
@@ -36,33 +35,9 @@ body{
     100%{background-position:100% 50%;}
 }
 
-input{
-    padding:10px;
-    width:250px;
-    margin-top:20px;
-    font-size:16px;
-    border-radius:5px;
-    border:none;
-}
-
-button{
-    padding:8px 15px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:14px;
-    margin:5px;
-}
-
-#generateBtn{ background:#ff4081; color:white; }
-#generateBtn:hover{ background:#e91e63; }
-
-#downloadAllBtn{ background:#4CAF50; color:white; }
-#downloadAllBtn:hover{ background:#45a049; }
-
 .design-container{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+    grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
     gap:15px;
     margin:20px;
 }
@@ -76,11 +51,11 @@ button{
 }
 
 .design-card:hover{
-    transform: scale(1.1) rotateY(10deg);
+    transform: scale(1.05) rotateY(5deg);
 }
 
 .design-text{
-    font-size:24px;
+    font-size:22px;
     font-weight:bold;
     color:white;
     margin-bottom:8px;
@@ -97,11 +72,9 @@ button{
 
 <body>
 
-<div class="banner">GM 3D Locket Designer</div>
+<div class="banner">GM 3D Logo Designer</div>
 
-<input type="text" id="nameInput" placeholder="Enter Name">
-<br>
-<button id="generateBtn">Generate 1000 Designs</button>
+<button id="generateBtn">Generate 200 Logo Designs</button>
 <button id="downloadAllBtn">Download All as PNG</button>
 
 <div class="design-container" id="allDesigns"></div>
@@ -109,6 +82,28 @@ button{
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
+
+// Example 200 unique names (replace with your own later)
+const uniqueNames = [
+"GM Alpha","GM Beta","GM Gamma","GM Delta","GM Epsilon","GM Zeta","GM Eta","GM Theta","GM Iota","GM Kappa",
+"GM Lambda","GM Mu","GM Nu","GM Xi","GM Omicron","GM Pi","GM Rho","GM Sigma","GM Tau","GM Upsilon",
+"GM Phi","GM Chi","GM Psi","GM Omega","GM Nova","GM Orion","GM Leo","GM Vega","GM Lyra","GM Phoenix",
+"GM Titan","GM Apollo","GM Artemis","GM Hermes","GM Atlas","GM Hera","GM Zeus","GM Poseidon","GM Athena","GM Ares",
+"GM Mercury","GM Mars","GM Jupiter","GM Saturn","GM Venus","GM Neptune","GM Pluto","GM Sirius","GM Rigel","GM Aldebaran",
+"GM Polaris","GM Andromeda","GM Cassiopeia","GM Draco","GM Orionis","GM Lycan","GM VegaNova","GM Luna","GM Sol","GM Terra",
+"GM Aqua","GM Ignis","GM TerraNova","GM Chronos","GM Aeon","GM Zenith","GM Horizon","GM Eclipse","GM Aurora","GM Nebula",
+"GM Comet","GM Meteor","GM Galaxy","GM Quasar","GM Pulsar","GM Blackhole","GM Starfall","GM Starlight","GM Moonlight","GM Sunfire",
+"GM Ember","GM Blaze","GM Frost","GM Shadow","GM Phantom","GM Specter","GM Mirage","GM Infinity","GM Quantum","GM NovaStar",
+"GM Astro","GM Celeste","GM Orbit","GM ZenithX","GM NovaX","GM Cosmo","GM Nebulon","GM Stellar","GM AuroraX","GM Lumin",
+"GM Radiant","GM Prism","GM Spectrum","GM SpectrumX","GM Photon","GM PhotonX","GM Ion","GM IonX","GM Plasma","GM CometX",
+"GM Rocket","GM Warp","GM Hyper","GM Velocity","GM Flux","GM Gravity","GM EclipseX","GM DarkStar","GM Nightfall","GM Skyfall",
+"GM Storm","GM Thunder","GM Lightning","GM Tempest","GM Cyclone","GM Tornado","GM Hurricane","GM Avalanche","GM Glacier","GM Frostbite",
+"GM Iceberg","GM Snowfall","GM Blizzard","GM Crystal","GM Diamond","GM Sapphire","GM Emerald","GM Ruby","GM Topaz","GM Onyx",
+"GM Obsidian","GM ShadowX","GM PhantomX","GM SpecterX","GM MirageX","GM InfinityX","GM QuantumX","GM NovaStarX","GM AstroX","GM CelesteX",
+"GM OrbitX","GM ZenithXX","GM NebulonX","GM StellarX","GM AuroraXX","GM LuminX","GM RadiantX","GM PrismX","GM SpectrumXX","GM PhotonXX",
+"GM IonXX","GM PlasmaX","GM CometXX","GM RocketX","GM WarpX","GM HyperX","GM VelocityX","GM FluxX","GM GravityX","GM EclipseXX",
+"GM DarkStarX","GM NightfallX","GM SkyfallX","GM StormX","GM ThunderX","GM LightningX","GM TempestX","GM CycloneX","GM TornadoX","GM HurricaneX","GM AvalancheX"
+];
 
 const baseColors = [
 "#ff4d4d","#ff944d","#ffff4d","#4dff4d","#4dffff","#4d4dff","#ff4dff",
@@ -124,33 +119,26 @@ const fonts = [
 "Courier New","Lucida Console"
 ];
 
-function generateUniqueDesigns(name){
+function generateLogoDesigns(){
 
     const container = document.getElementById("allDesigns");
     container.innerHTML="";
 
-    let usedCombos = new Set();
-    let count = 0;
-
-    while(count < 1000){
+    for(let i=0; i<uniqueNames.length; i++){
+        let name = uniqueNames[i];
 
         let color = baseColors[Math.floor(Math.random()*baseColors.length)];
         let font = fonts[Math.floor(Math.random()*fonts.length)];
-        let scale = (Math.random()*0.5)+0.8;
-        let rotateX = (Math.random()*40)-20;
-        let rotateY = (Math.random()*40)-20;
-
-        let comboKey = color+"|"+font+"|"+scale.toFixed(2)+"|"+rotateX.toFixed(1)+"|"+rotateY.toFixed(1);
-        if(usedCombos.has(comboKey)) continue;
-
-        usedCombos.add(comboKey);
+        let scale = (Math.random()*0.4)+0.8;
+        let rotateX = (Math.random()*30)-15;
+        let rotateY = (Math.random()*30)-15;
 
         let card = document.createElement("div");
         card.className="design-card";
 
         let textDiv = document.createElement("div");
         textDiv.className="design-text";
-        textDiv.innerText=name;
+        textDiv.innerText = name;
 
         textDiv.style.background = `linear-gradient(135deg, ${color}, #000000)`;
         textDiv.style.fontFamily = font;
@@ -165,7 +153,7 @@ function generateUniqueDesigns(name){
             html2canvas(textDiv,{backgroundColor:null,scale:3}).then(canvas=>{
                 let link = document.createElement("a");
                 link.href = canvas.toDataURL("image/png");
-                link.download = name+"_GM_Locket.png";
+                link.download = name+"_GM_Logo.png";
                 link.click();
             });
         });
@@ -173,27 +161,21 @@ function generateUniqueDesigns(name){
         card.appendChild(textDiv);
         card.appendChild(downloadBtn);
         container.appendChild(card);
-
-        count++;
     }
 }
 
-document.getElementById("generateBtn").addEventListener("click", ()=>{
-    let name = document.getElementById("nameInput").value.trim() || "GM";
-    generateUniqueDesigns(name);
-});
+document.getElementById("generateBtn").addEventListener("click", generateLogoDesigns);
 
 document.getElementById("downloadAllBtn").addEventListener("click", ()=>{
-    let container = document.getElementById("allDesigns");
-    if(container.innerHTML === ""){
-        alert("First generate designs!");
+    const container = document.getElementById("allDesigns");
+    if(container.innerHTML===""){
+        alert("Please generate logos first!");
         return;
     }
-
     html2canvas(container,{scale:2}).then(canvas=>{
         let link = document.createElement("a");
         link.href = canvas.toDataURL("image/png");
-        link.download="GM_Locket_Designs_All.png";
+        link.download="GM_Logo_Designs_All.png";
         link.click();
     });
 });
