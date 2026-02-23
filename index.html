@@ -1,61 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GM 3D Shape Locket Designer</title>
-
-<meta name="description" content="GM 3D Shape Locket Designer - 1000 unique 3D name designs in different geometric shapes.">
-<meta name="author" content="GM Official">
-<meta name="robots" content="index, follow">
-
+<title>GM 3D Designer Working</title>
 <style>
 body{
     margin:0;
     background:#000;
-    color:white;
     text-align:center;
+    color:white;
     font-family:Arial;
 }
-
 .banner{
-    font-size:40px;
+    font-size:35px;
     padding:20px;
     font-weight:bold;
-    background:linear-gradient(90deg,#ff0080,#00ffff);
-    background-size:200% 200%;
-    animation:move 4s infinite alternate;
+    background:linear-gradient(90deg,#ff00cc,#00ffff);
 }
-
-@keyframes move{
-    0%{background-position:0%}
-    100%{background-position:100%}
-}
-
 input{
     padding:10px;
-    margin-top:20px;
-    width:250px;
+    margin:15px;
 }
-
 button{
     padding:10px 15px;
-    margin:10px;
     cursor:pointer;
     border:none;
-    border-radius:8px;
-    background:#ff0080;
+    border-radius:6px;
+    background:#ff00cc;
     color:white;
 }
-
 #container{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:20px;
     padding:20px;
 }
 .canvasBox{
-    height:200px;
+    height:220px;
     background:#111;
     border-radius:12px;
 }
@@ -63,10 +44,10 @@ button{
 </head>
 <body>
 
-<div class="banner">GM 3D Shape Locket Designer</div>
+<div class="banner">GM 3D Designer (Stable)</div>
 
 <input type="text" id="nameInput" placeholder="Enter Name">
-<button onclick="generateShapes()">Generate 1000 3D Designs</button>
+<button onclick="generate()">Generate 3D Designs</button>
 
 <div id="container"></div>
 
@@ -74,10 +55,9 @@ button{
 
 <script>
 
-const shapesList = [
-"Sphere","Box","Cylinder","Cone","Torus",
-"Tetrahedron","Octahedron","Dodecahedron","Icosahedron",
-"Plane","Ring"
+const shapes = [
+    "sphere","box","cone","cylinder","torus",
+    "tetra","octa","dodeca","icosa"
 ];
 
 function createShape(type,name){
@@ -85,52 +65,39 @@ function createShape(type,name){
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75,1,0.1,1000);
     const renderer = new THREE.WebGLRenderer({alpha:true});
-    renderer.setSize(200,200);
+    renderer.setSize(220,220);
 
-    const colors = ["#ff0080","#00ffff","#ffcc00","#00ff00","#ff3300"];
-    const randomColor = colors[Math.floor(Math.random()*colors.length)];
+    const color = new THREE.Color("hsl(" + Math.random()*360 + ",100%,50%)");
 
     let geometry;
 
     switch(type){
-        case "Sphere":
-            geometry = new THREE.SphereGeometry(2,32,32);
-            break;
-        case "Box":
-            geometry = new THREE.BoxGeometry(3,3,3);
-            break;
-        case "Cylinder":
-            geometry = new THREE.CylinderGeometry(2,2,4,32);
-            break;
-        case "Cone":
-            geometry = new THREE.ConeGeometry(2,4,32);
-            break;
-        case "Torus":
-            geometry = new THREE.TorusGeometry(2,0.6,16,100);
-            break;
-        case "Tetrahedron":
-            geometry = new THREE.TetrahedronGeometry(3);
-            break;
-        case "Octahedron":
-            geometry = new THREE.OctahedronGeometry(3);
-            break;
-        case "Dodecahedron":
-            geometry = new THREE.DodecahedronGeometry(3);
-            break;
-        case "Icosahedron":
-            geometry = new THREE.IcosahedronGeometry(3);
-            break;
-        default:
-            geometry = new THREE.BoxGeometry(3,3,3);
+        case "sphere": geometry = new THREE.SphereGeometry(2,32,32); break;
+        case "box": geometry = new THREE.BoxGeometry(3,3,3); break;
+        case "cone": geometry = new THREE.ConeGeometry(2,4,32); break;
+        case "cylinder": geometry = new THREE.CylinderGeometry(2,2,4,32); break;
+        case "torus": geometry = new THREE.TorusGeometry(2,0.6,16,100); break;
+        case "tetra": geometry = new THREE.TetrahedronGeometry(3); break;
+        case "octa": geometry = new THREE.OctahedronGeometry(3); break;
+        case "dodeca": geometry = new THREE.DodecahedronGeometry(3); break;
+        case "icosa": geometry = new THREE.IcosahedronGeometry(3); break;
     }
 
-    const material = new THREE.MeshStandardMaterial({color:randomColor});
+    const material = new THREE.MeshStandardMaterial({
+        color:color,
+        metalness:0.6,
+        roughness:0.3
+    });
+
     const mesh = new THREE.Mesh(geometry,material);
     scene.add(mesh);
 
     const light = new THREE.PointLight(0xffffff,1);
     light.position.set(10,10,10);
     scene.add(light);
+
+    const ambient = new THREE.AmbientLight(0x404040);
+    scene.add(ambient);
 
     camera.position.z = 7;
 
@@ -142,33 +109,31 @@ function createShape(type,name){
     }
     animate();
 
-    const div = document.createElement("div");
-    div.className="canvasBox";
-    div.appendChild(renderer.domElement);
+    const box = document.createElement("div");
+    box.className="canvasBox";
+    box.appendChild(renderer.domElement);
 
     const label = document.createElement("div");
     label.innerText = name;
     label.style.marginTop="5px";
     label.style.fontWeight="bold";
-    label.style.color=randomColor;
+    label.style.color=color.getStyle();
 
-    div.appendChild(label);
+    box.appendChild(label);
 
-    return div;
+    return box;
 }
 
-function generateShapes(){
+function generate(){
 
     const container = document.getElementById("container");
     container.innerHTML="";
     const name = document.getElementById("nameInput").value || "GM";
 
-    for(let i=0;i<1000;i++){
-
-        const randomShape = shapesList[Math.floor(Math.random()*shapesList.length)];
-        const shapeElement = createShape(randomShape,name);
-        container.appendChild(shapeElement);
-
+    for(let i=0;i<20;i++){
+        const randomShape = shapes[Math.floor(Math.random()*shapes.length)];
+        const design = createShape(randomShape,name);
+        container.appendChild(design);
     }
 }
 
