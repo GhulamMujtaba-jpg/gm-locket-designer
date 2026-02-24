@@ -3,32 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>GM 3D Locket Designer - Create 1000 Unique Name Designs</title>
-
-<meta name="description" content="GM 3D Locket Designer - Create 1000 unique colorful 3D name locket designs online. Download high quality PNG instantly.">
-<meta name="keywords" content="3D locket designer, name locket maker, GM locket, 3D name art, online locket generator">
-<meta name="author" content="GM Official">
-<meta name="robots" content="index, follow">
+<title>GM 3D Locket Designer Pro</title>
 
 <style>
 body{
-    text-align:center;
-    font-family:Arial, sans-serif;
     background:#111;
     color:white;
+    font-family:Arial, sans-serif;
+    text-align:center;
     margin:0;
 }
 
-/* 3D Banner */
 .banner{
-    font-size:40px;
+    font-size:35px;
+    padding:20px;
     font-weight:bold;
-    padding:25px;
     background:linear-gradient(90deg,#ff0080,#7928ca,#00ffff);
     background-size:300% 300%;
     animation: gradientMove 5s infinite alternate;
-    text-shadow: 0 5px 15px rgba(0,0,0,0.6);
 }
 
 @keyframes gradientMove{
@@ -39,9 +31,8 @@ body{
 input{
     padding:10px;
     width:250px;
-    margin-top:20px;
-    font-size:16px;
-    border-radius:5px;
+    margin:20px;
+    border-radius:8px;
     border:none;
 }
 
@@ -50,152 +41,165 @@ button{
     border:none;
     border-radius:8px;
     cursor:pointer;
-    font-size:14px;
     margin:5px;
+    font-weight:bold;
 }
 
 #generateBtn{ background:#ff4081; color:white; }
-#generateBtn:hover{ background:#e91e63; }
 
-#downloadAllBtn{ background:#4CAF50; color:white; }
-#downloadAllBtn:hover{ background:#45a049; }
+.category-title{
+    margin-top:40px;
+    font-size:22px;
+    color:#00ffff;
+}
 
 .design-container{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
     gap:15px;
-    margin:20px;
+    padding:20px;
 }
 
 .design-card{
-    background:linear-gradient(135deg,#ff0080,#7928ca);
-    padding:15px;
-    border-radius:12px;
-    transition: transform 0.3s;
-    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    padding:20px;
+    border-radius:20px;
+    transition:0.3s;
+    position:relative;
 }
 
 .design-card:hover{
-    transform: scale(1.1) rotateY(10deg);
+    transform:scale(1.1) rotateY(10deg);
 }
 
-.design-text{
-    font-size:24px;
+.locket{
+    padding:20px;
+    font-size:20px;
     font-weight:bold;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     color:white;
-    margin-bottom:8px;
-    display:inline-block;
-    padding:5px 10px;
-    border-radius:8px;
+    text-shadow:0 0 10px rgba(0,0,0,0.6);
 }
 
-.download-btn{ background:#ffcc00; color:black; }
-.download-btn:hover{ background:#ffaa00; }
+.heart{ border-radius:50% 50% 0 0; transform:rotate(-45deg); }
+.circle{ border-radius:50%; }
+.oval{ border-radius:50% / 40%; }
+.square{ border-radius:10px; }
+.rectangle{ border-radius:15px; }
+.star{ clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
+.infinity{ border-radius:50px; }
+
+.download-btn{
+    margin-top:10px;
+    background:#ffcc00;
+    color:black;
+}
 
 </style>
 </head>
-
 <body>
 
-<div class="banner">GM 3D Locket Designer</div>
+<div class="banner">GM 3D Locket Designer PRO</div>
 
 <input type="text" id="nameInput" placeholder="Enter Name">
 <br>
-<button id="generateBtn">Generate 1000 Designs</button>
-<button id="downloadAllBtn">Download All as PNG</button>
+<button id="generateBtn">Generate All Designs</button>
 
-<div class="design-container" id="allDesigns"></div>
+<div id="designArea"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
 
-const baseColors = [
-"#ff4d4d","#ff944d","#ffff4d","#4dff4d","#4dffff","#4d4dff","#ff4dff",
-"#ff1a75","#ff661a","#99ff33","#33ffcc","#ff3366","#9933ff","#ffcc33",
-"#66ff33","#33ccff","#cc33ff","#ff3399","#33ff99","#ff6633",
-"#00ccff","#ff00cc","#ccff00","#ff9900","#00ff99",
-"#9900ff","#ff0066","#66ff00","#ff3300","#00ffcc"
+const categories = {
+
+"1. Shape Based Lockets":[
+{class:"heart", shape:"Heart"},
+{class:"circle", shape:"Circle"},
+{class:"oval", shape:"Oval"},
+{class:"square", shape:"Square"},
+{class:"rectangle", shape:"Rectangle"},
+{class:"star", shape:"Star"},
+{class:"infinity", shape:"Infinity"}
+],
+
+"2. Love / Couple Lockets":[
+{class:"heart", shape:"Half Heart"},
+{class:"circle", shape:"King & Queen"},
+{class:"oval", shape:"Puzzle Piece"}
+],
+
+"3. Kids Lockets":[
+{class:"circle", shape:"Teddy"},
+{class:"square", shape:"Unicorn"},
+{class:"oval", shape:"Crown Princess"}
+]
+
+};
+
+const colors=[
+"#ff4d4d","#ff944d","#ffff4d","#4dff4d","#4dffff",
+"#4d4dff","#ff4dff","#ff1a75","#00ccff","#ffcc00"
 ];
 
-const fonts = [
-"Cursive","Arial Black","Impact","Trebuchet MS",
-"Verdana","Tahoma","Georgia","Comic Sans MS",
-"Courier New","Lucida Console"
-];
+function generateDesigns(name){
 
-function generateUniqueDesigns(name){
+let designArea=document.getElementById("designArea");
+designArea.innerHTML="";
 
-    const container = document.getElementById("allDesigns");
-    container.innerHTML="";
+for(let category in categories){
 
-    let usedCombos = new Set();
-    let count = 0;
+let title=document.createElement("div");
+title.className="category-title";
+title.innerText=category;
+designArea.appendChild(title);
 
-    while(count < 1000){
+let container=document.createElement("div");
+container.className="design-container";
 
-        let color = baseColors[Math.floor(Math.random()*baseColors.length)];
-        let font = fonts[Math.floor(Math.random()*fonts.length)];
-        let scale = (Math.random()*0.5)+0.8;
-        let rotateX = (Math.random()*40)-20;
-        let rotateY = (Math.random()*40)-20;
+categories[category].forEach(item=>{
 
-        let comboKey = color+"|"+font+"|"+scale.toFixed(2)+"|"+rotateX.toFixed(1)+"|"+rotateY.toFixed(1);
-        if(usedCombos.has(comboKey)) continue;
+let card=document.createElement("div");
+card.className="design-card";
+card.style.background=`linear-gradient(135deg, ${randomColor()}, #000)`;
 
-        usedCombos.add(comboKey);
+let locket=document.createElement("div");
+locket.className="locket "+item.class;
+locket.style.background=randomColor();
+locket.innerText=name;
 
-        let card = document.createElement("div");
-        card.className="design-card";
+let btn=document.createElement("button");
+btn.className="download-btn";
+btn.innerText="Download";
 
-        let textDiv = document.createElement("div");
-        textDiv.className="design-text";
-        textDiv.innerText=name;
+btn.onclick=function(){
+html2canvas(locket,{backgroundColor:null,scale:3}).then(canvas=>{
+let link=document.createElement("a");
+link.href=canvas.toDataURL();
+link.download=name+"_GM_Locket.png";
+link.click();
+});
+};
 
-        textDiv.style.background = `linear-gradient(135deg, ${color}, #000000)`;
-        textDiv.style.fontFamily = font;
-        textDiv.style.transform = `perspective(300px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
-        textDiv.style.boxShadow = "0 5px 15px rgba(0,0,0,0.6)";
+card.appendChild(locket);
+card.appendChild(btn);
+container.appendChild(card);
 
-        let downloadBtn = document.createElement("button");
-        downloadBtn.className="download-btn";
-        downloadBtn.innerText="Download";
-
-        downloadBtn.addEventListener("click", ()=>{
-            html2canvas(textDiv,{backgroundColor:null,scale:3}).then(canvas=>{
-                let link = document.createElement("a");
-                link.href = canvas.toDataURL("image/png");
-                link.download = name+"_GM_Locket.png";
-                link.click();
-            });
-        });
-
-        card.appendChild(textDiv);
-        card.appendChild(downloadBtn);
-        container.appendChild(card);
-
-        count++;
-    }
-}
-
-document.getElementById("generateBtn").addEventListener("click", ()=>{
-    let name = document.getElementById("nameInput").value.trim() || "GM";
-    generateUniqueDesigns(name);
 });
 
-document.getElementById("downloadAllBtn").addEventListener("click", ()=>{
-    let container = document.getElementById("allDesigns");
-    if(container.innerHTML === ""){
-        alert("First generate designs!");
-        return;
-    }
+designArea.appendChild(container);
+}
 
-    html2canvas(container,{scale:2}).then(canvas=>{
-        let link = document.createElement("a");
-        link.href = canvas.toDataURL("image/png");
-        link.download="GM_Locket_Designs_All.png";
-        link.click();
-    });
+}
+
+function randomColor(){
+return colors[Math.floor(Math.random()*colors.length)];
+}
+
+document.getElementById("generateBtn").addEventListener("click",()=>{
+let name=document.getElementById("nameInput").value || "GM";
+generateDesigns(name);
 });
 
 </script>
