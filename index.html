@@ -3,94 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GM Official Jewelry Studio – Ultra PRO 300 Designs</title>
+<title>GM Official Jewelry Studio – Ultra Business 500 Designs</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cinzel:wght@600&family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
 
 <style>
 body{
-margin:0;
-background:#0c0c0c;
-color:white;
-font-family:Montserrat;
-text-align:center;
+    margin:0;
+    background:#0c0c0c;
+    color:white;
+    font-family:Montserrat;
+    text-align:center;
 }
-
 .header{
-padding:25px;
-font-size:26px;
-font-weight:bold;
-background:linear-gradient(90deg,#d4af37,#f9e79f,#d4af37);
-color:black;
-letter-spacing:2px;
+    padding:25px;
+    font-size:28px;
+    font-weight:bold;
+    background:linear-gradient(90deg,#d4af37,#f9e79f,#d4af37);
+    color:black;
+    letter-spacing:2px;
 }
-
 .controls{
-background:#111;
-padding:15px;
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:10px;
+    background:#111;
+    padding:15px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
 }
-
 input,select{
-padding:8px;
-border-radius:6px;
-border:none;
+    padding:8px;
+    border-radius:6px;
+    border:none;
 }
-
 button{
-padding:8px 14px;
-border:none;
-border-radius:6px;
-cursor:pointer;
-background:#d4af37;
-font-weight:bold;
+    padding:8px 14px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    background:#d4af37;
+    font-weight:bold;
 }
-
 .preview-area{
-margin-top:20px;
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:15px;
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
 }
-
 .locket{
-width:260px;
-height:260px;
-display:flex;
-align-items:center;
-justify-content:center;
-position:relative;
-font-size:30px;
-font-weight:bold;
-transition:0.3s;
-overflow:hidden;
+    width:200px;
+    height:200px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    font-size:20px;
+    font-weight:bold;
+    transition:0.3s;
+    overflow:hidden;
+    border-radius:50%;
 }
-
-.circle{border-radius:50%;}
-.heart{clip-path:polygon(50% 90%, 90% 50%, 75% 15%, 50% 30%, 25% 15%, 10% 50%);}
-
-.gold{background:linear-gradient(145deg,#d4af37,#f9e79f,#b8860b);box-shadow:0 0 25px #d4af37;}
-.silver{background:linear-gradient(145deg,#e0e0e0,#ffffff,#a8a8a8);box-shadow:0 0 20px #ccc;}
-.rose{background:linear-gradient(145deg,#b76e79,#ffb6c1,#b76e79);box-shadow:0 0 20px #ffb6c1;}
-
-.text{z-index:2;text-shadow:0 2px 10px rgba(0,0,0,0.5);}
-.shine{position:absolute;width:150%;height:100%;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.6),transparent 70%);transform:translateX(-100%);animation:shine 3s infinite;}
-
-@keyframes shine{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
-
-.order-form{background:#1a1a1a;padding:15px;margin:20px auto;max-width:400px;border-radius:10px;}
-.order-form input, .order-form select{width:calc(100% - 20px);margin:5px 0;}
-.footer{margin-top:20px;font-size:12px;opacity:0.6;}
+.text{
+    z-index:2;
+    text-shadow:0 2px 10px rgba(0,0,0,0.5);
+}
+.shine{
+    position:absolute;
+    width:150%;
+    height:100%;
+    background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.6),transparent 70%);
+    transform:translateX(-100%);
+    animation:shine 3s infinite;
+}
+@keyframes shine{
+    0%{transform:translateX(-100%);}
+    100%{transform:translateX(100%);}
+}
+.order-form{
+    background:#1a1a1a;
+    padding:15px;
+    margin:20px auto;
+    max-width:450px;
+    border-radius:10px;
+}
+.order-form input, .order-form select{
+    width:calc(100% - 20px);
+    margin:5px 0;
+}
+.footer{
+    margin-top:20px;
+    font-size:12px;
+    opacity:0.6;
+}
 </style>
 </head>
 
 <body>
-
-<div class="header">GM Official Jewelry Studio – Ultra PRO 300 Designs</div>
+<div class="header">GM Official Jewelry Studio – 500 Ultra Designs</div>
 
 <div class="controls">
 <input type="text" id="nameInput" placeholder="Enter Name">
@@ -111,7 +120,7 @@ overflow:hidden;
 </select>
 <input type="file" id="photoUpload" accept="image/*">
 <button onclick="downloadDesign()">Download HD</button>
-<button onclick="generate300()">Generate 300 Designs</button>
+<button onclick="generate500()">Generate 500 Designs</button>
 </div>
 
 <div class="preview-area" id="previewArea"></div>
@@ -127,6 +136,7 @@ overflow:hidden;
 <option value="Rose Gold">Rose Gold</option>
 </select>
 <button onclick="sendWhatsAppOrder()">Order via WhatsApp</button>
+<button onclick="payOnline()">Pay Online</button>
 <p id="totalPrice">Price: PKR 2500</p>
 </div>
 
@@ -135,29 +145,43 @@ overflow:hidden;
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
 const previewArea=document.getElementById("previewArea");
-
+const shapes=["circle","heart"];
+const materials=["gold","silver","rose"];
+const fonts=["Playfair Display","Cinzel","Great Vibes","Montserrat"];
+function randomColor(){
+    return `hsl(${Math.floor(Math.random()*360)},${Math.floor(Math.random()*50)+50}%,${Math.floor(Math.random()*30)+40}%)`;
+}
 function createLocket(name,shape,material,font){
     let div=document.createElement("div");
     div.className="locket "+shape+" "+material;
     div.style.fontFamily=font;
+    div.style.background=randomColor();
     let shine=document.createElement("div"); shine.className="shine"; div.appendChild(shine);
     let span=document.createElement("span"); span.className="text"; span.innerText=name; div.appendChild(span);
     return div;
 }
 
-// Generate 300 Designs
-function generate300(){
+// Generate 500 Unique Designs
+function generate500(){
     previewArea.innerHTML="";
     let name=document.getElementById("nameInput").value || "GM";
-    let shapes=["circle","heart"], materials=["gold","silver","rose"], fonts=["Playfair Display","Cinzel","Great Vibes","Montserrat"];
-    for(let i=0;i<300;i++){
-        let l=createLocket(name,shapes[Math.floor(Math.random()*shapes.length)],materials[Math.floor(Math.random()*materials.length)],fonts[Math.floor(Math.random()*fonts.length)]);
+    let usedCombos=new Set();
+    let count=0;
+    while(count<500){
+        let s=shapes[Math.floor(Math.random()*shapes.length)];
+        let m=materials[Math.floor(Math.random()*materials.length)];
+        let f=fonts[Math.floor(Math.random()*fonts.length)];
+        let key=s+"|"+m+"|"+f+"|"+Math.floor(Math.random()*360);
+        if(usedCombos.has(key)) continue;
+        usedCombos.add(key);
+        let l=createLocket(name,s,m,f);
         l.style.transform="rotateY("+((Math.random()*60)-30)+"deg)";
         previewArea.appendChild(l);
+        count++;
     }
 }
 
-// Live Price Calculator
+// Live Price
 function updatePrice(){
     let material=document.getElementById("materialSelect").value;
     let price=0;
@@ -190,8 +214,13 @@ function sendWhatsAppOrder(){
     let designName=document.getElementById("nameInput").value || "GM";
     if(!cname || !cphone || !caddress){alert("Please fill all fields!");return;}
     let message=`Hello GM Official,%0AI want to order a locket.%0AName: ${designName}%0AMaterial: ${material}%0ACustomer Name: ${cname}%0APhone: ${cphone}%0AAddress: ${caddress}`;
-    let whatsappUrl=`https://wa.me/923000000000?text=${message}`; // <-- Replace number with yours
+    let whatsappUrl=`https://wa.me/923000000000?text=${message}`; // Replace with your number
     window.open(whatsappUrl,"_blank");
+}
+
+// Online Payment Placeholder
+function payOnline(){
+    alert("Online Payment feature coming soon! You can integrate JazzCash / EasyPaisa API here.");
 }
 </script>
 </body>
