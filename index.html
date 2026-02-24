@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GM Official – 500 Unique Locket Designs</title>
+<title>GM Official – 500 Locket Designs</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cinzel:wght@600&family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
 <style>
 body{
@@ -104,10 +104,10 @@ button:hover{
 </head>
 <body>
 
-<div class="header">GM Official – 500 Unique Locket Designs</div>
+<div class="header">GM Official – 500 Locket Designs</div>
 
 <div class="controls">
-  <input type="text" id="nameInput" placeholder="Enter Base Name">
+  <input type="text" id="nameInput" placeholder="Enter Name">
   <select id="shapeSelect">
     <option value="circle">Circle</option>
     <option value="heart">Heart</option>
@@ -119,12 +119,6 @@ button:hover{
     <option value="Cinzel">Luxury</option>
     <option value="Great Vibes">Signature</option>
     <option value="Montserrat">Modern</option>
-  </select>
-  <input type="file" id="photoUpload" accept="image/*">
-  <select id="mockupSelect">
-    <option value="neck">Neck</option>
-    <option value="box">Box</option>
-    <option value="model">Model</option>
   </select>
   <button onclick="generate500()">Generate 500 Designs</button>
 </div>
@@ -146,17 +140,11 @@ button:hover{
 <script>
 const previewArea=document.getElementById("previewArea");
 
-const mockups={
-  neck:"https://i.ibb.co/1Z6V0gB/neck-mockup.png",
-  box:"https://i.ibb.co/7gX9J2r/box-mockup.png",
-  model:"https://i.ibb.co/8cxkqTz/model-mockup.png"
-};
-
 function randomColor(){
   return `hsl(${Math.floor(Math.random()*360)},70%,50%)`;
 }
 
-function createLocket(name,shape,font,photo,mockupType){
+function createLocket(name,shape,font){
   let card=document.createElement("div");
   card.className="design-card";
 
@@ -164,34 +152,10 @@ function createLocket(name,shape,font,photo,mockupType){
   locket.className="locket";
   locket.style.background=randomColor();
   locket.style.fontFamily=font;
-  
-  let img=document.createElement("img");
-  img.src=mockups[mockupType]||mockups.neck;
-  img.className="mockup";
-  img.style.position="absolute";
-  img.style.width="100%";
-  img.style.height="100%";
-  img.style.top="0";
-  img.style.left="0";
-  img.style.objectFit="cover";
-  locket.appendChild(img);
-
-  if(photo){
-    let userPhoto=document.createElement("img");
-    userPhoto.src=photo;
-    userPhoto.className="mockup";
-    userPhoto.style.position="absolute";
-    userPhoto.style.width="100%";
-    userPhoto.style.height="100%";
-    userPhoto.style.top="0";
-    userPhoto.style.left="0";
-    userPhoto.style.objectFit="cover";
-    locket.appendChild(userPhoto);
-  }
 
   let span=document.createElement("span");
   span.className="text";
-  span.innerText=name;
+  span.innerText=name; 
   locket.appendChild(span);
 
   card.appendChild(locket);
@@ -215,17 +179,14 @@ function createLocket(name,shape,font,photo,mockupType){
 function generate500(){
   previewArea.innerHTML="";
   let baseName=document.getElementById("nameInput").value||"GM";
-  let photo=document.getElementById("photoUpload").files[0]?URL.createObjectURL(document.getElementById("photoUpload").files[0]):null;
-  let selectedMockup=document.getElementById("mockupSelect").value;
 
   const shapes=["circle","heart","square","star"];
   const fonts=["Playfair Display","Cinzel","Great Vibes","Montserrat"];
 
-  for(let i=1;i<=500;i++){
+  for(let i=0;i<500;i++){
     let randomShape=shapes[Math.floor(Math.random()*shapes.length)];
     let randomFont=fonts[Math.floor(Math.random()*fonts.length)];
-    let uniqueName=`${baseName} #${i}`;
-    previewArea.appendChild(createLocket(uniqueName, randomShape, randomFont, photo, selectedMockup));
+    previewArea.appendChild(createLocket(baseName, randomShape, randomFont));
   }
 }
 
@@ -243,14 +204,13 @@ async function submitOrder(){
 
   document.getElementById("orderMsg").innerHTML="Submitting order...";
 
-  // GitHub Gist API example
   const token="<YOUR_GITHUB_TOKEN>"; // Replace with your token
   const gistData={
     description: "GM Official Order",
     public: true,
     files: {
       ["order_"+Date.now()+".txt"]: {
-        content: `Design Base Name: ${designName}\nCustomer Name: ${cname}\nPhone: ${cphone}\nAddress: ${caddress}`
+        content: `Design Name: ${designName}\nCustomer Name: ${cname}\nPhone: ${cphone}\nAddress: ${caddress}`
       }
     }
   };
