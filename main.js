@@ -91,6 +91,7 @@ function saveOrder(){
 }
 function payOnline(){
     let orderId=document.getElementById("orderIdHidden").value;
-    if(!orderId){alert("Save order first!");return;}
-    alert("Redirecting to payment gateway...\nIntegrate JazzCash/EasyPaisa API using order ID: "+orderId);
+    let price=document.getElementById("price").value;
+    if(!orderId){alert("Save order first!"); return;}
+    alert(`Redirecting to payment gateway for Order ID: ${orderId}, Amount: PKR ${price}`);
 }
