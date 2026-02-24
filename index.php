@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GM Official – Ultimate Locket Studio</title>
+<title>GM Official – Ultra Pro Locket Studio</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="header">GM Official – Ultimate Locket Studio</div>
+<div class="header">GM Official – Ultra Pro Locket Studio</div>
 
 <div class="controls">
     <input type="text" id="nameInput" placeholder="Enter Name">
