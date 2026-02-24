@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GM Official – 500 Locket Designs PRO</title>
+<title>GM Official – 500 Unique Locket Designs</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cinzel:wght@600&family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
 <style>
 body{
@@ -13,7 +13,6 @@ body{
   font-family:Montserrat;
   text-align:center;
 }
-
 .header{
   padding:20px;
   font-size:28px;
@@ -22,7 +21,6 @@ body{
   color:white;
   letter-spacing:2px;
 }
-
 .controls{
   background:#1c1c1c;
   padding:15px;
@@ -31,13 +29,11 @@ body{
   justify-content:center;
   gap:10px;
 }
-
 input,select,button{
   padding:8px;
   border-radius:6px;
   border:none;
 }
-
 button{
   cursor:pointer;
   background:#ff5e62;
@@ -45,12 +41,10 @@ button{
   color:white;
   transition:0.3s;
 }
-
 button:hover{
   background:#ff9966;
   transform:scale(1.05);
 }
-
 .preview-area{
   margin-top:20px;
   display:grid;
@@ -58,7 +52,6 @@ button:hover{
   gap:20px;
   padding:20px;
 }
-
 .design-card{
   background:#1e1e1e;
   padding:10px;
@@ -66,11 +59,9 @@ button:hover{
   box-shadow:0 0 15px rgba(0,0,0,0.6);
   transition:0.3s;
 }
-
 .design-card:hover{
   transform:translateY(-5px);
 }
-
 .locket{
   width:150px;
   height:150px;
@@ -84,22 +75,18 @@ button:hover{
   border-radius:50%;
   overflow:hidden;
 }
-
 .text{
   z-index:2;
   color:white;
   text-shadow:0 2px 10px rgba(0,0,0,0.7);
 }
-
 .download-btn{
   margin-top:10px;
   background:#00c853;
 }
-
 .download-btn:hover{
   background:#69f0ae;
 }
-
 .order-form{
   background:#1c1c1c;
   padding:20px;
@@ -108,7 +95,6 @@ button:hover{
   border-radius:15px;
   box-shadow:0 0 20px rgba(0,0,0,0.6);
 }
-
 .footer{
   margin-top:20px;
   font-size:12px;
@@ -118,10 +104,10 @@ button:hover{
 </head>
 <body>
 
-<div class="header">GM Official – 500 Locket Designs PRO</div>
+<div class="header">GM Official – 500 Unique Locket Designs</div>
 
 <div class="controls">
-  <input type="text" id="nameInput" placeholder="Enter Name">
+  <input type="text" id="nameInput" placeholder="Enter Base Name">
   <select id="shapeSelect">
     <option value="circle">Circle</option>
     <option value="heart">Heart</option>
@@ -157,7 +143,6 @@ button:hover{
 <div class="footer">Premium Locket Designs by GM Official</div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
 <script>
 const previewArea=document.getElementById("previewArea");
 
@@ -165,7 +150,7 @@ const mockups={
   neck:"https://i.ibb.co/1Z6V0gB/neck-mockup.png",
   box:"https://i.ibb.co/7gX9J2r/box-mockup.png",
   model:"https://i.ibb.co/8cxkqTz/model-mockup.png"
-}
+};
 
 function randomColor(){
   return `hsl(${Math.floor(Math.random()*360)},70%,50%)`;
@@ -229,14 +214,18 @@ function createLocket(name,shape,font,photo,mockupType){
 
 function generate500(){
   previewArea.innerHTML="";
-  let name=document.getElementById("nameInput").value||"GM";
+  let baseName=document.getElementById("nameInput").value||"GM";
   let photo=document.getElementById("photoUpload").files[0]?URL.createObjectURL(document.getElementById("photoUpload").files[0]):null;
-  let shape=document.getElementById("shapeSelect").value;
-  let font=document.getElementById("fontSelect").value;
-  let mockup=document.getElementById("mockupSelect").value;
+  let selectedMockup=document.getElementById("mockupSelect").value;
 
-  for(let i=0;i<500;i++){
-    previewArea.appendChild(createLocket(name,shape,font,photo,mockup));
+  const shapes=["circle","heart","square","star"];
+  const fonts=["Playfair Display","Cinzel","Great Vibes","Montserrat"];
+
+  for(let i=1;i<=500;i++){
+    let randomShape=shapes[Math.floor(Math.random()*shapes.length)];
+    let randomFont=fonts[Math.floor(Math.random()*fonts.length)];
+    let uniqueName=`${baseName} #${i}`;
+    previewArea.appendChild(createLocket(uniqueName, randomShape, randomFont, photo, selectedMockup));
   }
 }
 
@@ -261,7 +250,7 @@ async function submitOrder(){
     public: true,
     files: {
       ["order_"+Date.now()+".txt"]: {
-        content: `Design Name: ${designName}\nCustomer Name: ${cname}\nPhone: ${cphone}\nAddress: ${caddress}`
+        content: `Design Base Name: ${designName}\nCustomer Name: ${cname}\nPhone: ${cphone}\nAddress: ${caddress}`
       }
     }
   };
