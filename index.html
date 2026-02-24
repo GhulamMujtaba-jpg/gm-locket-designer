@@ -3,167 +3,184 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GM 3D Locket Designer PRO MAX</title>
+<title>GM Official Jewelry Studio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cinzel:wght@600&family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
 
 <style>
 body{
-    background:#0f0f0f;
-    font-family:Arial;
-    text-align:center;
-    color:white;
-    margin:0;
+margin:0;
+background:#0c0c0c;
+color:white;
+font-family:Montserrat;
+text-align:center;
 }
 
-.banner{
-    font-size:32px;
-    padding:20px;
-    font-weight:bold;
-    background:linear-gradient(90deg,#ff0080,#7928ca,#00ffff);
-    background-size:300% 300%;
-    animation: move 6s infinite alternate;
+.header{
+padding:25px;
+font-size:26px;
+font-weight:bold;
+background:linear-gradient(90deg,#d4af37,#f9e79f,#d4af37);
+color:black;
+letter-spacing:2px;
 }
 
-@keyframes move{
-0%{background-position:0%}
-100%{background-position:100%}
+.controls{
+background:#111;
+padding:15px;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
 }
 
-input{
-padding:10px;
-width:250px;
+input,select{
+padding:8px;
+border-radius:6px;
 border:none;
-border-radius:8px;
-margin:20px;
 }
 
 button{
-padding:8px 15px;
+padding:8px 14px;
 border:none;
-border-radius:8px;
+border-radius:6px;
 cursor:pointer;
-margin:5px;
+background:#d4af37;
 font-weight:bold;
 }
 
-#generateBtn{background:#ff4081;color:white;}
-
-.design-container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:15px;
-padding:20px;
-}
-
-.design-card{
-padding:15px;
-border-radius:20px;
-transition:0.3s;
-box-shadow:0 5px 20px rgba(0,0,0,0.6);
-}
-
-.design-card:hover{
-transform:scale(1.08) rotateY(8deg);
+.preview-area{
+margin-top:30px;
+display:flex;
+justify-content:center;
 }
 
 .locket{
-padding:25px;
-font-weight:bold;
-font-size:18px;
+width:260px;
+height:260px;
 display:flex;
 align-items:center;
 justify-content:center;
-color:white;
-text-shadow:0 0 10px rgba(0,0,0,0.6);
+position:relative;
+font-size:30px;
+font-weight:bold;
+transition:0.3s;
+overflow:hidden;
 }
 
 .circle{border-radius:50%;}
-.oval{border-radius:50% / 40%;}
-.square{border-radius:15px;}
-.rectangle{border-radius:25px;}
 .heart{
 clip-path:polygon(50% 90%, 90% 50%, 75% 15%, 50% 30%, 25% 15%, 10% 50%);
 }
-.star{
-clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+
+.gold{
+background:linear-gradient(145deg,#d4af37,#f9e79f,#b8860b);
+box-shadow:0 0 25px #d4af37;
 }
 
-.download-btn{
-margin-top:8px;
-background:#ffcc00;
-color:black;
+.silver{
+background:linear-gradient(145deg,#e0e0e0,#ffffff,#a8a8a8);
+box-shadow:0 0 20px #ccc;
+}
+
+.rose{
+background:linear-gradient(145deg,#b76e79,#ffb6c1,#b76e79);
+box-shadow:0 0 20px #ffb6c1;
+}
+
+.text{
+z-index:2;
+text-shadow:0 2px 10px rgba(0,0,0,0.5);
+}
+
+.shine{
+position:absolute;
+width:150%;
+height:100%;
+background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.6),transparent 70%);
+transform:translateX(-100%);
+animation:shine 3s infinite;
+}
+
+@keyframes shine{
+0%{transform:translateX(-100%);}
+100%{transform:translateX(100%);}
+}
+
+.footer{
+margin-top:20px;
+font-size:12px;
+opacity:0.6;
 }
 </style>
 </head>
+
 <body>
 
-<div class="banner">GM 3D Locket Designer PRO MAX</div>
+<div class="header">GM Official Jewelry Studio</div>
 
+<div class="controls">
 <input type="text" id="nameInput" placeholder="Enter Name">
-<br>
-<button id="generateBtn">Generate 200+ Designs</button>
+<select id="shapeSelect">
+<option value="circle">Circle</option>
+<option value="heart">Heart</option>
+</select>
 
-<div class="design-container" id="designArea"></div>
+<select id="materialSelect">
+<option value="gold">Gold</option>
+<option value="silver">Silver</option>
+<option value="rose">Rose Gold</option>
+</select>
+
+<select id="fontSelect">
+<option value="Playfair Display">Royal</option>
+<option value="Cinzel">Luxury</option>
+<option value="Great Vibes">Signature</option>
+</select>
+
+<button onclick="downloadDesign()">Download HD</button>
+</div>
+
+<div class="preview-area">
+<div id="locket" class="locket circle gold">
+<div class="shine"></div>
+<span class="text" id="locketText">GM</span>
+</div>
+</div>
+
+<div class="footer">Premium Design by GM Official</div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
 
-const shapes=["circle","oval","square","rectangle","heart","star"];
-const fonts=["Arial","Georgia","Verdana","Trebuchet MS","Comic Sans MS","Impact"];
-const textures=[
-"linear-gradient(135deg,#FFD700,#FFA500)", // gold
-"linear-gradient(135deg,#C0C0C0,#808080)", // silver
-"linear-gradient(135deg,#00ffff,#0066ff)", // diamond
-"linear-gradient(135deg,#ff0080,#7928ca)",
-"linear-gradient(135deg,#00ffcc,#0099ff)"
-];
+const locket=document.getElementById("locket");
+const text=document.getElementById("locketText");
 
-function generateDesigns(name){
+document.getElementById("nameInput").oninput=function(){
+text.innerText=this.value || "GM";
+};
 
-let area=document.getElementById("designArea");
-area.innerHTML="";
+document.getElementById("shapeSelect").onchange=function(){
+locket.className="locket "+this.value+" "+document.getElementById("materialSelect").value;
+};
 
-for(let i=0;i<200;i++){
+document.getElementById("materialSelect").onchange=function(){
+locket.className="locket "+document.getElementById("shapeSelect").value+" "+this.value;
+};
 
-let card=document.createElement("div");
-card.className="design-card";
-card.style.background=textures[random(textures.length)];
+document.getElementById("fontSelect").onchange=function(){
+text.style.fontFamily=this.value;
+};
 
-let locket=document.createElement("div");
-locket.className="locket "+shapes[random(shapes.length)];
-locket.style.background=textures[random(textures.length)];
-locket.style.fontFamily=fonts[random(fonts.length)];
-locket.style.transform=`perspective(400px) rotateX(${randDeg()}deg) rotateY(${randDeg()}deg) scale(${randScale()})`;
-locket.innerText=name;
-
-let btn=document.createElement("button");
-btn.className="download-btn";
-btn.innerText="Download";
-
-btn.onclick=function(){
-html2canvas(locket,{backgroundColor:null,scale:3}).then(canvas=>{
+function downloadDesign(){
+html2canvas(locket,{scale:4}).then(canvas=>{
 let link=document.createElement("a");
+link.download="GM_Premium_Locket.png";
 link.href=canvas.toDataURL();
-link.download=name+"_GM_Locket.png";
 link.click();
 });
-};
-
-card.appendChild(locket);
-card.appendChild(btn);
-area.appendChild(card);
 }
-
-}
-
-function random(max){return Math.floor(Math.random()*max);}
-function randDeg(){return Math.floor(Math.random()*40)-20;}
-function randScale(){return (Math.random()*0.5+0.8);}
-
-document.getElementById("generateBtn").onclick=function(){
-let name=document.getElementById("nameInput").value || "GM";
-generateDesigns(name);
-};
 
 </script>
 
