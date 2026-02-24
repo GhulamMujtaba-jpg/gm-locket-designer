@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GM Official Jewelry Studio</title>
+<title>GM Official Jewelry Studio – Business Edition</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cinzel:wght@600&family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
 
@@ -50,7 +50,7 @@ font-weight:bold;
 }
 
 .preview-area{
-margin-top:30px;
+margin-top:20px;
 display:flex;
 justify-content:center;
 }
@@ -107,6 +107,19 @@ animation:shine 3s infinite;
 100%{transform:translateX(100%);}
 }
 
+.order-form{
+background:#1a1a1a;
+padding:15px;
+margin:20px auto;
+max-width:400px;
+border-radius:10px;
+}
+
+.order-form input, .order-form select{
+width:calc(100% - 20px);
+margin:5px 0;
+}
+
 .footer{
 margin-top:20px;
 font-size:12px;
@@ -117,7 +130,7 @@ opacity:0.6;
 
 <body>
 
-<div class="header">GM Official Jewelry Studio</div>
+<div class="header">GM Official Jewelry Studio – Business Edition</div>
 
 <div class="controls">
 <input type="text" id="nameInput" placeholder="Enter Name">
@@ -138,6 +151,7 @@ opacity:0.6;
 <option value="Great Vibes">Signature</option>
 </select>
 
+<input type="file" id="photoUpload" accept="image/*">
 <button onclick="downloadDesign()">Download HD</button>
 </div>
 
@@ -148,12 +162,24 @@ opacity:0.6;
 </div>
 </div>
 
-<div class="footer">Premium Design by GM Official</div>
+<div class="order-form">
+<h3>Place Your Order</h3>
+<input type="text" id="customerName" placeholder="Your Name">
+<input type="tel" id="customerPhone" placeholder="Phone Number">
+<input type="text" id="customerAddress" placeholder="Delivery Address">
+<select id="orderMaterial">
+<option value="Gold">Gold</option>
+<option value="Silver">Silver</option>
+<option value="Rose Gold">Rose Gold</option>
+</select>
+<button onclick="sendWhatsAppOrder()">Order via WhatsApp</button>
+<p id="totalPrice">Price: PKR 2500</p>
+</div>
+
+<div class="footer">Premium Jewelry Design by GM Official</div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
 <script>
-
 const locket=document.getElementById("locket");
 const text=document.getElementById("locketText");
 
@@ -167,10 +193,21 @@ locket.className="locket "+this.value+" "+document.getElementById("materialSelec
 
 document.getElementById("materialSelect").onchange=function(){
 locket.className="locket "+document.getElementById("shapeSelect").value+" "+this.value;
+updatePrice();
 };
 
 document.getElementById("fontSelect").onchange=function(){
 text.style.fontFamily=this.value;
+};
+
+document.getElementById("photoUpload").onchange=function(e){
+let reader=new FileReader();
+reader.onload=function(){
+let img=document.createElement("img");
+img.src=reader.result;
+locket.insertBefore(img,text);
+};
+reader.readAsDataURL(e.target.files[0]);
 };
 
 function downloadDesign(){
@@ -182,7 +219,36 @@ link.click();
 });
 }
 
-</script>
+// Price Calculator
+function updatePrice(){
+let material=document.getElementById("materialSelect").value;
+let price=0;
+if(material=="gold") price=2500;
+else if(material=="silver") price=1800;
+else if(material=="rose") price=2200;
+document.getElementById("totalPrice").innerText="Price: PKR "+price;
+}
 
+updatePrice();
+
+// WhatsApp Order
+function sendWhatsAppOrder(){
+let cname=document.getElementById("customerName").value;
+let cphone=document.getElementById("customerPhone").value;
+let caddress=document.getElementById("customerAddress").value;
+let material=document.getElementById("orderMaterial").value;
+let designName=document.getElementById("nameInput").value || "GM";
+
+if(!cname || !cphone || !caddress){
+alert("Please fill all fields!");
+return;
+}
+
+let message=`Hello GM Official,%0AI want to order a locket.%0AName: ${designName}%0AMaterial: ${material}%0ACustomer Name: ${cname}%0APhone: ${cphone}%0AAddress: ${caddress}`;
+
+let whatsappUrl=`https://wa.me/923000000000?text=${message}`; // <-- Replace 923000000000 with your number
+window.open(whatsappUrl,"_blank");
+}
+</script>
 </body>
 </html>
