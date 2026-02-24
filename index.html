@@ -3,134 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GM Official – 300 Locket Designs PRO</title>
-
+<title>GM Official – 500 Locket Designs PRO</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cinzel:wght@600&family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
-
 <style>
-
 body{
-margin:0;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;
-font-family:Montserrat;
-text-align:center;
+  margin:0;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+  font-family:Montserrat;
+  text-align:center;
 }
 
 .header{
-padding:20px;
-font-size:28px;
-font-weight:bold;
-background:linear-gradient(90deg,#ff9966,#ff5e62);
-color:white;
-letter-spacing:2px;
+  padding:20px;
+  font-size:28px;
+  font-weight:bold;
+  background:linear-gradient(90deg,#ff9966,#ff5e62);
+  color:white;
+  letter-spacing:2px;
 }
 
 .controls{
-background:#1c1c1c;
-padding:15px;
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:10px;
+  background:#1c1c1c;
+  padding:15px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
 }
 
 input,select,button{
-padding:8px;
-border-radius:6px;
-border:none;
+  padding:8px;
+  border-radius:6px;
+  border:none;
 }
 
 button{
-cursor:pointer;
-background:#ff5e62;
-font-weight:bold;
-color:white;
-transition:0.3s;
+  cursor:pointer;
+  background:#ff5e62;
+  font-weight:bold;
+  color:white;
+  transition:0.3s;
 }
 
 button:hover{
-background:#ff9966;
-transform:scale(1.05);
+  background:#ff9966;
+  transform:scale(1.05);
 }
 
 .preview-area{
-margin-top:20px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:20px;
-padding:20px;
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+  padding:20px;
 }
 
 .design-card{
-background:#1e1e1e;
-padding:10px;
-border-radius:15px;
-box-shadow:0 0 15px rgba(0,0,0,0.6);
-transition:0.3s;
+  background:#1e1e1e;
+  padding:10px;
+  border-radius:15px;
+  box-shadow:0 0 15px rgba(0,0,0,0.6);
+  transition:0.3s;
 }
 
 .design-card:hover{
-transform:translateY(-5px);
+  transform:translateY(-5px);
 }
 
 .locket{
-width:150px;
-height:150px;
-margin:auto;
-display:flex;
-align-items:center;
-justify-content:center;
-position:relative;
-font-size:20px;
-font-weight:bold;
-border-radius:50%;
-overflow:hidden;
+  width:150px;
+  height:150px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  font-size:20px;
+  font-weight:bold;
+  border-radius:50%;
+  overflow:hidden;
 }
 
 .text{
-z-index:2;
+  z-index:2;
+  color:white;
+  text-shadow:0 2px 10px rgba(0,0,0,0.7);
 }
 
 .download-btn{
-margin-top:10px;
-background:#00c853;
+  margin-top:10px;
+  background:#00c853;
 }
 
 .download-btn:hover{
-background:#69f0ae;
+  background:#69f0ae;
 }
 
 .order-form{
-background:#1c1c1c;
-padding:20px;
-margin:20px auto;
-max-width:450px;
-border-radius:15px;
-box-shadow:0 0 20px rgba(0,0,0,0.6);
+  background:#1c1c1c;
+  padding:20px;
+  margin:20px auto;
+  max-width:500px;
+  border-radius:15px;
+  box-shadow:0 0 20px rgba(0,0,0,0.6);
 }
 
 .footer{
-margin-top:20px;
-font-size:12px;
-opacity:0.6;
+  margin-top:20px;
+  font-size:12px;
+  opacity:0.6;
 }
-
 </style>
 </head>
 <body>
 
-<div class="header">GM Official – 300 Locket Designs PRO</div>
+<div class="header">GM Official – 500 Locket Designs PRO</div>
 
 <div class="controls">
-<input type="text" id="nameInput" placeholder="Enter Name">
-<button onclick="generate300()">Generate Designs</button>
+  <input type="text" id="nameInput" placeholder="Enter Name">
+  <select id="shapeSelect">
+    <option value="circle">Circle</option>
+    <option value="heart">Heart</option>
+    <option value="square">Square</option>
+    <option value="star">Star</option>
+  </select>
+  <select id="fontSelect">
+    <option value="Playfair Display">Royal</option>
+    <option value="Cinzel">Luxury</option>
+    <option value="Great Vibes">Signature</option>
+    <option value="Montserrat">Modern</option>
+  </select>
+  <input type="file" id="photoUpload" accept="image/*">
+  <select id="mockupSelect">
+    <option value="neck">Neck</option>
+    <option value="box">Box</option>
+    <option value="model">Model</option>
+  </select>
+  <button onclick="generate500()">Generate 500 Designs</button>
 </div>
 
 <div class="preview-area" id="previewArea"></div>
 
 <div class="order-form">
-<h3>Submit Order</h3>
+<h3>Submit Your Order</h3>
 <input type="text" id="customerName" placeholder="Your Name"><br><br>
 <input type="tel" id="customerPhone" placeholder="Phone Number"><br><br>
 <input type="text" id="customerAddress" placeholder="Delivery Address"><br><br>
@@ -143,65 +159,133 @@ opacity:0.6;
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
-
 const previewArea=document.getElementById("previewArea");
 
+const mockups={
+  neck:"https://i.ibb.co/1Z6V0gB/neck-mockup.png",
+  box:"https://i.ibb.co/7gX9J2r/box-mockup.png",
+  model:"https://i.ibb.co/8cxkqTz/model-mockup.png"
+}
+
 function randomColor(){
-return `hsl(${Math.floor(Math.random()*360)},70%,50%)`;
+  return `hsl(${Math.floor(Math.random()*360)},70%,50%)`;
 }
 
-function createDesign(name){
+function createLocket(name,shape,font,photo,mockupType){
+  let card=document.createElement("div");
+  card.className="design-card";
 
-let card=document.createElement("div");
-card.className="design-card";
+  let locket=document.createElement("div");
+  locket.className="locket";
+  locket.style.background=randomColor();
+  locket.style.fontFamily=font;
+  
+  let img=document.createElement("img");
+  img.src=mockups[mockupType]||mockups.neck;
+  img.className="mockup";
+  img.style.position="absolute";
+  img.style.width="100%";
+  img.style.height="100%";
+  img.style.top="0";
+  img.style.left="0";
+  img.style.objectFit="cover";
+  locket.appendChild(img);
 
-let locket=document.createElement("div");
-locket.className="locket";
-locket.style.background=randomColor();
-locket.innerHTML="<span class='text'>"+name+"</span>";
+  if(photo){
+    let userPhoto=document.createElement("img");
+    userPhoto.src=photo;
+    userPhoto.className="mockup";
+    userPhoto.style.position="absolute";
+    userPhoto.style.width="100%";
+    userPhoto.style.height="100%";
+    userPhoto.style.top="0";
+    userPhoto.style.left="0";
+    userPhoto.style.objectFit="cover";
+    locket.appendChild(userPhoto);
+  }
 
-let btn=document.createElement("button");
-btn.innerText="Download";
-btn.className="download-btn";
+  let span=document.createElement("span");
+  span.className="text";
+  span.innerText=name;
+  locket.appendChild(span);
 
-btn.onclick=function(){
-html2canvas(locket,{scale:3}).then(canvas=>{
-let link=document.createElement("a");
-link.download=name+"_Design.png";
-link.href=canvas.toDataURL();
-link.click();
-});
-};
+  card.appendChild(locket);
 
-card.appendChild(locket);
-card.appendChild(btn);
+  let btn=document.createElement("button");
+  btn.innerText="Download";
+  btn.className="download-btn";
+  btn.onclick=function(){
+    html2canvas(locket,{scale:3}).then(canvas=>{
+      let link=document.createElement("a");
+      link.download=name+"_Design.png";
+      link.href=canvas.toDataURL();
+      link.click();
+    });
+  };
+  card.appendChild(btn);
 
-return card;
+  return card;
 }
 
-function generate300(){
-previewArea.innerHTML="";
-let name=document.getElementById("nameInput").value||"GM";
-for(let i=0;i<20;i++){   // performance ke liye 20 kar diya (300 slow hota hai)
-previewArea.appendChild(createDesign(name));
-}
-}
+function generate500(){
+  previewArea.innerHTML="";
+  let name=document.getElementById("nameInput").value||"GM";
+  let photo=document.getElementById("photoUpload").files[0]?URL.createObjectURL(document.getElementById("photoUpload").files[0]):null;
+  let shape=document.getElementById("shapeSelect").value;
+  let font=document.getElementById("fontSelect").value;
+  let mockup=document.getElementById("mockupSelect").value;
 
-function submitOrder(){
-let name=document.getElementById("customerName").value;
-let phone=document.getElementById("customerPhone").value;
-let address=document.getElementById("customerAddress").value;
-
-if(!name||!phone||!address){
-alert("Please fill all fields");
-return;
+  for(let i=0;i<500;i++){
+    previewArea.appendChild(createLocket(name,shape,font,photo,mockup));
+  }
 }
 
-document.getElementById("orderMsg").innerHTML=
-"✅ Order Submitted Successfully! We will contact you soon.";
+// ----- ORDER SUBMIT -----
+async function submitOrder(){
+  let cname=document.getElementById("customerName").value;
+  let cphone=document.getElementById("customerPhone").value;
+  let caddress=document.getElementById("customerAddress").value;
+  let designName=document.getElementById("nameInput").value||"GM";
 
+  if(!cname || !cphone || !caddress){
+    alert("Please fill all fields!");
+    return;
+  }
+
+  document.getElementById("orderMsg").innerHTML="Submitting order...";
+
+  // GitHub Gist API example
+  const token="<YOUR_GITHUB_TOKEN>"; // Replace with your token
+  const gistData={
+    description: "GM Official Order",
+    public: true,
+    files: {
+      ["order_"+Date.now()+".txt"]: {
+        content: `Design Name: ${designName}\nCustomer Name: ${cname}\nPhone: ${cphone}\nAddress: ${caddress}`
+      }
+    }
+  };
+
+  try{
+    let response=await fetch("https://api.github.com/gists",{
+      method:"POST",
+      headers:{
+        "Authorization":"token "+token,
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(gistData)
+    });
+    if(response.ok){
+      document.getElementById("orderMsg").innerHTML="✅ Order submitted! Check your GitHub Gists.";
+    }else{
+      document.getElementById("orderMsg").innerHTML="❌ Failed to submit order. Check token.";
+      console.error(await response.json());
+    }
+  }catch(err){
+    document.getElementById("orderMsg").innerHTML="❌ Error submitting order.";
+    console.error(err);
+  }
 }
-
 </script>
 
 </body>
