@@ -23,6 +23,7 @@ button{cursor:pointer;background:#ff6f61;font-weight:bold;color:white;}
 </style>
 </head>
 <body>
+
 <div class="header">GM Official – 300 Locket Designs PRO</div>
 
 <div class="controls">
@@ -40,6 +41,11 @@ button{cursor:pointer;background:#ff6f61;font-weight:bold;color:white;}
 <option value="Montserrat">Modern</option>
 </select>
 <input type="file" id="photoUpload" accept="image/*">
+<select id="mockupSelect">
+<option value="neck">Neck</option>
+<option value="box">Box</option>
+<option value="model">Model</option>
+</select>
 <button onclick="generate300()">Generate 300 Designs</button>
 <button onclick="downloadDesign()">Download HD</button>
 </div>
@@ -68,22 +74,35 @@ button{cursor:pointer;background:#ff6f61;font-weight:bold;color:white;}
 const previewArea=document.getElementById("previewArea");
 const shapes=["circle","heart","square","star"];
 const fonts=["Playfair Display","Cinzel","Great Vibes","Montserrat"];
+const mockups={
+    neck:"https://i.ibb.co/1Z6V0gB/neck-mockup.png",
+    box:"https://i.ibb.co/7gX9J2r/box-mockup.png",
+    model:"https://i.ibb.co/8cxkqTz/model-mockup.png"
+};
 
 // Random color generator
 function randomColor(){return `hsl(${Math.floor(Math.random()*360)},${Math.floor(Math.random()*50)+50}%,${Math.floor(Math.random()*30)+40}%)`;}
 
 // Create locket
-function createLocket(name,shape,font,photo){
+function createLocket(name,shape,font,photo,mockupType){
     let div=document.createElement("div");
     div.className="locket "+shape;
     div.style.fontFamily=font;
     div.style.background=randomColor();
+
+    // Add mockup background
+    let img=document.createElement("img");
+    img.src=mockups[mockupType]||mockups.neck;
+    img.className="mockup";
+    div.appendChild(img);
+
     if(photo){
-        let img=document.createElement("img");
-        img.src=photo;
-        img.className="mockup";
-        div.appendChild(img);
+        let userPhoto=document.createElement("img");
+        userPhoto.src=photo;
+        userPhoto.className="mockup";
+        div.appendChild(userPhoto);
     }
+
     let shine=document.createElement("div"); shine.className="shine"; div.appendChild(shine);
     let span=document.createElement("span"); span.className="text"; span.innerText=name; div.appendChild(span);
     return div;
@@ -94,6 +113,7 @@ function generate300(){
     previewArea.innerHTML="";
     let name=document.getElementById("nameInput").value||"GM";
     let photo=document.getElementById("photoUpload").files[0]?URL.createObjectURL(document.getElementById("photoUpload").files[0]):null;
+    let mockup=document.getElementById("mockupSelect").value;
     let used=new Set();
     let count=0;
     while(count<300){
@@ -102,7 +122,7 @@ function generate300(){
         let key=s+"|"+f+"|"+Math.floor(Math.random()*360);
         if(used.has(key)) continue;
         used.add(key);
-        let l=createLocket(name,s,f,photo);
+        let l=createLocket(name,s,f,photo,mockup);
         l.style.transform="rotateY("+((Math.random()*60)-30)+"deg)";
         previewArea.appendChild(l);
         count++;
@@ -124,7 +144,7 @@ updatePrice();
 // Download first design HD
 function downloadDesign(){
     let first=previewArea.firstChild;
-    if(!first) first=createLocket("GM","circle","Montserrat",null);
+    if(!first) first=createLocket("GM","circle","Montserrat",null,"neck");
     html2canvas(first,{scale:4}).then(canvas=>{
         let link=document.createElement("a");
         link.download="GM_Locket_HD.png";
@@ -142,7 +162,7 @@ function sendWhatsAppOrder(){
     let designName=document.getElementById("nameInput").value||"GM";
     if(!cname||!cphone||!caddress){alert("Please fill all fields!");return;}
     let message=`Hello GM Official,%0AI want to order a locket.%0AName: ${designName}%0AMaterial: ${material}%0ACustomer Name: ${cname}%0APhone: ${cphone}%0AAddress: ${caddress}`;
-    let whatsappUrl=`https://wa.me/923000000000?text=${message}`; // Replace number
+    let whatsappUrl=`https://wa.me/923000000000?text=${message}`;
     window.open(whatsappUrl,"_blank");
 }
 
