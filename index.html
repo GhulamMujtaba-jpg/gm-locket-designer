@@ -36,13 +36,11 @@ input,select,button{
 }
 button{
   cursor:pointer;
-  background:#ff5e62;
   font-weight:bold;
   color:white;
   transition:0.3s;
 }
 button:hover{
-  background:#ff9966;
   transform:scale(1.05);
 }
 .preview-area{
@@ -87,13 +85,12 @@ button:hover{
 .download-btn:hover{
   background:#69f0ae;
 }
-.order-form{
-  background:#1c1c1c;
-  padding:20px;
-  margin:20px auto;
-  max-width:500px;
-  border-radius:15px;
-  box-shadow:0 0 20px rgba(0,0,0,0.6);
+.order-btn{
+  margin-top:5px;
+  background:#2962ff;
+}
+.order-btn:hover{
+  background:#448aff;
 }
 .footer{
   margin-top:20px;
@@ -108,31 +105,37 @@ button:hover{
 
 <div class="controls">
   <input type="text" id="nameInput" placeholder="Enter Name">
+  
+  <!-- Shape select -->
   <select id="shapeSelect">
     <option value="circle">Circle</option>
     <option value="heart">Heart</option>
     <option value="square">Square</option>
     <option value="star">Star</option>
   </select>
+
+  <!-- Style/Font select -->
   <select id="fontSelect">
     <option value="Playfair Display">Royal</option>
     <option value="Cinzel">Luxury</option>
     <option value="Great Vibes">Signature</option>
     <option value="Montserrat">Modern</option>
   </select>
-  <button onclick="generate500()">Generate 500 Designs</button>
+
+  <!-- File Upload -->
+  <input type="file" id="photoUpload" accept="image/*">
+
+  <!-- Mockup select -->
+  <select id="mockupSelect">
+    <option value="neck">Neck</option>
+    <option value="box">Box</option>
+    <option value="model">Model</option>
+  </select>
+
+  <button style="background:#ff5e62;" onclick="generate500()">Generate 500 Designs</button>
 </div>
 
 <div class="preview-area" id="previewArea"></div>
-
-<div class="order-form">
-<h3>Submit Your Order</h3>
-<input type="text" id="customerName" placeholder="Your Name"><br><br>
-<input type="tel" id="customerPhone" placeholder="Phone Number"><br><br>
-<input type="text" id="customerAddress" placeholder="Delivery Address"><br><br>
-<button onclick="submitOrder()">Submit Order</button>
-<p id="orderMsg"></p>
-</div>
 
 <div class="footer">Premium Locket Designs by GM Official</div>
 
@@ -140,11 +143,18 @@ button:hover{
 <script>
 const previewArea=document.getElementById("previewArea");
 
+// Mockup images
+const mockups={
+  neck:"https://i.ibb.co/1Z6V0gB/neck-mockup.png",
+  box:"https://i.ibb.co/7gX9J2r/box-mockup.png",
+  model:"https://i.ibb.co/8cxkqTz/model-mockup.png"
+};
+
 function randomColor(){
   return `hsl(${Math.floor(Math.random()*360)},70%,50%)`;
 }
 
-function createLocket(name,shape,font){
+function createLocket(name,shape,font,photo,mockupType){
   let card=document.createElement("div");
   card.className="design-card";
 
@@ -153,17 +163,43 @@ function createLocket(name,shape,font){
   locket.style.background=randomColor();
   locket.style.fontFamily=font;
 
+  // Mockup image
+  let img=document.createElement("img");
+  img.src=mockups[mockupType]||mockups.neck;
+  img.style.position="absolute";
+  img.style.width="100%";
+  img.style.height="100%";
+  img.style.top="0";
+  img.style.left="0";
+  img.style.objectFit="cover";
+  locket.appendChild(img);
+
+  // Uploaded file if exists
+  if(photo){
+    let userPhoto=document.createElement("img");
+    userPhoto.src=photo;
+    userPhoto.style.position="absolute";
+    userPhoto.style.width="100%";
+    userPhoto.style.height="100%";
+    userPhoto.style.top="0";
+    userPhoto.style.left="0";
+    userPhoto.style.objectFit="cover";
+    locket.appendChild(userPhoto);
+  }
+
+  // Name text
   let span=document.createElement("span");
   span.className="text";
-  span.innerText=name; 
+  span.innerText=name;
   locket.appendChild(span);
 
   card.appendChild(locket);
 
-  let btn=document.createElement("button");
-  btn.innerText="Download";
-  btn.className="download-btn";
-  btn.onclick=function(){
+  // Download button
+  let downloadBtn=document.createElement("button");
+  downloadBtn.innerText="Download";
+  downloadBtn.className="download-btn";
+  downloadBtn.onclick=function(){
     html2canvas(locket,{scale:3}).then(canvas=>{
       let link=document.createElement("a");
       link.download=name+"_Design.png";
@@ -171,14 +207,24 @@ function createLocket(name,shape,font){
       link.click();
     });
   };
-  card.appendChild(btn);
+  card.appendChild(downloadBtn);
+
+  // Order Submit button for each design
+  let orderBtn=document.createElement("button");
+  orderBtn.innerText="Submit Order";
+  orderBtn.className="order-btn";
+  orderBtn.onclick=function(){submitOrder(name);}
+  card.appendChild(orderBtn);
 
   return card;
 }
 
+// Generate 500 designs
 function generate500(){
   previewArea.innerHTML="";
   let baseName=document.getElementById("nameInput").value||"GM";
+  let photo=document.getElementById("photoUpload").files[0]?URL.createObjectURL(document.getElementById("photoUpload").files[0]):null;
+  let selectedMockup=document.getElementById("mockupSelect").value;
 
   const shapes=["circle","heart","square","star"];
   const fonts=["Playfair Display","Cinzel","Great Vibes","Montserrat"];
@@ -186,25 +232,20 @@ function generate500(){
   for(let i=0;i<500;i++){
     let randomShape=shapes[Math.floor(Math.random()*shapes.length)];
     let randomFont=fonts[Math.floor(Math.random()*fonts.length)];
-    previewArea.appendChild(createLocket(baseName, randomShape, randomFont));
+    previewArea.appendChild(createLocket(baseName, randomShape, randomFont, photo, selectedMockup));
   }
 }
 
-// ----- ORDER SUBMIT -----
-async function submitOrder(){
-  let cname=document.getElementById("customerName").value;
-  let cphone=document.getElementById("customerPhone").value;
-  let caddress=document.getElementById("customerAddress").value;
-  let designName=document.getElementById("nameInput").value||"GM";
+// ----- ORDER SUBMIT for each design -----
+async function submitOrder(designName){
+  let cname=prompt("Enter Your Name:");
+  if(!cname) return alert("Name required!");
+  let cphone=prompt("Enter Phone Number:");
+  if(!cphone) return alert("Phone required!");
+  let caddress=prompt("Enter Delivery Address:");
+  if(!caddress) return alert("Address required!");
 
-  if(!cname || !cphone || !caddress){
-    alert("Please fill all fields!");
-    return;
-  }
-
-  document.getElementById("orderMsg").innerHTML="Submitting order...";
-
-  const token="<YOUR_GITHUB_TOKEN>"; // Replace with your token
+  const token="<YOUR_GITHUB_TOKEN>"; // Replace with your GitHub token
   const gistData={
     description: "GM Official Order",
     public: true,
@@ -225,13 +266,13 @@ async function submitOrder(){
       body:JSON.stringify(gistData)
     });
     if(response.ok){
-      document.getElementById("orderMsg").innerHTML="✅ Order submitted! Check your GitHub Gists.";
+      alert("✅ Order submitted for " + designName + "!");
     }else{
-      document.getElementById("orderMsg").innerHTML="❌ Failed to submit order. Check token.";
+      alert("❌ Failed to submit order. Check token.");
       console.error(await response.json());
     }
   }catch(err){
-    document.getElementById("orderMsg").innerHTML="❌ Error submitting order.";
+    alert("❌ Error submitting order.");
     console.error(err);
   }
 }
