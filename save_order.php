@@ -14,6 +14,7 @@ $material = $_POST['orderMaterial'];
 $design_name = $_POST['designName'];
 $mockup_type = $_POST['mockupType'];
 $price = $_POST['price'];
+$payment_status = "pending";
 
 $photo = "";
 if(isset($_FILES['photo'])){
@@ -24,8 +25,8 @@ if(isset($_FILES['photo'])){
     $photo = $target_file;
 }
 
-$stmt = $conn->prepare("INSERT INTO orders (customer_name, phone, address, material, design_name, mockup_type, photo, price) VALUES (?,?,?,?,?,?,?,?)");
-$stmt->bind_param("sssssssi",$customer_name,$phone,$address,$material,$design_name,$mockup_type,$photo,$price);
+$stmt = $conn->prepare("INSERT INTO orders (customer_name, phone, address, material, design_name, mockup_type, photo, price, payment_status) VALUES (?,?,?,?,?,?,?,?,?)");
+$stmt->bind_param("sssssssis",$customer_name,$phone,$address,$material,$design_name,$mockup_type,$photo,$price,$payment_status);
 
 if($stmt->execute()){
     $order_id = $stmt->insert_id;
