@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GM Official – 300 Locket Designs PRO</title>
+<title>GM Official – 1000 Locket Designs PRO</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cinzel:wght@600&family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
 <style>
 body{margin:0;background:#111;color:white;font-family:Montserrat;text-align:center;}
@@ -16,6 +16,7 @@ button{cursor:pointer;background:#ff6f61;font-weight:bold;color:white;}
 .locket img.mockup{position:absolute;width:100%;height:100%;object-fit:cover;top:0;left:0;z-index:0;}
 .text{z-index:2;text-shadow:0 2px 10px rgba(0,0,0,0.5);}
 .shine{position:absolute;width:150%;height:100%;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.6),transparent 70%);transform:translateX(-100%);animation:shine 3s infinite;}
+.download-btn{margin-top:5px;padding:4px 8px;background:#ffcc00;color:black;border:none;border-radius:5px;cursor:pointer;}
 @keyframes shine{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
 .order-form{background:#222;padding:15px;margin:20px auto;max-width:450px;border-radius:10px;}
 .order-form input, .order-form select{width:calc(100% - 20px);margin:5px 0;}
@@ -24,7 +25,7 @@ button{cursor:pointer;background:#ff6f61;font-weight:bold;color:white;}
 </head>
 <body>
 
-<div class="header">GM Official – 300 Locket Designs PRO</div>
+<div class="header">GM Official – 1000 Locket Designs PRO</div>
 
 <div class="controls">
 <input type="text" id="nameInput" placeholder="Enter Name">
@@ -46,8 +47,7 @@ button{cursor:pointer;background:#ff6f61;font-weight:bold;color:white;}
 <option value="box">Box</option>
 <option value="model">Model</option>
 </select>
-<button onclick="generate300()">Generate 300 Designs</button>
-<button onclick="downloadDesign()">Download HD</button>
+<button onclick="generate1000()">Generate 1000 Designs</button>
 </div>
 
 <div class="preview-area" id="previewArea"></div>
@@ -79,18 +79,13 @@ const mockups={
     box:"https://i.ibb.co/7gX9J2r/box-mockup.png",
     model:"https://i.ibb.co/8cxkqTz/model-mockup.png"
 };
-
-// Random color generator
 function randomColor(){return `hsl(${Math.floor(Math.random()*360)},${Math.floor(Math.random()*50)+50}%,${Math.floor(Math.random()*30)+40}%)`;}
-
-// Create locket
 function createLocket(name,shape,font,photo,mockupType){
     let div=document.createElement("div");
     div.className="locket "+shape;
     div.style.fontFamily=font;
     div.style.background=randomColor();
 
-    // Add mockup background
     let img=document.createElement("img");
     img.src=mockups[mockupType]||mockups.neck;
     img.className="mockup";
@@ -105,25 +100,33 @@ function createLocket(name,shape,font,photo,mockupType){
 
     let shine=document.createElement("div"); shine.className="shine"; div.appendChild(shine);
     let span=document.createElement("span"); span.className="text"; span.innerText=name; div.appendChild(span);
+
+    // Download button for each design
+    let btn=document.createElement("button"); 
+    btn.className="download-btn"; 
+    btn.innerText="Download"; 
+    btn.onclick=()=>{html2canvas(div,{scale:4}).then(canvas=>{let link=document.createElement("a");link.href=canvas.toDataURL();link.download=name+"_GM_Locket.png";link.click();});};
+    div.appendChild(btn);
+
     return div;
 }
 
-// Generate 300 designs
-function generate300(){
+// Generate 1000 designs with unique shape/font/color
+function generate1000(){
     previewArea.innerHTML="";
     let name=document.getElementById("nameInput").value||"GM";
     let photo=document.getElementById("photoUpload").files[0]?URL.createObjectURL(document.getElementById("photoUpload").files[0]):null;
     let mockup=document.getElementById("mockupSelect").value;
     let used=new Set();
     let count=0;
-    while(count<300){
+    while(count<1000){
         let s=shapes[Math.floor(Math.random()*shapes.length)];
         let f=fonts[Math.floor(Math.random()*fonts.length)];
-        let key=s+"|"+f+"|"+Math.floor(Math.random()*360);
+        let key=s+"|"+f+"|"+Math.floor(Math.random()*360)+"|"+Math.floor(Math.random()*360);
         if(used.has(key)) continue;
         used.add(key);
         let l=createLocket(name,s,f,photo,mockup);
-        l.style.transform="rotateY("+((Math.random()*60)-30)+"deg)";
+        l.style.transform="rotateY("+((Math.random()*60)-30)+"deg) rotateX("+((Math.random()*40)-20)+"deg)";
         previewArea.appendChild(l);
         count++;
     }
@@ -140,18 +143,6 @@ function updatePrice(){
 }
 document.getElementById("orderMaterial").onchange=updatePrice;
 updatePrice();
-
-// Download first design HD
-function downloadDesign(){
-    let first=previewArea.firstChild;
-    if(!first) first=createLocket("GM","circle","Montserrat",null,"neck");
-    html2canvas(first,{scale:4}).then(canvas=>{
-        let link=document.createElement("a");
-        link.download="GM_Locket_HD.png";
-        link.href=canvas.toDataURL();
-        link.click();
-    });
-}
 
 // WhatsApp order
 function sendWhatsAppOrder(){
