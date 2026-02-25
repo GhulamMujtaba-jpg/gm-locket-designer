@@ -8,7 +8,7 @@
 <style>
 body {
   margin: 0;
-  background: #111; /* clean black */
+  background: #111; 
   color: white;
   font-family: 'Montserrat', sans-serif;
   text-align: center;
@@ -148,12 +148,6 @@ button:hover {
 
   <input type="file" id="photoUpload" accept="image/*">
 
-  <select id="mockupSelect">
-    <option value="neck">Neck</option>
-    <option value="box">Box</option>
-    <option value="model">Model</option>
-  </select>
-
   <button style="background:#ff5e62;" onclick="generate500()">Generate 500 Designs</button>
 </div>
 
@@ -165,12 +159,6 @@ button:hover {
 <script>
 const previewArea = document.getElementById("previewArea");
 
-const mockups = {
-  neck: "https://i.ibb.co/1Z6V0gB/neck-mockup.png",
-  box: "https://i.ibb.co/7gX9J2r/box-mockup.png",
-  model: "https://i.ibb.co/8cxkqTz/model-mockup.png"
-};
-
 function randomColor() {
   const h = Math.floor(Math.random() * 360);
   const s = Math.floor(Math.random() * 70 + 30);
@@ -178,7 +166,7 @@ function randomColor() {
   return `hsl(${h},${s}%,${l}%)`;
 }
 
-function createLocket(name, shape, font, photo, mockupType) {
+function createLocket(name, shape, font, photo) {
   let card = document.createElement("div");
   card.className = "design-card";
 
@@ -186,20 +174,6 @@ function createLocket(name, shape, font, photo, mockupType) {
   locket.className = "locket";
   locket.style.background = randomColor();
   locket.style.fontFamily = font;
-
-  // Mockup image (only if loads)
-  let img = document.createElement("img");
-  img.src = mockups[mockupType] || "";
-  img.onload = () => { locket.appendChild(img); }; // append only if loaded
-  img.onerror = () => {}; // do nothing if broken
-
-  img.style.position = "absolute";
-  img.style.width = "100%";
-  img.style.height = "100%";
-  img.style.top = "0";
-  img.style.left = "0";
-  img.style.objectFit = "cover";
-  img.style.opacity = "0.5";
 
   // Uploaded photo
   if(photo){
@@ -219,7 +193,7 @@ function createLocket(name, shape, font, photo, mockupType) {
   let span = document.createElement("span");
   span.className = "text";
   span.innerText = name;
-  span.style.color = randomColor(); // different color from background
+  span.style.color = randomColor();
   locket.appendChild(span);
 
   card.appendChild(locket);
@@ -253,14 +227,13 @@ function generate500() {
   previewArea.innerHTML = "";
   let baseName = document.getElementById("nameInput").value || "GM";
   let photo = document.getElementById("photoUpload").files[0] ? URL.createObjectURL(document.getElementById("photoUpload").files[0]) : null;
-  let selectedMockup = document.getElementById("mockupSelect").value;
   const shapes = ["circle","heart","square","star"];
   const fonts = ["Playfair Display","Cinzel","Great Vibes","Montserrat"];
 
   for(let i=0; i<500; i++){
     let randomShape = shapes[Math.floor(Math.random()*shapes.length)];
     let randomFont = fonts[Math.floor(Math.random()*fonts.length)];
-    previewArea.appendChild(createLocket(baseName, randomShape, randomFont, photo, selectedMockup));
+    previewArea.appendChild(createLocket(baseName, randomShape, randomFont, photo));
   }
 }
 
