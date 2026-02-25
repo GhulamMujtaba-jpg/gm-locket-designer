@@ -6,96 +6,123 @@
 <title>GM Official – 500 Locket Designs</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cinzel:wght@600&family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
 <style>
-body{
-  margin:0;
-  background:#111; /* clean dark background */
-  color:white;
-  font-family:Montserrat;
-  text-align:center;
+body {
+  margin: 0;
+  background: #111; /* clean black */
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
 }
-.header{
-  padding:20px;
-  font-size:28px;
-  font-weight:bold;
-  background:linear-gradient(90deg,#ff9966,#ff5e62);
-  color:white;
-  letter-spacing:2px;
+
+.header {
+  padding: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff9966, #ff5e62);
+  color: white;
+  letter-spacing: 2px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
-.controls{
-  background:#222;
-  padding:15px;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
+
+.controls {
+  background: linear-gradient(90deg, #222, #333);
+  padding: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  border-bottom: 3px solid #ff5e62;
 }
-input,select,button{
-  padding:8px;
-  border-radius:6px;
-  border:none;
+
+input, select, button {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
 }
-button{
-  cursor:pointer;
-  font-weight:bold;
-  color:white;
-  transition:0.3s;
+
+button {
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  transition: 0.3s;
 }
-button:hover{
-  transform:scale(1.05);
+
+button:hover {
+  transform: scale(1.05);
 }
-.preview-area{
-  margin-top:20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:20px;
-  padding:20px;
+
+.preview-area {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
-.design-card{
-  background:#1e1e1e;
-  padding:10px;
-  border-radius:15px;
-  box-shadow:0 0 15px rgba(0,0,0,0.6);
-  transition:0.3s;
+
+.design-card {
+  background: #1c1c1c;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.7);
+  transition: 0.3s;
 }
-.design-card:hover{
-  transform:translateY(-5px);
+
+.design-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 0 25px rgba(255, 94, 98, 0.7);
 }
-.locket{
-  width:150px;
-  height:150px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  font-size:20px;
-  font-weight:bold;
-  border-radius:50%;
-  overflow:hidden;
+
+.locket {
+  width: 150px;
+  height: 150px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: 0.3s;
 }
-.text{
-  z-index:2;
-  color:white;
-  text-shadow:0 2px 10px rgba(0,0,0,0.7);
+
+.text {
+  z-index: 2;
+  color: white;
+  font-size: 18px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+  font-weight: 700;
+  letter-spacing: 1px;
 }
-.download-btn{
-  margin-top:10px;
-  background:#00c853;
+
+.download-btn {
+  margin-top: 10px;
+  background: #00c853;
+  width: 100%;
+  border-radius: 8px;
 }
-.download-btn:hover{
-  background:#69f0ae;
+
+.download-btn:hover {
+  background: #69f0ae;
 }
-.order-btn{
-  margin-top:5px;
-  background:#2962ff;
+
+.order-btn {
+  margin-top: 5px;
+  background: #2962ff;
+  width: 100%;
+  border-radius: 8px;
 }
-.order-btn:hover{
-  background:#448aff;
+
+.order-btn:hover {
+  background: #448aff;
 }
-.footer{
-  margin-top:20px;
-  font-size:12px;
-  opacity:0.6;
+
+.footer {
+  margin-top: 20px;
+  font-size: 12px;
+  opacity: 0.7;
 }
 </style>
 </head>
@@ -105,8 +132,7 @@ button:hover{
 
 <div class="controls">
   <input type="text" id="nameInput" placeholder="Enter Name">
-  
-  <!-- Shape select -->
+
   <select id="shapeSelect">
     <option value="circle">Circle</option>
     <option value="heart">Heart</option>
@@ -114,7 +140,6 @@ button:hover{
     <option value="star">Star</option>
   </select>
 
-  <!-- Style/Font select -->
   <select id="fontSelect">
     <option value="Playfair Display">Royal</option>
     <option value="Cinzel">Luxury</option>
@@ -122,10 +147,8 @@ button:hover{
     <option value="Montserrat">Modern</option>
   </select>
 
-  <!-- File Upload -->
   <input type="file" id="photoUpload" accept="image/*">
 
-  <!-- Mockup select -->
   <select id="mockupSelect">
     <option value="neck">Neck</option>
     <option value="box">Box</option>
@@ -141,112 +164,116 @@ button:hover{
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-const previewArea=document.getElementById("previewArea");
+const previewArea = document.getElementById("previewArea");
 
-// Mockup images
-const mockups={
-  neck:"https://i.ibb.co/1Z6V0gB/neck-mockup.png",
-  box:"https://i.ibb.co/7gX9J2r/box-mockup.png",
-  model:"https://i.ibb.co/8cxkqTz/model-mockup.png"
+const mockups = {
+  neck: "https://i.ibb.co/1Z6V0gB/neck-mockup.png",
+  box: "https://i.ibb.co/7gX9J2r/box-mockup.png",
+  model: "https://i.ibb.co/8cxkqTz/model-mockup.png"
 };
 
-function randomColor(){
-  return `hsl(${Math.floor(Math.random()*360)},70%,50%)`;
+function randomColor() {
+  // bright and unique HSL color
+  const h = Math.floor(Math.random() * 360);
+  const s = Math.floor(Math.random() * 70 + 30); // 30%-100%
+  const l = Math.floor(Math.random() * 30 + 40); // 40%-70%
+  return `hsl(${h},${s}%,${l}%)`;
 }
 
-function createLocket(name,shape,font,photo,mockupType){
-  let card=document.createElement("div");
-  card.className="design-card";
+function createLocket(name, shape, font, photo, mockupType) {
+  let card = document.createElement("div");
+  card.className = "design-card";
 
-  let locket=document.createElement("div");
-  locket.className="locket";
-  locket.style.background=randomColor();
-  locket.style.fontFamily=font;
+  let locket = document.createElement("div");
+  locket.className = "locket";
+  locket.style.background = randomColor();
+  locket.style.fontFamily = font;
 
   // Mockup image
-  let img=document.createElement("img");
-  img.src=mockups[mockupType]||mockups.neck;
-  img.style.position="absolute";
-  img.style.width="100%";
-  img.style.height="100%";
-  img.style.top="0";
-  img.style.left="0";
-  img.style.objectFit="cover";
+  let img = document.createElement("img");
+  img.src = mockups[mockupType] || mockups.neck;
+  img.style.position = "absolute";
+  img.style.width = "100%";
+  img.style.height = "100%";
+  img.style.top = "0";
+  img.style.left = "0";
+  img.style.objectFit = "cover";
+  img.style.opacity = "0.5"; // transparent overlay
   locket.appendChild(img);
 
-  // Uploaded file if exists
+  // Uploaded photo
   if(photo){
-    let userPhoto=document.createElement("img");
-    userPhoto.src=photo;
-    userPhoto.style.position="absolute";
-    userPhoto.style.width="100%";
-    userPhoto.style.height="100%";
-    userPhoto.style.top="0";
-    userPhoto.style.left="0";
-    userPhoto.style.objectFit="cover";
+    let userPhoto = document.createElement("img");
+    userPhoto.src = photo;
+    userPhoto.style.position = "absolute";
+    userPhoto.style.width = "100%";
+    userPhoto.style.height = "100%";
+    userPhoto.style.top = "0";
+    userPhoto.style.left = "0";
+    userPhoto.style.objectFit = "cover";
+    userPhoto.style.opacity = "0.7"; 
     locket.appendChild(userPhoto);
   }
 
   // Name text
-  let span=document.createElement("span");
-  span.className="text";
-  span.innerText=name;
+  let span = document.createElement("span");
+  span.className = "text";
+  span.innerText = name;
   locket.appendChild(span);
 
   card.appendChild(locket);
 
   // Download button
-  let downloadBtn=document.createElement("button");
-  downloadBtn.innerText="Download";
-  downloadBtn.className="download-btn";
-  downloadBtn.onclick=function(){
-    html2canvas(locket,{scale:3}).then(canvas=>{
-      let link=document.createElement("a");
-      link.download=name+"_Design.png";
-      link.href=canvas.toDataURL();
+  let downloadBtn = document.createElement("button");
+  downloadBtn.innerText = "Download";
+  downloadBtn.className = "download-btn";
+  downloadBtn.onclick = function() {
+    html2canvas(locket, {scale:3}).then(canvas=>{
+      let link = document.createElement("a");
+      link.download = name+"_Design.png";
+      link.href = canvas.toDataURL();
       link.click();
     });
   };
   card.appendChild(downloadBtn);
 
-  // Order Submit button for each design
-  let orderBtn=document.createElement("button");
-  orderBtn.innerText="Submit Order";
-  orderBtn.className="order-btn";
-  orderBtn.onclick=function(){submitOrder(name);}
+  // Order button
+  let orderBtn = document.createElement("button");
+  orderBtn.innerText = "Submit Order";
+  orderBtn.className = "order-btn";
+  orderBtn.onclick = function() { submitOrder(name); };
   card.appendChild(orderBtn);
 
   return card;
 }
 
 // Generate 500 designs
-function generate500(){
-  previewArea.innerHTML="";
-  let baseName=document.getElementById("nameInput").value||"GM";
-  let photo=document.getElementById("photoUpload").files[0]?URL.createObjectURL(document.getElementById("photoUpload").files[0]):null;
-  let selectedMockup=document.getElementById("mockupSelect").value;
+function generate500() {
+  previewArea.innerHTML = "";
+  let baseName = document.getElementById("nameInput").value || "GM";
+  let photo = document.getElementById("photoUpload").files[0] ? URL.createObjectURL(document.getElementById("photoUpload").files[0]) : null;
+  let selectedMockup = document.getElementById("mockupSelect").value;
+  const shapes = ["circle","heart","square","star"];
+  const fonts = ["Playfair Display","Cinzel","Great Vibes","Montserrat"];
 
-  const shapes=["circle","heart","square","star"];
-  const fonts=["Playfair Display","Cinzel","Great Vibes","Montserrat"];
-
-  for(let i=0;i<500;i++){
-    let randomShape=shapes[Math.floor(Math.random()*shapes.length)];
-    let randomFont=fonts[Math.floor(Math.random()*fonts.length)];
+  for(let i=0; i<500; i++){
+    let randomShape = shapes[Math.floor(Math.random()*shapes.length)];
+    let randomFont = fonts[Math.floor(Math.random()*fonts.length)];
     previewArea.appendChild(createLocket(baseName, randomShape, randomFont, photo, selectedMockup));
   }
 }
 
-// ----- ORDER SUBMIT for each design -----
+// Submit Order function
 async function submitOrder(designName){
-  let cname=prompt("Enter Your Name:");
+  let cname = prompt("Enter Your Name:");
   if(!cname) return alert("Name required!");
-  let cphone=prompt("Enter Phone Number:");
+  let cphone = prompt("Enter Phone Number:");
   if(!cphone) return alert("Phone required!");
-  let caddress=prompt("Enter Delivery Address:");
+  let caddress = prompt("Enter Delivery Address:");
   if(!caddress) return alert("Address required!");
 
-  const token="<YOUR_GITHUB_TOKEN>"; // Replace with your GitHub token
-  const gistData={
+  const token = "<YOUR_GITHUB_TOKEN>"; // replace with your token
+  const gistData = {
     description: "GM Official Order",
     public: true,
     files: {
@@ -257,21 +284,21 @@ async function submitOrder(designName){
   };
 
   try{
-    let response=await fetch("https://api.github.com/gists",{
+    let response = await fetch("https://api.github.com/gists",{
       method:"POST",
-      headers:{
+      headers: {
         "Authorization":"token "+token,
         "Content-Type":"application/json"
       },
-      body:JSON.stringify(gistData)
+      body: JSON.stringify(gistData)
     });
     if(response.ok){
       alert("✅ Order submitted for " + designName + "!");
-    }else{
+    } else {
       alert("❌ Failed to submit order. Check token.");
       console.error(await response.json());
     }
-  }catch(err){
+  } catch(err){
     alert("❌ Error submitting order.");
     console.error(err);
   }
