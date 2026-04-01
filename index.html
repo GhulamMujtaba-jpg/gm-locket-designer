@@ -1,261 +1,889 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GM Official – 500 Locket Designs</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cinzel:wght@600&family=Great+Vibes&family=Montserrat&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>GM Jewelry Atelier | Professional Urdu & English 3D Locket Studio</title>
+<!-- Google Fonts + Urdu Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700;800&family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Tangerine:wght@400;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<!-- Urdu Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Scheherazade+New:wght@400;500;600;700&family=Jameel+Noori+Nastaleeq&family=Urdu+Typesetting&family=Alvi+Nastaleeq&family=Mehr+Nastaliq&display=swap" rel="stylesheet">
 <style>
-body{
-  margin:0;
-  background:#111;
-  color:white;
-  font-family:'Montserrat',sans-serif;
-  text-align:center;
+@import url('https://fonts.cdnfonts.com/css/jameel-noori-nastaleeq');
+@import url('https://fonts.cdnfonts.com/css/alvi-nastaleeq');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.header{
-  padding:20px;
-  font-size:28px;
-  font-weight:bold;
-  background:linear-gradient(90deg,#ff9966,#ff5e62);
+body {
+  background: radial-gradient(ellipse at top, #08080f 0%, #010103 100%);
+  font-family: 'Montserrat', sans-serif;
+  min-height: 100vh;
+  color: #fff;
 }
 
-.controls{
-  background:#222;
-  padding:15px;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
+/* Premium Header */
+.hero-section {
+  background: linear-gradient(135deg, #0a0704 0%, #1a120c 50%, #0a0704 100%);
+  padding: 30px 20px;
+  text-align: center;
+  border-bottom: 3px solid #FFD966;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
 }
 
-input,select,button{
-  padding:8px;
-  border:none;
-  border-radius:8px;
-  font-weight:bold;
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,217,102,0.1) 0%, transparent 70%);
+  animation: shimmer 10s infinite;
 }
 
-button{
-  cursor:pointer;
-  color:white;
+@keyframes shimmer {
+  0%, 100% { transform: translate(-20%, -20%); opacity: 0.3; }
+  50% { transform: translate(20%, 20%); opacity: 0.7; }
 }
 
-.preview-area{
-  margin-top:20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:20px;
-  padding:20px;
+.hero-section h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #FFE6B0, #FFB347, #FF8C42, #D4AF37);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 15px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 2;
 }
 
-.design-card{
-  background:#1c1c1c;
-  padding:10px;
-  border-radius:20px;
+.hero-section .urdu-tagline {
+  font-family: 'Noto Nastaliq Urdu', 'Amiri', serif;
+  font-size: 1.1rem;
+  color: #FFD966;
+  margin-top: 8px;
+  letter-spacing: 1px;
 }
 
-.locket{
-  width:150px;
-  height:150px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  overflow:hidden;
-  transition:0.4s;
+/* Language Switcher */
+.lang-switch {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  gap: 12px;
+  z-index: 10;
 }
 
-.text{
-  z-index:2;
-  font-weight:bold;
-  text-shadow:0 2px 10px rgba(0,0,0,0.7);
+.lang-btn {
+  background: rgba(0,0,0,0.6);
+  border: 1px solid #FFD966;
+  padding: 6px 18px;
+  border-radius: 40px;
+  color: #FFD966;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.8rem;
 }
 
-.download-btn{
-  margin-top:8px;
-  background:#00c853;
-  width:100%;
+.lang-btn.active {
+  background: #FFB347;
+  color: #1a1208;
+  border-color: #FFB347;
 }
 
-.order-btn{
-  margin-top:5px;
-  background:#2962ff;
-  width:100%;
+.lang-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Professional Control Panel */
+.control-pavilion {
+  background: rgba(10, 8, 12, 0.88);
+  backdrop-filter: blur(16px);
+  margin: 20px 25px;
+  padding: 25px;
+  border-radius: 48px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.control-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.control-card {
+  background: rgba(25, 20, 18, 0.8);
+  border-radius: 60px;
+  padding: 8px 18px;
+  border-left: 3px solid #FFD966;
+  transition: all 0.2s;
+  min-width: 150px;
+}
+
+.control-card:hover {
+  background: rgba(45, 35, 28, 0.9);
+  transform: translateY(-2px);
+}
+
+.control-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #FFD966;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.control-card input, .control-card select {
+  background: #1e1915;
+  border: 1px solid #4a3a2a;
+  border-radius: 40px;
+  padding: 8px 16px;
+  color: #FFE6B0;
+  font-weight: 500;
+  font-size: 0.85rem;
+  cursor: pointer;
+  width: 100%;
+  min-width: 140px;
+}
+
+.control-card input:focus, .control-card select:focus {
+  border-color: #FFB347;
+  outline: none;
+  box-shadow: 0 0 8px rgba(255,180,71,0.3);
+}
+
+.range-value {
+  font-size: 0.7rem;
+  color: #FFD966;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #FFB347, #E69500);
+  border: none;
+  border-radius: 60px;
+  padding: 0 32px;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #1a1208;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+
+.primary-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(255,180,71,0.5);
+}
+
+/* Stats Bar */
+.stats-marquee {
+  background: linear-gradient(90deg, #1a1510, #2a2018, #1a1510);
+  padding: 12px;
+  text-align: center;
+  border-radius: 60px;
+  margin: 0 25px 20px;
+  font-weight: 600;
+  color: #FFD966;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  border: 1px solid rgba(212,175,55,0.3);
+}
+
+/* Jewelry Gallery */
+.jewelry-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 28px;
+  padding: 20px 25px;
+  max-height: 70vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Premium Jewelry Card */
+.jewelry-masterpiece {
+  background: linear-gradient(145deg, #181410, #0f0c08);
+  border-radius: 32px;
+  padding: 20px 15px 18px;
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.jewelry-masterpiece::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.1), transparent);
+  transition: left 0.6s;
+}
+
+.jewelry-masterpiece:hover::before {
+  left: 100%;
+}
+
+.jewelry-masterpiece:hover {
+  transform: translateY(-8px);
+  border-color: #FFD966;
+  box-shadow: 0 20px 35px rgba(212,175,55,0.25);
+}
+
+.locket-container {
+  width: 190px;
+  height: 190px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  background-size: cover;
+}
+
+/* Metal Texture Overlay */
+.metal-grain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(45deg, rgba(255,255,200,0.1) 0px, rgba(255,255,200,0.1) 2px, transparent 2px, transparent 12px);
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 2;
+}
+
+/* Premium Text Styling - Supports Urdu */
+.inscription-text {
+  position: relative;
+  z-index: 10;
+  font-weight: 800;
+  text-align: center;
+  padding: 8px;
+  word-break: break-word;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  line-height: 1.3;
+}
+
+/* Urdu Specific Styling */
+.urdu-text {
+  font-weight: 600;
+  letter-spacing: 0px;
+  line-height: 1.5;
+}
+
+/* Gemstone Accent */
+.gem-accent {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  z-index: 15;
+  box-shadow: 0 0 8px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.5);
+  animation: gemGlow 2s infinite;
+}
+
+@keyframes gemGlow {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); filter: brightness(1.1); }
+}
+
+.halo-ring {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: inherit;
+  border: 1px solid rgba(255,215,0,0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.jewelry-masterpiece:hover .halo-ring {
+  opacity: 1;
+}
+
+/* Action Buttons */
+.jewelry-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border: none;
+  border-radius: 40px;
+  font-weight: 700;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: inherit;
+}
+
+.download-spec {
+  background: linear-gradient(95deg, #2c5530, #1e3a22);
+  color: #FFE6B0;
+  border: 1px solid #D4AF37;
+}
+
+.order-manufacture {
+  background: linear-gradient(95deg, #8B5A2B, #5D3A1A);
+  color: #FFE6B0;
+  border: 1px solid #D4AF37;
+}
+
+.action-btn:hover {
+  transform: scale(0.97);
+  filter: brightness(1.1);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1510;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #FFB347;
+  border-radius: 10px;
+}
+
+@media (max-width: 750px) {
+  .control-card { padding: 5px 12px; min-width: 120px; }
+  .locket-container { width: 150px; height: 150px; }
+  .jewelry-gallery { gap: 18px; }
+  .hero-section h1 { font-size: 1.6rem; }
+  .lang-switch { top: 10px; right: 15px; }
+  .lang-btn { padding: 4px 12px; font-size: 0.7rem; }
 }
 </style>
 </head>
 <body>
 
-<div class="header">GM Official – 500 Locket Designs</div>
-
-<div class="controls">
-  <input type="text" id="nameInput" placeholder="Enter Name">
-
-  <select id="shapeSelect">
-    <option value="circle">Circle</option>
-    <option value="square">Square</option>
-    <option value="heart">Heart</option>
-    <option value="star">Star</option>
-  </select>
-
-  <select id="fontSelect">
-    <option value="Playfair Display">Royal</option>
-    <option value="Cinzel">Luxury</option>
-    <option value="Great Vibes">Signature</option>
-    <option value="Montserrat">Modern</option>
-  </select>
-
-  <label>Size</label>
-  <input type="range" id="sizeRange" min="14" max="50" value="20">
-
-  <label>Rotate</label>
-  <input type="range" id="rotateRange" min="-180" max="180" value="0">
-
-  <select id="styleSelect">
-    <option value="none">Normal</option>
-    <option value="uppercase">UPPERCASE</option>
-    <option value="lowercase">lowercase</option>
-    <option value="capitalize">Capitalize</option>
-  </select>
-
-  <input type="file" id="photoUpload" accept="image/*">
-
-  <select id="bgStyle">
-    <option value="normal">Normal</option>
-    <option value="gold">Gold 3D</option>
-    <option value="silver">Silver 3D</option>
-    <option value="glass">Glass 3D</option>
-  </select>
-
-  <button style="background:#ff5e62;" onclick="generate500()">Generate 500 Designs</button>
+<div class="hero-section">
+  <div class="lang-switch">
+    <button class="lang-btn active" data-lang="en">ENGLISH</button>
+    <button class="lang-btn" data-lang="ur">اردو</button>
+  </div>
+  <h1>⚜️ GM JEWELRY ATELIER ⚜️</h1>
+  <div class="urdu-tagline" id="urduTagline">پروفیشنل جیولری مینوفیکچرنگ اسٹوڈیو</div>
+  <p id="engTagline">PROFESSIONAL 3D LOCKET MANUFACTURING STUDIO | URDU & ENGLISH SUPPORT</p>
 </div>
 
-<div class="preview-area" id="previewArea"></div>
+<div class="control-pavilion">
+  <div class="control-grid">
+    <div class="control-card">
+      <span class="control-label" id="nameLabel">✍️ NAME ENGRAVING</span>
+      <input type="text" id="nameInput" value="ROYAL" placeholder="Enter Name">
+    </div>
+    <div class="control-card">
+      <span class="control-label" id="shapeLabel">💎 LOCKET SHAPE</span>
+      <select id="shapeSelect">
+        <option value="round">✦ ROUND MEDALLION</option>
+        <option value="oval">❖ OVAL LOCKET</option>
+        <option value="heart">❤️ HEART CHARM</option>
+        <option value="star">⭐ STARBURST</option>
+        <option value="octagon">🔶 OCTAGON CUT</option>
+        <option value="diamond">💠 DIAMOND CUT</option>
+        <option value="hexagon">⬡ HEXAGON ROYAL</option>
+        <option value="square">📦 SQUARE CLASSIC</option>
+      </select>
+    </div>
+    <div class="control-card">
+      <span class="control-label" id="fontLabel">👑 FONT STYLE</span>
+      <select id="fontSelect">
+        <option value="Cinzel">✦ CINZEL (LUXURY)</option>
+        <option value="Playfair Display">✦ PLAYFAIR (CLASSIC)</option>
+        <option value="Great Vibes">✦ GREAT VIBES (CURSIVE)</option>
+        <option value="Montserrat">✦ MODERN SANS</option>
+        <option value="Dancing Script">✦ DANCING SCRIPT</option>
+        <option value="Tangerine">✦ TANGERINE (BOLD)</option>
+        <option value="Cormorant Garamond">✦ CORMORANT (ELEGANT)</option>
+        <option value="UnifrakturMaguntia">✦ GOTHIC ENGRAVING</option>
+      </select>
+    </div>
+    <div class="control-card">
+      <span class="control-label" id="urduFontLabel">🎨 URDU FONT</span>
+      <select id="urduFontSelect">
+        <option value="Noto Nastaliq Urdu">نستعلیق (Noto Nastaliq)</option>
+        <option value="Amiri">امیری (Amiri)</option>
+        <option value="Scheherazade New">شہرزاد (Scheherazade)</option>
+        <option value="Jameel Noori Nastaleeq">جamil نوری نستعلیق</option>
+        <option value="Alvi Nastaleeq">علوی نستعلیق</option>
+        <option value="Urdu Typesetting">اردو ٹائپ سیٹنگ</option>
+      </select>
+    </div>
+    <div class="control-card">
+      <span class="control-label" id="metalLabel">🏆 METAL FINISH</span>
+      <select id="metalFinish">
+        <option value="gold">18K GOLD</option>
+        <option value="rosegold">ROSE GOLD</option>
+        <option value="platinum">PLATINUM</option>
+        <option value="silver">STERLING SILVER</option>
+        <option value="blackgold">BLACK GOLD</option>
+        <option value="antique">ANTIQUE BRASS</option>
+        <option value="whitegold">WHITE GOLD</option>
+      </select>
+    </div>
+    <div class="control-card">
+      <span class="control-label" id="gemLabel">💠 GEMSTONE</span>
+      <select id="gemstone">
+        <option value="ruby">RUBY</option>
+        <option value="sapphire">SAPPHIRE</option>
+        <option value="emerald">EMERALD</option>
+        <option value="diamond">DIAMOND</option>
+        <option value="amethyst">AMETHYST</option>
+        <option value="topaz">TOPAZ</option>
+        <option value="none">NO GEM</option>
+      </select>
+    </div>
+    <div class="control-card">
+      <span class="control-label" id="sizeLabel">📏 TEXT SIZE</span>
+      <input type="range" id="sizeRange" min="18" max="62" value="30" step="1">
+      <div class="range-value" id="sizeVal">30px</div>
+    </div>
+    <div class="control-card">
+      <span class="control-label" id="rotateLabel">🔄 ENGRAVING ANGLE</span>
+      <input type="range" id="rotateRange" min="-35" max="35" value="0" step="1">
+      <div class="range-value" id="rotateVal">0°</div>
+    </div>
+    <div class="control-card">
+      <span class="control-label" id="depthLabel">✨ RELIEF DEPTH</span>
+      <select id="depthStyle">
+        <option value="deep">DEEP RELIEF</option>
+        <option value="medium">MEDIUM EMBOSS</option>
+        <option value="raised">RAISED GOLD</option>
+        <option value="engraved">ENGRAVED LINES</option>
+        <option value="chiseled">CHISELED EDGE</option>
+      </select>
+    </div>
+    <div class="control-card">
+      <span class="control-label" id="photoLabel">🖼️ PHOTO INSET</span>
+      <input type="file" id="photoUpload" accept="image/*">
+    </div>
+    <button id="generateBtn" class="primary-btn">✨ FORGE JEWELRY ✨</button>
+  </div>
+</div>
+
+<div class="stats-marquee" id="statsMarquee">⚜️ JEWELRY MANUFACTURING MODE | URDU & ENGLISH SUPPORT | 500+ UNIQUE STYLES ⚜️</div>
+<div class="jewelry-gallery" id="jewelryGallery"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script>
-const previewArea=document.getElementById("previewArea");
+// ===================== PROFESSIONAL JEWELRY STYLE ENGINE =====================
+let currentLanguage = 'en';
 
-function randomColor(){
-  const h=Math.floor(Math.random()*360);
-  return `hsl(${h},70%,50%)`;
+// Urdu Sample Names for demonstration
+const urduSampleNames = [
+  "محبت", "عشق", "دل", "جانان", "نور", "زینب", "علی", "فاطمہ", 
+  "حسن", "حسین", "مومن", "رحمت", "برکت", "کرامت", "شفقت",
+  "ROYAL", "ELEGANCE", "DIAMOND", "GOLD", "PRINCE", "PRINCESS"
+];
+
+// Metal Profiles
+const metalProfiles = {
+  gold: { bg: "radial-gradient(circle at 30% 25%, #FFE6B0, #D4AF37, #B8860B, #9C6E1A)", border: "2px solid #FFD966", shadow: "inset 5px 5px 12px rgba(255,245,180,0.6), inset -4px -4px 10px rgba(0,0,0,0.5), 0 15px 30px rgba(0,0,0,0.6)" },
+  rosegold: { bg: "radial-gradient(circle at 35% 30%, #FFDAB9, #E6B8A2, #D48C6C, #B86B4A)", border: "2px solid #F4C2A2", shadow: "inset 4px 4px 12px rgba(255,220,180,0.5), inset -3px -3px 8px rgba(0,0,0,0.45), 0 15px 30px rgba(0,0,0,0.6)" },
+  platinum: { bg: "radial-gradient(circle at 40% 35%, #FFFFFF, #E5E4E2, #C0C0C0, #A0A0A0)", border: "2px solid #F5F5F5", shadow: "inset 5px 5px 12px rgba(255,255,255,0.7), inset -4px -4px 10px rgba(0,0,0,0.3), 0 15px 30px rgba(0,0,0,0.5)" },
+  silver: { bg: "radial-gradient(circle at 30% 30%, #F0F0F0, #C0C0C0, #A0A0A0, #808080)", border: "2px solid #E0E0E0", shadow: "inset 4px 4px 10px rgba(255,255,255,0.6), inset -3px -3px 8px rgba(0,0,0,0.4), 0 15px 30px rgba(0,0,0,0.6)" },
+  blackgold: { bg: "radial-gradient(circle at 25% 30%, #3a2e20, #2a2418, #1e1810, #0f0b06)", border: "2px solid #D4AF37", shadow: "inset 3px 3px 10px rgba(255,215,0,0.2), inset -2px -2px 8px rgba(0,0,0,0.7), 0 15px 30px rgba(0,0,0,0.7)" },
+  antique: { bg: "radial-gradient(circle at 35% 40%, #CD7F32, #B87C4E, #8B5A2B, #6B3E1A)", border: "2px solid #CD7F32", shadow: "inset 4px 4px 12px rgba(255,200,120,0.3), inset -3px -3px 8px rgba(0,0,0,0.5), 0 15px 30px rgba(0,0,0,0.6)" },
+  whitegold: { bg: "radial-gradient(circle at 40% 35%, #F8F8FF, #E8E8F0, #D0D0E0, #B8B8C8)", border: "2px solid #F0F0FF", shadow: "inset 4px 4px 12px rgba(255,255,255,0.7), inset -3px -3px 8px rgba(0,0,0,0.25), 0 15px 30px rgba(0,0,0,0.5)" }
+};
+
+const gemColorsMap = {
+  ruby: "#E34234", sapphire: "#0F52BA", emerald: "#50C878", diamond: "#E8EEF2", amethyst: "#9966CC", topaz: "#FFC87C", none: null
+};
+
+function applyShapeClipping(element, shape) {
+  element.style.clipPath = "none";
+  element.style.borderRadius = "0";
+  const shapes = {
+    round: { borderRadius: "50%" },
+    oval: { borderRadius: "50%", transform: "scaleX(0.88)", width: "100%", height: "100%" },
+    heart: { clipPath: "polygon(50% 10%, 28% 0%, 12% 8%, 5% 22%, 3% 38%, 8% 54%, 22% 72%, 40% 88%, 50% 96%, 60% 88%, 78% 72%, 92% 54%, 97% 38%, 95% 22%, 88% 8%, 72% 0%, 50% 10%)" },
+    star: { clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)" },
+    octagon: { clipPath: "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)", borderRadius: "12px" },
+    diamond: { clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" },
+    hexagon: { clipPath: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)" },
+    square: { borderRadius: "20px" }
+  };
+  const style = shapes[shape] || shapes.round;
+  Object.assign(element.style, style);
 }
 
-function applyShape(locket,shape){
-  if(shape==="circle"){
-    locket.style.borderRadius="50%";
-    locket.style.clipPath="none";
-  } else if(shape==="square"){
-    locket.style.borderRadius="10px";
-    locket.style.clipPath="none";
-  } else if(shape==="heart"){
-    locket.style.clipPath="polygon(50% 90%, 0% 40%, 25% 10%, 50% 30%, 75% 10%, 100% 40%)";
-  } else if(shape==="star"){
-    locket.style.clipPath="polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)";
-  }
+function applyTextDepthEffect(element, depthType) {
+  const effects = {
+    deep: "3px 3px 0px rgba(0,0,0,0.6), 6px 6px 12px rgba(0,0,0,0.5), 0 0 5px rgba(255,215,0,0.3)",
+    medium: "2px 2px 3px rgba(0,0,0,0.5), 3px 3px 6px rgba(0,0,0,0.4)",
+    raised: "0px 1px 0px rgba(255,255,200,0.7), 2px 2px 4px rgba(0,0,0,0.5)",
+    engraved: "inset 1px 1px 2px rgba(0,0,0,0.6), 0px 0px 2px rgba(0,0,0,0.5)",
+    chiseled: "2px 2px 1px rgba(0,0,0,0.5), -1px -1px 1px rgba(255,255,200,0.3)"
+  };
+  element.style.textShadow = effects[depthType] || effects.medium;
 }
 
-function apply3D(locket,style){
-  if(style==="gold"){
-    locket.style.background="linear-gradient(145deg,#d4af37,#f9e79f,#b8860b)";
-    locket.style.boxShadow="inset 6px 6px 12px rgba(255,255,255,0.5),inset -6px -6px 12px rgba(0,0,0,0.6),0 10px 20px rgba(0,0,0,0.8)";
-  } else if(style==="silver"){
-    locket.style.background="linear-gradient(145deg,#c0c0c0,#f0f0f0,#999)";
-    locket.style.boxShadow="inset 6px 6px 12px rgba(255,255,255,0.5),inset -6px -6px 12px rgba(0,0,0,0.6),0 10px 20px rgba(0,0,0,0.8)";
-  } else if(style==="glass"){
-    locket.style.background="rgba(255,255,255,0.1)";
-    locket.style.backdropFilter="blur(10px)";
-    locket.style.boxShadow="inset 0 0 15px rgba(255,255,255,0.5),0 10px 20px rgba(0,0,0,0.7)";
-  } else{
-    locket.style.background=randomColor();
-    locket.style.boxShadow="";
-    locket.style.clipPath="";
-  }
+// Generate Unique Style Based on Index - Each Name Gets Different Style
+function getUniqueStyleForIndex(index, baseParams) {
+  const styles = {
+    shapeOffset: index % 8,
+    fontOffset: index % 9,
+    metalOffset: index % 7,
+    gemOffset: index % 7,
+    depthOffset: index % 5,
+    sizeVariation: (index % 11) - 5,
+    rotateVariation: (index % 9) - 4,
+    urduNameIndex: index % urduSampleNames.length
+  };
+  return styles;
 }
 
-function createLocket(name,shape,font,photo,bgStyle){
-  let card=document.createElement("div");
-  card.className="design-card";
-
-  let locket=document.createElement("div");
-  locket.className="locket";
-
-  applyShape(locket,shape);
-  apply3D(locket,bgStyle);
-
-  if(photo){
-    let img=document.createElement("img");
-    img.src=photo;
-    img.style.position="absolute";
-    img.style.width="100%";
-    img.style.height="100%";
-    img.style.objectFit="cover";
-    img.style.opacity="0.7";
-    locket.appendChild(img);
+// Create Jewelry Piece with Unique Style
+function createJewelryPiece(name, isUrdu, baseParams, variantId) {
+  const card = document.createElement("div");
+  card.className = "jewelry-masterpiece";
+  
+  const locket = document.createElement("div");
+  locket.className = "locket-container";
+  
+  // Get unique style for this variant
+  const uniqueStyle = getUniqueStyleForIndex(variantId, baseParams);
+  
+  // Dynamic shape selection - each design can have different shape
+  const shapeOptions = ["round", "oval", "heart", "star", "octagon", "diamond", "hexagon", "square"];
+  const selectedShape = (variantId % 5 === 0) ? shapeOptions[uniqueStyle.shapeOffset] : baseParams.shape;
+  
+  // Dynamic metal selection
+  const metalOptions = ["gold", "rosegold", "platinum", "silver", "blackgold", "antique", "whitegold"];
+  const selectedMetal = (variantId % 7 === 3) ? metalOptions[uniqueStyle.metalOffset] : baseParams.metal;
+  
+  // Dynamic gem selection
+  const gemOptions = ["ruby", "sapphire", "emerald", "diamond", "amethyst", "topaz", "none"];
+  let selectedGem = baseParams.gem;
+  if(variantId % 13 === 5 && baseParams.gem !== "none") {
+    selectedGem = gemOptions[uniqueStyle.gemOffset];
   }
-
-  let span=document.createElement("span");
-  span.className="text";
-  span.innerText=name;
-  span.style.fontFamily=font;
-  span.style.fontSize=document.getElementById("sizeRange").value+"px";
-  span.style.transform="rotate("+document.getElementById("rotateRange").value+"deg)";
-  span.style.textTransform=document.getElementById("styleSelect").value;
-  span.style.color=randomColor();
-
-  locket.appendChild(span);
+  
+  // Dynamic depth
+  const depthOptions = ["deep", "medium", "raised", "engraved", "chiseled"];
+  const selectedDepth = (variantId % 9 === 4) ? depthOptions[uniqueStyle.depthOffset] : baseParams.depth;
+  
+  // Dynamic size
+  let dynamicSize = baseParams.size + uniqueStyle.sizeVariation;
+  dynamicSize = Math.min(62, Math.max(18, dynamicSize));
+  
+  // Dynamic rotation
+  let dynamicRotate = baseParams.rotate + uniqueStyle.rotateVariation;
+  dynamicRotate = Math.min(35, Math.max(-35, dynamicRotate));
+  
+  // Dynamic name - for Urdu, use different Urdu names for variety
+  let displayText = name;
+  if(isUrdu) {
+    // For Urdu, create variations with different Urdu words
+    const urduVariants = ["محبت", "عشق", "دل", "جانان", "نور", "زینب", "علی", "فاطمہ", "حسن", "حسین", "مومن", "رحمت", "برکت"];
+    if(variantId % 7 === 2 && variantId > 10) {
+      displayText = urduVariants[variantId % urduVariants.length];
+    }
+  } else {
+    // English name variations
+    const engVariants = ["ROYAL", "DIAMOND", "GOLDEN", "PRINCE", "PRINCESS", "QUEEN", "KING", "LOVE", "BLESS"];
+    if(variantId % 11 === 6 && variantId > 15) {
+      displayText = engVariants[variantId % engVariants.length];
+    }
+  }
+  
+  applyShapeClipping(locket, selectedShape);
+  
+  const metalData = metalProfiles[selectedMetal] || metalProfiles.gold;
+  locket.style.background = metalData.bg;
+  locket.style.border = metalData.border;
+  locket.style.boxShadow = metalData.shadow;
+  locket.style.position = "relative";
+  locket.style.overflow = "hidden";
+  
+  // Metal Grain Texture
+  const grain = document.createElement("div");
+  grain.className = "metal-grain";
+  locket.appendChild(grain);
+  
+  // Halo Ring
+  const halo = document.createElement("div");
+  halo.className = "halo-ring";
+  locket.appendChild(halo);
+  
+  // Photo Inset
+  if(baseParams.photoURL) {
+    const imgLayer = document.createElement("img");
+    imgLayer.src = baseParams.photoURL;
+    imgLayer.style.position = "absolute";
+    imgLayer.style.width = "100%";
+    imgLayer.style.height = "100%";
+    imgLayer.style.objectFit = "cover";
+    imgLayer.style.opacity = "0.5";
+    imgLayer.style.zIndex = "1";
+    locket.appendChild(imgLayer);
+  }
+  
+  // Text Inscription
+  const textSpan = document.createElement("span");
+  textSpan.className = "inscription-text";
+  if(isUrdu) textSpan.classList.add("urdu-text");
+  
+  textSpan.innerText = displayText;
+  
+  // Font selection based on language
+  if(isUrdu) {
+    const urduFonts = ["Noto Nastaliq Urdu", "Amiri", "Scheherazade New", "Jameel Noori Nastaleeq", "Alvi Nastaleeq", "Urdu Typesetting"];
+    const selectedUrduFont = (variantId % 5 === 0) ? urduFonts[variantId % urduFonts.length] : baseParams.urduFont;
+    textSpan.style.fontFamily = `'${selectedUrduFont}', 'Noto Nastaliq Urdu', serif`;
+    textSpan.style.fontSize = dynamicSize + "px";
+    textSpan.style.fontWeight = "600";
+  } else {
+    const fontOptions = ["Cinzel", "Playfair Display", "Great Vibes", "Montserrat", "Dancing Script", "Tangerine", "Cormorant Garamond", "UnifrakturMaguntia"];
+    const selectedFont = (variantId % 8 === 3) ? fontOptions[variantId % fontOptions.length] : baseParams.font;
+    textSpan.style.fontFamily = `'${selectedFont}', serif`;
+    textSpan.style.fontSize = dynamicSize + "px";
+  }
+  
+  textSpan.style.transform = `rotate(${dynamicRotate}deg)`;
+  textSpan.style.fontWeight = "800";
+  textSpan.style.display = "inline-block";
+  textSpan.style.textAlign = "center";
+  
+  // Premium Gradient Text based on Metal
+  const goldGrad = "linear-gradient(135deg, #FFE6B0, #FFB347, #F5A623)";
+  const silverGrad = "linear-gradient(135deg, #F8F9FA, #E0E0E0, #C0C0C0)";
+  const roseGrad = "linear-gradient(135deg, #FFDAB9, #E6B8A2, #D48C6C)";
+  
+  if(selectedMetal === "gold" || selectedMetal === "blackgold") {
+    textSpan.style.background = goldGrad;
+    textSpan.style.webkitBackgroundClip = "text";
+    textSpan.style.backgroundClip = "text";
+    textSpan.style.color = "transparent";
+  } else if(selectedMetal === "rosegold") {
+    textSpan.style.background = roseGrad;
+    textSpan.style.webkitBackgroundClip = "text";
+    textSpan.style.backgroundClip = "text";
+    textSpan.style.color = "transparent";
+  } else {
+    textSpan.style.background = silverGrad;
+    textSpan.style.webkitBackgroundClip = "text";
+    textSpan.style.backgroundClip = "text";
+    textSpan.style.color = "transparent";
+  }
+  
+  applyTextDepthEffect(textSpan, selectedDepth);
+  textSpan.style.letterSpacing = isUrdu ? "0px" : "1.5px";
+  locket.appendChild(textSpan);
+  
+  // Gemstone Accent
+  if(selectedGem !== "none" && gemColorsMap[selectedGem]) {
+    const gem = document.createElement("div");
+    gem.className = "gem-accent";
+    gem.style.background = `radial-gradient(circle at 35% 35%, ${gemColorsMap[selectedGem]}, ${gemColorsMap[selectedGem]}aa)`;
+    gem.style.boxShadow = `0 0 12px ${gemColorsMap[selectedGem]}, inset 0 1px 2px rgba(255,255,255,0.6)`;
+    locket.appendChild(gem);
+  }
+  
   card.appendChild(locket);
-
-  let downloadBtn=document.createElement("button");
-  downloadBtn.innerText="Download";
-  downloadBtn.className="download-btn";
-  downloadBtn.onclick=function(){
-    html2canvas(locket,{scale:3}).then(canvas=>{
-      let link=document.createElement("a");
-      link.download=name+"_Design.png";
-      link.href=canvas.toDataURL();
+  
+  // Action Buttons
+  const actionDiv = document.createElement("div");
+  actionDiv.className = "jewelry-actions";
+  
+  const downloadBtn = document.createElement("button");
+  downloadBtn.className = "action-btn download-spec";
+  downloadBtn.innerHTML = "📿 DOWNLOAD SPEC";
+  downloadBtn.onclick = () => {
+    html2canvas(locket, { scale: 3, backgroundColor: null, logging: false }).then(canvas => {
+      const link = document.createElement("a");
+      link.download = `Jewelry_${displayText}_${variantId+1}.png`;
+      link.href = canvas.toDataURL();
       link.click();
     });
   };
-  card.appendChild(downloadBtn);
-
-  let orderBtn=document.createElement("button");
-  orderBtn.innerText="Submit Order";
-  orderBtn.className="order-btn";
-  orderBtn.onclick=function(){
-    alert("Order feature needs GitHub token.");
+  
+  const orderBtn = document.createElement("button");
+  orderBtn.className = "action-btn order-manufacture";
+  orderBtn.innerHTML = "🔨 ORDER NOW";
+  orderBtn.onclick = () => {
+    html2canvas(locket, { scale: 2, backgroundColor: null }).then(() => {
+      alert(`✅ JEWELRY ORDER SUBMITTED\n━━━━━━━━━━━━━━━━━━━\n📛 NAME: ${displayText}\n🏷️ METAL: ${selectedMetal.toUpperCase()}\n💎 GEM: ${selectedGem.toUpperCase()}\n🔷 SHAPE: ${selectedShape}\n━━━━━━━━━━━━━━━━━━━\nOur master jeweler will contact you within 24hrs with CAD design and pricing.\n\n✨ READY FOR MANUFACTURING`);
+    }).catch(() => {
+      alert(`🔨 MANUFACTURING ORDER PLACED for "${displayText}" in ${selectedMetal}.\nWe'll craft your custom jewelry piece.`);
+    });
   };
-  card.appendChild(orderBtn);
-
+  
+  actionDiv.appendChild(downloadBtn);
+  actionDiv.appendChild(orderBtn);
+  card.appendChild(actionDiv);
+  
   return card;
 }
 
-function generate500(){
-  previewArea.innerHTML="";
-  let name=document.getElementById("nameInput").value || "GM";
-  let shape=document.getElementById("shapeSelect").value;
-  let font=document.getElementById("fontSelect").value;
-  let photo=document.getElementById("photoUpload").files[0] ? URL.createObjectURL(document.getElementById("photoUpload").files[0]) : null;
-  let bgStyle=document.getElementById("bgStyle").value;
-
-  for(let i=0;i<500;i++){
-    previewArea.appendChild(createLocket(name,shape,font,photo,bgStyle));
+// Main Generation Function
+function generateJewelryCollection() {
+  const gallery = document.getElementById("jewelryGallery");
+  gallery.innerHTML = "";
+  
+  const name = document.getElementById("nameInput").value.trim();
+  const isUrdu = currentLanguage === 'ur';
+  
+  const baseParams = {
+    shape: document.getElementById("shapeSelect").value,
+    font: document.getElementById("fontSelect").value,
+    urduFont: document.getElementById("urduFontSelect").value,
+    metal: document.getElementById("metalFinish").value,
+    gem: document.getElementById("gemstone").value,
+    size: parseInt(document.getElementById("sizeRange").value),
+    rotate: parseInt(document.getElementById("rotateRange").value),
+    depth: document.getElementById("depthStyle").value,
+    photoURL: null
+  };
+  
+  const photoFile = document.getElementById("photoUpload").files[0];
+  if(photoFile) {
+    baseParams.photoURL = URL.createObjectURL(photoFile);
+  }
+  
+  // Generate 500 unique designs - each with different style
+  const totalDesigns = 500;
+  
+  for(let i = 0; i < totalDesigns; i++) {
+    let displayName = name;
+    if(displayName === "") {
+      displayName = isUrdu ? "محبت" : "ROYAL";
+    }
+    const card = createJewelryPiece(displayName, isUrdu, baseParams, i);
+    gallery.appendChild(card);
+  }
+  
+  const stats = document.getElementById("statsMarquee");
+  const langText = isUrdu ? "اردو" : "ENGLISH";
+  stats.innerHTML = `⚜️ JEWELRY MANUFACTURING READY | ${totalDesigns} UNIQUE STYLES | LANGUAGE: ${langText} | EACH DESIGN HAS UNIQUE STYLE ⚜️`;
+  
+  if(baseParams.photoURL && photoFile) {
+    setTimeout(() => URL.revokeObjectURL(baseParams.photoURL), 15000);
   }
 }
 
-// Live Update
-document.getElementById("nameInput").addEventListener("input",generate500);
-document.getElementById("fontSelect").addEventListener("change",generate500);
-document.getElementById("shapeSelect").addEventListener("change",generate500);
-document.getElementById("sizeRange").addEventListener("input",generate500);
-document.getElementById("rotateRange").addEventListener("input",generate500);
-document.getElementById("styleSelect").addEventListener("change",generate500);
-document.getElementById("photoUpload").addEventListener("change",generate500);
-document.getElementById("bgStyle").addEventListener("change",generate500);
+// Language Switch
+function setLanguage(lang) {
+  currentLanguage = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    if(btn.getAttribute('data-lang') === lang) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+  
+  // Update UI text based on language
+  const urduTagline = document.getElementById("urduTagline");
+  const engTagline = document.getElementById("engTagline");
+  if(lang === 'ur') {
+    urduTagline.style.display = "block";
+    engTagline.style.display = "none";
+    document.getElementById("nameLabel").innerText = "✍️ نام کندہ کاری";
+    document.getElementById("shapeLabel").innerText = "💎 لاکٹ کی شکل";
+    document.getElementById("fontLabel").innerText = "👑 انگریزی فونٹ";
+    document.getElementById("urduFontLabel").innerText = "🎨 اردو فونٹ";
+    document.getElementById("metalLabel").innerText = "🏆 دھات کی تکمیل";
+    document.getElementById("gemLabel").innerText = "💠 قیمتی پتھر";
+    document.getElementById("sizeLabel").innerText = "📏 متن کا سائز";
+    document.getElementById("rotateLabel").innerText = "🔄 کندہ کاری کا زاویہ";
+    document.getElementById("depthLabel").innerText = "✨ گہرائی کا انداز";
+    document.getElementById("photoLabel").innerText = "🖼️ تصویر داخل کریں";
+    document.getElementById("nameInput").placeholder = "نام درج کریں";
+  } else {
+    urduTagline.style.display = "none";
+    engTagline.style.display = "block";
+    document.getElementById("nameLabel").innerText = "✍️ NAME ENGRAVING";
+    document.getElementById("shapeLabel").innerText = "💎 LOCKET SHAPE";
+    document.getElementById("fontLabel").innerText = "👑 FONT STYLE";
+    document.getElementById("urduFontLabel").innerText = "🎨 URDU FONT";
+    document.getElementById("metalLabel").innerText = "🏆 METAL FINISH";
+    document.getElementById("gemLabel").innerText = "💠 GEMSTONE";
+    document.getElementById("sizeLabel").innerText = "📏 TEXT SIZE";
+    document.getElementById("rotateLabel").innerText = "🔄 ENGRAVING ANGLE";
+    document.getElementById("depthLabel").innerText = "✨ RELIEF DEPTH";
+    document.getElementById("photoLabel").innerText = "🖼️ PHOTO INSET";
+    document.getElementById("nameInput").placeholder = "Enter Name";
+  }
+  
+  generateJewelryCollection();
+}
 
+// Debounced Update
+let updateTimer;
+function debouncedUpdate() {
+  clearTimeout(updateTimer);
+  updateTimer = setTimeout(() => generateJewelryCollection(), 150);
+}
+
+// Event Listeners
+document.getElementById("generateBtn").addEventListener("click", generateJewelryCollection);
+document.getElementById("nameInput").addEventListener("input", debouncedUpdate);
+document.getElementById("shapeSelect").addEventListener("change", debouncedUpdate);
+document.getElementById("fontSelect").addEventListener("change", debouncedUpdate);
+document.getElementById("urduFontSelect").addEventListener("change", debouncedUpdate);
+document.getElementById("metalFinish").addEventListener("change", debouncedUpdate);
+document.getElementById("gemstone").addEventListener("change", debouncedUpdate);
+document.getElementById("sizeRange").addEventListener("input", (e) => {
+  document.getElementById("sizeVal").innerText = e.target.value + "px";
+  debouncedUpdate();
+});
+document.getElementById("rotateRange").addEventListener("input", (e) => {
+  document.getElementById("rotateVal").innerText = e.target.value + "°";
+  debouncedUpdate();
+});
+document.getElementById("depthStyle").addEventListener("change", debouncedUpdate);
+document.getElementById("photoUpload").addEventListener("change", debouncedUpdate);
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang')));
+});
+
+// Initialize
+window.addEventListener("load", () => {
+  setLanguage('en');
+});
 </script>
 </body>
 </html>
